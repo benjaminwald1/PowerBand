@@ -8,7 +8,7 @@
 // Until a link is set, the "Pay with card" button shows a "checkout opens soon" message instead of charging anyone.
 window.POWERBAND_CHECKOUT = {
   links: {
-    1: '', // e.g. 'https://buy.stripe.com/xxxxxxxx'
+    1: 'https://buy.stripe.com/test_7sYeVe1728Z00QA0Bbco000', // 1x PowerBand (Stripe TEST mode link: swap for the live link before launch)
     2: '',
     3: '',
   },
