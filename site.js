@@ -39,7 +39,7 @@ const sports = [
   ['Golf', 'Grip insert', 'Hides in the butt of the grip. Club speed, tempo and swing plane from the shaft.', 'golf'],
   ['Boxing', 'Wrist band', 'Snaps into a wrist band. Punch power, speed and combos counted round by round.', 'boxing'],
 ];
-$('#carousel').innerHTML = sports.map((s) => `<article class="sport"><img src="images/${s[3]}.webp" alt="PowerBand sensor in a ${s[0].toLowerCase()} setup" loading="lazy"><span class="tag">${s[1]}</span><div class="cap"><h3>${s[0]}</h3><p>${s[2]}</p></div></article>`).join('');
+$('#carousel').innerHTML = sports.map((s) => `<article class="sport"><img src="images/${s[3]}.webp?v=2" alt="PowerBand sensor in a ${s[0].toLowerCase()} setup" loading="lazy"><span class="tag">${s[1]}</span><div class="cap"><h3>${s[0]}</h3><p>${s[2]}</p></div></article>`).join('');
 const car = $('#carousel');
 $('#prev').onclick = () => car.scrollBy({ left: -360, behavior: 'smooth' });
 $('#next').onclick = () => car.scrollBy({ left: 360, behavior: 'smooth' });
@@ -158,7 +158,7 @@ const setBand = (k) => {
 bandsList.forEach((b) => { new Image().src = bandImg(b[0]); });
 
 /* details */
-const photo = (f) => `<img src="images/${f}.webp" alt="" loading="lazy">`;
+const photo = (f) => `<img src="images/${f}.webp?v=2" alt="" loading="lazy">`;
 const details = {
   'Tennis 3D': ['Two grooves. Zero tools.', 'A solid body with a narrow groove on each side. Slide it between two strings and it grips in place. Drag to spin it a full 360 degrees.', () => `<div class="viewer"><canvas></canvas><span class="vhint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Drag to rotate 360°</span><button type="button" class="vtog on">Racquet string</button></div>`, 'v3d'],
   'Pickleball 3D': ['Fits any paddle.', 'Two elastic bands wrap the throat of your paddle and run through the sensor\'s side grooves. No tape, no glue, and it comes off in a second. Drag to spin it 360 degrees.', () => `<div class="viewer" data-mode="paddle"><canvas></canvas><span class="vhint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Drag to rotate 360°</span><button type="button" class="vtog on">Elastic bands</button></div>`, 'v3d'],
