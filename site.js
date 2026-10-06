@@ -186,8 +186,8 @@ renderDetail();
 /* buy */
 const gal = $('#gallery');
 let gview = 'Band';
-const gsrc = () => ({ Band: bandImg(band), Sensor: 'images/sensor-top.webp', Underside: 'images/sensor-bottom.webp' })[gview];
-gal.innerHTML = `<div id="gal-view"><img alt="PowerBand"></div><div class="gal-tabs"><button class="on">Band</button><button>Sensor</button><button>Underside</button></div>`;
+const gsrc = () => ({ Band: bandImg(band), Sensor: 'images/sensor-top.webp' })[gview];
+gal.innerHTML = `<div id="gal-view"><img alt="PowerBand"></div><div class="gal-tabs"><button class="on">Band</button><button>Sensor</button></div>`;
 const refreshGallery = () => { const im = $('#gal-view img'); im.src = gsrc(); im.classList.toggle('mult', gview !== 'Band'); };
 gal.querySelector('.gal-tabs').onclick = (e) => {
   if (e.target.tagName !== 'BUTTON') return;
