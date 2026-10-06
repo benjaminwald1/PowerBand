@@ -583,3 +583,12 @@ body.lock{overflow:hidden}
 .phone .screen .wrings{margin-bottom:-2px}
 .phone .screen .wrings .wr{width:92px!important;--sz:92px!important}
 .phone .screen .wrings .wr b{font-size:27px}
+
+/* ---------- text animations ---------- */
+.w{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(.4em);transition:opacity .9s var(--ease),filter .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0) * 42ms);will-change:opacity,filter,transform}
+.sv .w{opacity:1;filter:blur(0);transform:none}
+.blk{opacity:0;filter:blur(8px);transform:translateY(14px);transition:opacity .8s var(--ease),filter .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+.blk.sv{opacity:1;filter:blur(0);transform:none}
+.faq summary .w{display:inline-block}
+em .w{font-style:italic}
+@media(prefers-reduced-motion:reduce){.w,.blk{opacity:1;filter:none;transform:none;transition:none}}

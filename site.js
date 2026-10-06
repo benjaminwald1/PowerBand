@@ -175,6 +175,7 @@ const renderDetail = () => {
   const [h, p, vis, cls] = details[cur];
   card.innerHTML = `<div class="txt"><h3>${h}</h3><p>${p}</p></div><div class="vis ${cls}">${vis()}</div>`;
   dtabs.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.textContent === cur));
+  if (window.splitText) window.splitText(card);
   const vw = card.querySelector('.viewer');
   if (vw) { if (window.mountSensor3D) window.mountSensor3D(vw); else window.__mount3d = vw; }
 };
@@ -267,4 +268,40 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     ${row(I(BALL), WB, 'Tennis', '1h 12m · 212 shots', '12.4')}
     ${row(I(FLAG), WB, 'Golf', '2h 05m · 36 shots', '8.1')}
     ${tabbar(0)}<i class="hi"></i>`;
+})();
+
+
+/* ---------- text animations (word-by-word blur-in, same easing and stagger style as the reference site) ---------- */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const WORD_SEL = ['.h2', '.lede.sub', '.bt h3', '.bt p', '.sport h3', '.sport p', '.checks li', '.detail-card h3', '.detail-card p', '.buy h3', '.buy .tag', '.buy .eyebrow', '.incl li', '.incl h4', '.spec b', '.spec span', '.final-logo + .h2', '.band-name', 'footer p', '.opt-label', '.cta-block .h2'].join(',');
+  const BLOCK_SEL = ['.faq details', '.metric-cloud span', '.opt', '.assure span', '.fine'].join(',');
+  let seq = 0;
+  const split = (node, st) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const parts = n.textContent.split(/(\s+)/); const frag = document.createDocumentFragment();
+        parts.forEach((p) => {
+          if (!p) return;
+          if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span'); w.className = 'w'; w.textContent = p; w.setAttribute('aria-hidden', 'true'); w.style.setProperty('--i', st.i++); frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && n.tagName !== 'BR' && n.tagName !== 'SVG' && n.tagName !== 'svg' && !n.matches('img,button,canvas')) split(n, st);
+    });
+  };
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('sv'); io.unobserve(e.target); } }), { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+  const prep = (root = document) => {
+    root.querySelectorAll(WORD_SEL).forEach((el) => {
+      if (el.dataset.split || el.closest('#h1,#lede')) return;
+      el.dataset.split = '1'; el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
+      if (el.classList.contains('reveal')) el.classList.remove('reveal');
+      if (reduce) return; split(el, { i: 0 }); io.observe(el);
+    });
+    root.querySelectorAll(BLOCK_SEL).forEach((el, k) => {
+      if (el.dataset.blk) return; el.dataset.blk = '1'; if (reduce) return;
+      el.classList.add('blk'); el.style.setProperty('--d', (k % 6) * 70 + 'ms'); io.observe(el);
+    });
+  };
+  window.splitText = prep; prep();
 })();
