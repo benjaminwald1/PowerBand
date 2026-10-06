@@ -36,19 +36,15 @@ function build() {
     .reverse().map(([r, y]) => new THREE.Vector2(r, y));
   const cap = new THREE.Mesh(new THREE.LatheGeometry(prof, 128), dark); g.add(cap);
 
-  // base plate with two through-slits
+  // solid base plate
   const shape = new THREE.Shape(); shape.absarc(0, 0, 11.7, 0, Math.PI * 2, false);
-  shape.holes.push(slotPath(0, 2.45, 15, 1.9), slotPath(0, -2.45, 15, 1.9));
   const plateGeo = new THREE.ExtrudeGeometry(shape, { depth: 1.1, bevelEnabled: true, bevelThickness: .25, bevelSize: .25, bevelSegments: 4, curveSegments: 96 });
   plateGeo.rotateX(-Math.PI / 2); // extrusion goes +Y
   const plate = new THREE.Mesh(plateGeo, rim); plate.position.y = .25; g.add(plate);
 
-  // posts joining plate and cap (leave a channel in between)
-  for (let i = 0; i < 4; i++) {
-    const a = Math.PI / 4 + i * Math.PI / 2;
-    const post = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 1.3, 24), rim);
-    post.position.set(Math.cos(a) * 9.4, 1.95, Math.sin(a) * 9.4); g.add(post);
-  }
+  // solid core: the body is NOT hollow, only a narrow groove (~2.7 mm deep) runs around the sides
+  const core = new THREE.Mesh(new THREE.CylinderGeometry(9.1, 9.1, 1.5, 96), new THREE.MeshPhysicalMaterial({ color: 0x0c0c0e, roughness: .55, metalness: .3 }));
+  core.position.y = 1.95; g.add(core);
 
   // logo decal on top
   const decal = new THREE.Mesh(new THREE.CircleGeometry(5.2, 64), new THREE.MeshBasicMaterial({ map: logoTexture(), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }));
@@ -65,15 +61,16 @@ function build() {
   const gold = new THREE.MeshStandardMaterial({ color: 0xd9a441, metalness: 1, roughness: .28 });
   [-2.1, 2.1].forEach((px) => { const pin = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .3, 24), gold); pin.position.set(px, -.02, 0); g.add(pin); });
 
-  // racquet string: weaves up one slit, across the channel, down the other
+  // racquet strings: two main strings sit in the side grooves, cross strings run underneath outside the body
   const strings = new THREE.Group();
   const nylon = new THREE.MeshPhysicalMaterial({ color: 0xf1f1ee, roughness: .38, clearcoat: .3 });
-  const pts = [[0, -1.0, -15], [0, -1.0, -6], [0, -.1, -3.1], [0, 1.0, -2.45], [0, 2.1, -1.5], [0, 2.1, 1.5], [0, 1.0, 2.45], [0, -.1, 3.1], [0, -1.0, 6], [0, -1.0, 15]]
-    .map((p) => new THREE.Vector3(...p));
-  const main = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .4), 160, .6, 14), nylon); strings.add(main);
-  [-12, -7, 7, 12].forEach((z) => {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 30, 14), nylon);
-    m.rotation.z = Math.PI / 2; m.position.set(0, -2.25, z); strings.add(m);
+  [-9.8, 9.8].forEach((x) => {
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 44, 16), nylon);
+    m.rotation.x = Math.PI / 2; m.position.set(x, 1.95, 0); strings.add(m);
+  });
+  [-15, 15].forEach((z) => {
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 34, 16), nylon);
+    m.rotation.z = Math.PI / 2; m.position.set(0, .7, z); strings.add(m);
   });
   strings.name = 'strings'; g.add(strings);
   return g;
