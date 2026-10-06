@@ -9,7 +9,7 @@
 window.POWERBAND_CHECKOUT = {
   links: {
     1: 'https://buy.stripe.com/test_7sYeVe1728Z00QA0Bbco000', // 1x PowerBand (Stripe TEST mode link: swap for the live link before launch)
-    2: '',
-    3: '',
+    2: 'https://buy.stripe.com/test_8x23cw5nidfgczigA9co001', // 2x PowerBand (Stripe TEST mode link)
+    3: 'https://buy.stripe.com/test_9B6fZi7vq2AC42M0Bbco002', // 3x PowerBand (Stripe TEST mode link)
   },
 };
