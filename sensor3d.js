@@ -26,7 +26,7 @@ function slotPath(cx, cy, w, h) {
   return p;
 }
 
-function build() {
+function build(mode) {
   const g = new THREE.Group();
   const dark = new THREE.MeshPhysicalMaterial({ color: 0x1f1f23, roughness: 0.34, metalness: 0.3, clearcoat: 0.9, clearcoatRoughness: 0.22 });
   const rim = new THREE.MeshPhysicalMaterial({ color: 0x4a4a50, roughness: 0.32, metalness: 0.55 });
@@ -59,10 +59,37 @@ function build() {
 
   // gold charge pins underneath
   const gold = new THREE.MeshStandardMaterial({ color: 0xd9a441, metalness: 1, roughness: .28 });
-  [-2.1, 2.1].forEach((px) => { const pin = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .3, 24), gold); pin.position.set(px, -.02, 0); g.add(pin); });
+  [-2.1, 2.1].forEach((px) => { const pin = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .3, 24), gold); pin.position.set(px, -.02, 0); pin.visible = mode !== 'paddle'; g.add(pin); });
 
-  // racquet strings: two main strings sit in the side grooves, cross strings run underneath outside the body
   const strings = new THREE.Group();
+  if (mode === 'paddle') {
+    // pickleball paddle section: edge guard + face skin with a fine dimple texture
+    const rr = (w, h, r) => { const sh = new THREE.Shape(); sh.moveTo(-w / 2 + r, -h / 2); sh.lineTo(w / 2 - r, -h / 2); sh.absarc(w / 2 - r, -h / 2 + r, r, -Math.PI / 2, 0); sh.lineTo(w / 2, h / 2 - r); sh.absarc(w / 2 - r, h / 2 - r, r, 0, Math.PI / 2); sh.lineTo(-w / 2 + r, h / 2); sh.absarc(-w / 2 + r, h / 2 - r, r, Math.PI / 2, Math.PI); sh.lineTo(-w / 2, -h / 2 + r); sh.absarc(-w / 2 + r, -h / 2 + r, r, Math.PI, Math.PI * 1.5); return sh; };
+    const slabG = new THREE.ExtrudeGeometry(rr(88, 108, 14), { depth: 12, bevelEnabled: true, bevelThickness: .8, bevelSize: .8, bevelSegments: 4, curveSegments: 24 });
+    slabG.rotateX(-Math.PI / 2);
+    const guard = new THREE.Mesh(slabG, new THREE.MeshPhysicalMaterial({ color: 0xc6f432, roughness: .5, clearcoat: .4 }));
+    guard.position.set(0, -13.35, 0); g.add(guard);
+    const tc = document.createElement('canvas'); tc.width = tc.height = 128; const tx = tc.getContext('2d');
+    tx.fillStyle = '#1d2024'; tx.fillRect(0, 0, 128, 128);
+    for (let i = 0; i < 520; i++) { tx.fillStyle = Math.random() > .5 ? '#2a2e33' : '#14171a'; tx.beginPath(); tx.arc(Math.random() * 128, Math.random() * 128, .9, 0, 7); tx.fill(); }
+    const tex = new THREE.CanvasTexture(tc); tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(8, 10); tex.colorSpace = THREE.SRGBColorSpace;
+    const skinG = new THREE.ExtrudeGeometry(rr(84, 104, 12), { depth: .5, bevelEnabled: false, curveSegments: 24 });
+    skinG.rotateX(-Math.PI / 2);
+    // fix UVs so the texture tiles across the face
+    const uv = skinG.attributes.uv; const pos = skinG.attributes.position;
+    for (let i = 0; i < uv.count; i++) uv.setXY(i, pos.getX(i) / 84 + .5, pos.getZ(i) / 104 + .5);
+    const skin = new THREE.Mesh(skinG, new THREE.MeshPhysicalMaterial({ map: tex, roughness: .55, metalness: .1, clearcoat: .25 }));
+    skin.position.set(0, -.5, 0); g.add(skin);
+    // two elastic bands wrap the paddle and run through the sensor's side grooves
+    const band = new THREE.MeshPhysicalMaterial({ color: 0xf4f4f1, roughness: .55, clearcoat: .2 });
+    const P = (x, y) => new THREE.Vector3(x, y, 0);
+    const loop = [P(-44.6, .75), P(-14, .75), P(-9.2, 1.95), P(0, 1.95), P(9.2, 1.95), P(14, .75), P(44.6, .75), P(47.6, -.8), P(47.6, -11.6), P(44.6, -13.6), P(0, -13.6), P(-44.6, -13.6), P(-47.6, -11.6), P(-47.6, -.8)];
+    [-9.8, 9.8].forEach((z) => {
+      const curve = new THREE.CatmullRomCurve3(loop, true, 'catmullrom', .08);
+      const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 220, .62, 12, true), band); m.position.z = z; strings.add(m);
+    });
+    g.rotation.y = 0;
+  } else {
   const nylon = new THREE.MeshPhysicalMaterial({ color: 0xf1f1ee, roughness: .38, clearcoat: .3 });
   [-9.8, 9.8].forEach((x) => {
     const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 44, 16), nylon);
@@ -72,11 +99,13 @@ function build() {
     const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 34, 16), nylon);
     m.rotation.z = Math.PI / 2; m.position.set(0, .7, z); strings.add(m);
   });
+  }
   strings.name = 'strings'; g.add(strings);
   return g;
 }
 
 export function mount(el) {
+  const mode = el.dataset.mode || 'racquet';
   const canvas = el.querySelector('canvas'); if (!canvas || canvas.__mounted) return; canvas.__mounted = true;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -91,15 +120,17 @@ export function mount(el) {
   scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a95, 0.9));
   const cam = new THREE.PerspectiveCamera(26, 1, 1, 400); cam.position.set(0, 0, 74);
 
-  const obj = build(); scene.add(obj);
-  obj.quaternion.setFromEuler(new THREE.Euler(0.62, -0.7, 0.05));
+  const obj = build(mode); scene.add(obj);
+  const camZ = mode === 'paddle' ? 205 : 74;
+  if (mode === 'paddle') scene.fog = new THREE.Fog(0xf0f0f3, 230, 340);
+  obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.75, -0.55, 0.02) : new THREE.Euler(0.62, -0.7, 0.05));
   const strings = obj.getObjectByName('strings');
   canvas.__obj = obj; canvas.__auto = () => { auto = false; };
 
   const size = () => {
     const w = el.clientWidth || 400, h = el.clientHeight || 400;
     renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
-    cam.position.z = 74 * (w / h < 0.9 ? 1.3 : 1);
+    cam.position.z = camZ * (w / h < 0.9 ? 1.3 : 1);
   };
   size(); new ResizeObserver(size).observe(el);
 

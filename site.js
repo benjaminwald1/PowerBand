@@ -153,7 +153,8 @@ bandsList.forEach((b) => { new Image().src = bandImg(b[0]); });
 /* details */
 const photo = (f) => `<img src="images/${f}.webp" alt="" loading="lazy">`;
 const details = {
-  '3D view': ['Two grooves. Zero tools.', 'A solid body with a narrow groove on each side. Slide it between two strings and it grips in place. Drag to spin it a full 360 degrees.', () => `<div class="viewer"><canvas></canvas><span class="vhint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Drag to rotate 360°</span><button type="button" class="vtog on">Racquet string</button></div>`, 'v3d'],
+  'Tennis 3D': ['Two grooves. Zero tools.', 'A solid body with a narrow groove on each side. Slide it between two strings and it grips in place. Drag to spin it a full 360 degrees.', () => `<div class="viewer"><canvas></canvas><span class="vhint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Drag to rotate 360°</span><button type="button" class="vtog on">Racquet string</button></div>`, 'v3d'],
+  'Pickleball 3D': ['Fits any paddle.', 'Two elastic bands wrap the throat of your paddle and run through the sensor\'s side grooves. No tape, no glue, and it comes off in a second. Drag to spin it 360 degrees.', () => `<div class="viewer" data-mode="paddle"><canvas></canvas><span class="vhint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Drag to rotate 360°</span><button type="button" class="vtog on">Elastic bands</button></div>`, 'v3d'],
   'Photo': ['A coin-sized sensor. Six grams.', 'Ø24 mm by 7 mm. Nine axes of motion sensing sampled a thousand times a second, from a gentle dink to a 130 mph serve.', () => `<img class="mult" src="images/sensor-top.webp" alt="PowerBand sensor, top">`, ''],
   'Underside': ['Charge pins, nothing else.', 'Two gold contacts snap onto the magnetic charger. No ports, no flaps, nothing to leak sweat or rain.', () => `<img class="mult" src="images/sensor-bottom.webp" alt="PowerBand sensor, underside">`, ''],
   'Racquet': ['Slides between the strings.', 'Two narrow side grooves grip a pair of strings at the throat. Weighs less than the dampener it replaces, so balance and feel stay put.', () => photo('tennis'), 'photo'],
@@ -161,7 +162,7 @@ const details = {
   'Grip': ['Hidden in the grip.', 'Slides into the butt of a golf club grip. Measures club speed and tempo from the shaft.', () => photo('golf'), 'photo'],
   'Wrist band': ['Built for boxing. And everything with a punch.', 'Snap the sensor into a soft wrist band. It counts punches, measures power and tracks your rounds.', () => photo('boxing'), 'photo'],
 };
-let cur = '3D view';
+let cur = 'Tennis 3D';
 const dtabs = $('#detail-tabs'), card = $('#detail-card');
 const renderDetail = () => {
   const [h, p, vis, cls] = details[cur];
