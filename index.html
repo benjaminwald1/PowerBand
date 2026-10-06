@@ -7,8 +7,10 @@
 <meta name="description" content="PowerBand is a screenless smart sensor that tracks swing speed, ball speed, racquet path, spin and more. Tennis, pickleball, padel, golf, boxing and beyond.">
 <meta property="og:title" content="PowerBand: The smartest wearable in sport">
 <meta property="og:description" content="Screenless. Weightless. Every swing, measured.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23000'/%3E%3Cpath d='M9 19l5-9 3 5 2-3 4 7' fill='none' stroke='%23c6f432' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=1791261076">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css?v=1791262396">
 </head>
 <body>
 
@@ -189,6 +191,7 @@
 </section>
 
 <section class="final">
+  <img class="final-logo reveal" src="images/logo.webp" alt="PowerBand" width="210" height="28">
   <h2 class="h2 reveal">Your best game is waiting.<br>Get PowerBand.</h2>
   <a href="#buy" class="btn-dark btn-lg">Pre-order PowerBand</a>
 </section>
@@ -227,7 +230,9 @@
   </div>
 </div>
 
-<script src="checkout-config.js?v=1791261076"></script>
-<script src="site.js?v=1791261076"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script src="checkout-config.js?v=1791262396"></script>
+<script type="module" src="sensor3d.js?v=1791262396"></script>
+<script src="site.js?v=1791262396"></script>
 </body>
 </html>

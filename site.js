@@ -34,7 +34,7 @@ fill('#m3', '#m3b', [...cards.slice(8), ...cards.slice(0, 8)]);
 
 /* sports carousel */
 const sports = [
-  ['Tennis', 'Racquet insert', 'Clicks into the string bed. Swing speed, spin, serve speed and racquet path on every stroke.', 'tennis'],
+  ['Tennis', 'Racquet insert', 'Weaves into the string bed through two slits. Swing speed, spin, serve speed and racquet path on every stroke.', 'tennis'],
   ['Pickleball & padel', 'Paddle insert', 'Seats flush in the paddle face. Track dinks, drives, bandejas and smashes.', 'padel'],
   ['Golf', 'Grip insert', 'Hides in the butt of the grip. Club speed, tempo and swing plane from the shaft.', 'golf'],
   ['Boxing', 'Wrist band', 'Snaps into a wrist band. Punch power, speed and combos counted round by round.', 'boxing'],
@@ -143,19 +143,22 @@ bandsList.forEach((b) => { new Image().src = bandImg(b[0]); });
 /* details */
 const photo = (f) => `<img src="images/${f}.webp" alt="" loading="lazy">`;
 const details = {
-  'Sensor': ['A coin-sized sensor. Six grams.', 'Ø24 mm by 7 mm. Nine axes of motion sensing sampled a thousand times a second, from a gentle dink to a 130 mph serve.', () => `<img class="mult" src="images/sensor-top.webp" alt="PowerBand sensor, top">`, ''],
+  '3D view': ['Two slits. Zero tools.', 'Weave your racquet string through the two slits and it locks in place. Drag to spin it a full 360 degrees.', () => `<div class="viewer"><canvas></canvas><span class="vhint"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7"/><path d="M21 4v5h-5"/></svg>Drag to rotate 360°</span><button type="button" class="vtog on">Racquet string</button></div>`, 'v3d'],
+  'Photo': ['A coin-sized sensor. Six grams.', 'Ø24 mm by 7 mm. Nine axes of motion sensing sampled a thousand times a second, from a gentle dink to a 130 mph serve.', () => `<img class="mult" src="images/sensor-top.webp" alt="PowerBand sensor, top">`, ''],
   'Underside': ['Charge pins, nothing else.', 'Two gold contacts snap onto the magnetic charger. No ports, no flaps, nothing to leak sweat or rain.', () => `<img class="mult" src="images/sensor-bottom.webp" alt="PowerBand sensor, underside">`, ''],
-  'Racquet': ['Clicks into the strings.', 'Sits in the string bed at the throat. Weighs less than the dampener it replaces, so balance and feel stay put.', () => photo('tennis'), 'photo'],
+  'Racquet': ['Weaves into the strings.', 'Thread a string through the two slits and it sits at the throat. Weighs less than the dampener it replaces, so balance and feel stay put.', () => photo('tennis'), 'photo'],
   'Paddle': ['Flush in the paddle face.', 'Seats into pickleball and padel paddles without changing the swing weight.', () => photo('padel'), 'photo'],
   'Grip': ['Hidden in the grip.', 'Slides into the butt of a golf club grip. Measures club speed and tempo from the shaft.', () => photo('golf'), 'photo'],
   'Wrist band': ['Built for boxing. And everything with a punch.', 'Snap the sensor into a soft wrist band. It counts punches, measures power and tracks your rounds.', () => photo('boxing'), 'photo'],
 };
-let cur = 'Sensor';
+let cur = '3D view';
 const dtabs = $('#detail-tabs'), card = $('#detail-card');
 const renderDetail = () => {
   const [h, p, vis, cls] = details[cur];
   card.innerHTML = `<div class="txt"><h3>${h}</h3><p>${p}</p></div><div class="vis ${cls}">${vis()}</div>`;
   dtabs.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.textContent === cur));
+  const vw = card.querySelector('.viewer');
+  if (vw) { if (window.mountSensor3D) window.mountSensor3D(vw); else window.__mount3d = vw; }
 };
 dtabs.innerHTML = Object.keys(details).map((k) => `<button>${k}</button>`).join('');
 dtabs.onclick = (e) => { if (e.target.tagName === 'BUTTON') { cur = e.target.textContent; renderDetail(); } };
@@ -218,7 +221,7 @@ const faq = [
   ['What is PowerBand?', 'PowerBand is a tiny, screenless sensor that measures your swing and shows you the data in the PowerBand app. On a racquet it is the size of a coin. For boxing and other sports it snaps into a soft wrist band.'],
   ['Which sports does it work with?', 'Tennis, pickleball, padel, golf and boxing at launch, with more sports on the way.'],
   ['What does it track?', 'Swing speed, ball speed, racquet path, spin, serve speed, impact point, tempo and more, depending on the sport.'],
-  ['How do I attach it?', 'The sensor clicks into the string bed of a racquet, a paddle face or a golf grip, and snaps into the wrist band for boxing.'],
+  ['How do I attach it?', 'The sensor weaves onto your racquet strings through two slits, a paddle face or a golf grip, and snaps into the wrist band for boxing.'],
   ['Do I need my phone while I play?', 'No. PowerBand stores two days of sessions on the device and syncs when you open the app.'],
   ['Will it change how my racquet feels?', 'It weighs just six grams, less than a standard dampener, so balance and feel stay put.'],
   ['How long does the battery last?', 'Around five days of regular play, and a full charge takes 30 minutes on the magnetic puck.'],
