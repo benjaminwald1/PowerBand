@@ -66,7 +66,7 @@ const areaChart = (vals, w = 296, h = 118, tip = '') => {
 const spark = (vals, col = '#1d1d1f') => { const mx = Math.max(...vals), mn = Math.min(...vals); const pts = vals.map((v, i) => [i * (60 / (vals.length - 1)), 18 - ((v - mn) / (mx - mn || 1)) * 16]); return `<svg viewBox="0 0 60 20" class="sp"><path d="${smooth(pts)}" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round"/></svg>`; };
 const ico = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const tabbar = (on) => `<div class="tb">${[['Home', '<path d="M4 11l8-7 8 7v9H4z"/>'], ['Swings', '<path d="M3 17l5-9 4 6 3-4 6 7"/>'], ['Trends', '<path d="M5 20V10M12 20V4M19 20v-7"/>'], ['You', '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>']].map((t, i) => `<span class="${i === on ? 'on' : ''}">${ico(t[1])}<em>${t[0]}</em></span>`).join('')}</div>`;
-const status = '<div class="sb"><b>9:41</b><span class="sbi"><i></i><i></i><i class="b"></i></span></div>';
+const status = '<div class="sb"><b>9:41</b><span class="sbi"><svg viewBox="0 0 17 11" width="17" height="11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="4.7" y="5" width="3" height="6" rx=".8"/><rect x="9.4" y="2.6" width="3" height="8.4" rx=".8"/><rect x="14" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11" width="15" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1.2 3.6a9.6 9.6 0 0113.6 0M3.5 6a6.3 6.3 0 019 0"/><circle cx="8" cy="9" r="1.3" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 27 12" width="25" height="12" fill="none"><rect x=".6" y=".6" width="22.4" height="10.8" rx="3.3" stroke="currentColor" opacity=".45"/><rect x="2.1" y="2.1" width="17.5" height="7.8" rx="2" fill="currentColor"/><path d="M24.6 4v4c.9-.3 1.5-1.1 1.5-2s-.6-1.7-1.5-2z" fill="currentColor" opacity=".5"/></svg></span></div>';
 const seg = (a) => `<div class="seg">${['Day', 'Week', 'Month'].map((x, i) => `<span class="${i === a ? 'on' : ''}">${x}</span>`).join('')}</div>`;
 const swing = (n, sp, tag, t) => `<div class="sl"><span class="sd">${n}</span><div><b>${sp}</b><small>${t}</small></div><em>${tag}</em></div>`;
 const WG = '#25e665', WB = '#1c9bff', WS = '#7ba1bb';
@@ -201,7 +201,7 @@ const openCo = () => {
   const b = bundles[bundleIdx], bd = bandsList.find((x) => x[0] === band);
   $('#co-img').src = bandImg(band);
   $('#co-title').textContent = b[0];
-  $('#co-lines').innerHTML = `<div><span>${b[0]}</span><b>${money(b[3])}</b></div><div><span>Launch discount</span><b class="g">&minus;${money(b[3] - b[2])}</b></div><div><span>Band</span><b>${bd[1]}</b></div><div><span>Shipping</span><b>Free</b></div><div class="tot"><span>Total</span><b>${money(b[2])}</b></div>`;
+  $('#co-lines').innerHTML = `<div><span>${b[0]}</span><b>${money(b[3])}</b></div><div><span>Launch discount</span><b class="g">&minus;${money(b[3] - b[2])}</b></div><div><span>Band</span><b>${bd[1]}</b></div><div><span>Shipping</span><b>At payment</b></div><div class="tot"><span>Total</span><b>${money(b[2])}</b></div>`;
   coMsg.hidden = true; co.hidden = false; document.body.classList.add('lock');
   setTimeout(() => $('#co-email').focus(), 50);
 };
@@ -251,7 +251,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   const bars = [46, 62, 38, 74, 58, 88, 30], days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'], today = 5;
   const row = (icon, col, name, meta, val) => `<div class="mr"><span class="mt" style="color:${col};box-shadow:0 0 0 1.2px ${col}66 inset">${icon}</span><div><b>${name}</b><small>${meta}</small></div><em class="wn" style="color:${col}">${val}</em></div>`;
   el.innerHTML = `
-    <div class="mh"><b>9:41</b><span class="sbi"><i></i><i></i><i class="b"></i></span></div>
+    <div class="mh"><b>9:41</b><span class="sbi"><svg viewBox="0 0 17 11" width="17" height="11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="4.7" y="5" width="3" height="6" rx=".8"/><rect x="9.4" y="2.6" width="3" height="8.4" rx=".8"/><rect x="14" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11" width="15" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1.2 3.6a9.6 9.6 0 0113.6 0M3.5 6a6.3 6.3 0 019 0"/><circle cx="8" cy="9" r="1.3" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 27 12" width="25" height="12" fill="none"><rect x=".6" y=".6" width="22.4" height="10.8" rx="3.3" stroke="currentColor" opacity=".45"/><rect x="2.1" y="2.1" width="17.5" height="7.8" rx="2" fill="currentColor"/><path d="M24.6 4v4c.9-.3 1.5-1.1 1.5-2s-.6-1.7-1.5-2z" fill="currentColor" opacity=".5"/></svg></span></div>
     <div class="mtop"><div><small>MON, OCT 5</small><h6>Overview</h6></div></div>
     <div class="mrings">${wring(.87, WG, '87', 'POWER', 60, '%')}${wring(.68, WB, '14.2', 'LOAD', 60)}${wring(.92, WS, '92', 'FORM', 60, '%')}</div>
     <div class="mhero"><div class="mhh"><span>WEEKLY LOAD</span><em>▲ 12%</em></div><div class="mbig wn">1,842<i>swings</i></div>

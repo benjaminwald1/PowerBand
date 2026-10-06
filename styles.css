@@ -567,3 +567,15 @@ body.lock{overflow:hidden}
 .iscreen .rg{display:none}
 /* floating chips dark */
 @media(min-width:1100px){.chip{background:#0b0e11e6;border:1px solid #ffffff1c;color:#9aa4ab;box-shadow:0 18px 40px -18px #000a,inset 0 1px #ffffff14}.chip b{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:24px;letter-spacing:.01em}}
+
+/* ---------- v7: more realistic iPhone ---------- */
+.iphone,.phone{background:linear-gradient(145deg,#d3d3d8 0%,#85858b 7%,#2d2d30 20%,#121214 48%,#2f2f33 76%,#8f8f95 92%,#d6d6da 100%);box-shadow:0 0 0 1px #000,inset 0 0 0 1px #ffffff55,inset 0 0 0 2.5px #0000006b,inset 0 2px 3px #ffffff40,0 50px 80px -30px #0009,0 20px 30px -18px #0007}
+.iscreen,.phone .screen{box-shadow:0 0 0 5px #020203,0 0 0 6px #2a2a2e,0 0 0 7px #0006;background:radial-gradient(130% 55% at 50% 0,#12171c 0,#000 72%)}
+.iscreen::before,.phone .screen::before{width:76px;height:22px;top:9px;background:radial-gradient(circle at 80% 50%,#1d2b4a 0 2.6px,#06080d 3.4px,transparent 4px),#000;box-shadow:none}
+.iscreen::after,.phone .screen::after{background:linear-gradient(112deg,#ffffff30 0%,#ffffff12 18%,#ffffff00 34%),linear-gradient(0deg,#ffffff00 70%,#ffffff0d 100%)}
+.sbi{display:flex;gap:5px;align-items:center}.sbi svg{display:block}
+.phone .screen .sbi i,.iscreen .sbi i{display:none}
+.sb{align-items:center}
+.iscreen .mh .sbi{transform:scale(.8);transform-origin:right center}
+.iphone::before,.phone::before{background:linear-gradient(90deg,#9a9aa0,#3c3c40);box-shadow:0 44px 0 #4a4a4f,0 84px 0 #4a4a4f,0 -34px 0 #4a4a4f}
+.iphone::after,.phone::after{background:linear-gradient(270deg,#9a9aa0,#3c3c40)}
