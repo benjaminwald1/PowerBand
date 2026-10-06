@@ -69,7 +69,7 @@ function build(mode) {
     const YC = -12; // cross-section centre: handle top sits at y = 0 under the sensor
     const secs = [
       { z: 62, w: 33, t: 24, n: 3.2 }, { z: 58, w: 36, t: 25, n: 3.2 }, { z: 40, w: 36, t: 25, n: 3.2 }, { z: -60, w: 36, t: 25, n: 3.2 },
-      { z: -74, w: 42, t: 24, n: 3.4 }, { z: -88, w: 78, t: 19, n: 3.8 }, { z: -104, w: 150, t: 15, n: 4.2 }, { z: -125, w: 190, t: 14, n: 5 }, { z: -300, w: 190, t: 14, n: 5 },
+      { z: -74, w: 42, t: 24, n: 3.4 }, { z: -88, w: 70, t: 19, n: 3.8 }, { z: -104, w: 112, t: 15, n: 4.2 }, { z: -125, w: 140, t: 14, n: 5 }, { z: -250, w: 140, t: 14, n: 5 },
     ];
     const pos = [], col = [], idx = [];
     const GRIP = [.035, .037, .042], SKIN = [.115, .13, .15], EDGE = [.78, .96, .2];
@@ -87,28 +87,57 @@ function build(mode) {
     pg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); pg.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); pg.setIndex(idx); pg.computeVertexNormals();
     const paddle = new THREE.Mesh(pg, new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: .55, metalness: .1, clearcoat: .35, side: THREE.DoubleSide }));
     g.add(paddle);
-    // overgrip wrap lines on the handle
+    // everything belonging to the paddle moves together so the band sits at the TOP of the grip, at the pivot point
+    const ZOFF = 50;
+    paddle.position.z = ZOFF;
+    // overgrip wrap lines on the handle (skipped where the band sits)
     const wrapMat = new THREE.MeshStandardMaterial({ color: 0x2a2c30, roughness: .8 });
     for (let k = 0; k < 14; k++) {
-      const z = -52 + k * 7.6; const pts = prof(36.6, 25.6, 3.2).map(([x, y]) => new THREE.Vector3(x, y + YC, z));
-      const ring = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 90, .28, 6, true), wrapMat); g.add(ring);
+      const z = -52 + k * 7.6; if (z > -66 && z < -30) continue;
+      const pts = prof(36.6, 25.6, 3.2).map(([x, y]) => new THREE.Vector3(x, y + YC, z + ZOFF));
+      g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 90, .28, 6, true), wrapMat));
     }
-    // two soft silicone bands wrapped around the grip, running through the sensor's side grooves
-    const bandMat = new THREE.MeshPhysicalMaterial({ color: 0xc6f432, roughness: .5, clearcoat: .3 });
-    const bandCurve = (hump) => {
-      const p = prof(36, 24.4, 3.2).map(([x, y]) => {
-        const l = Math.hypot(x, y) || 1; let px = x + x / l * .85, py = y + y / l * .85 + YC;
-        if (py > -4 && Math.abs(px) < 12) { const w = Math.min(1, Math.max(0, (12 - Math.abs(px)) / 6)), wv = w * w * (3 - 2 * w); py = py + (hump - py) * wv; }
-        return new THREE.Vector3(px, py, 0);
-      });
-      return new THREE.CatmullRomCurve3(p, true, 'catmullrom', .2);
-    };
-    const bands = [-9.8, 9.8].map((z) => { const m = new THREE.Mesh(new THREE.TubeGeometry(bandCurve(1.95), 160, .62, 10, true), bandMat); m.position.z = z; strings.add(m); return m; });
-    // attach / detach animation: the sensor lowers onto the grip and the bands snap up into its grooves
-    const puck = [];
-    g.children.forEach((c) => { if (c !== paddle && !strings.children.includes(c) && c.type !== 'Mesh' ? false : false) puck.push(c); });
-    const sensorParts = g.children.filter((c) => c !== paddle && c !== strings && !c.geometry?.type?.startsWith('Tube'));
-    const holder = new THREE.Group(); sensorParts.forEach((c) => { g.remove(c); holder.add(c); }); g.add(holder);
+    // ---- the actual band: a wide, flat leather-finish strap that wraps the grip, with a pocket for the sensor and a metal keeper ----
+    const BW = 32, BT = 2.4, bandMat = new THREE.MeshPhysicalMaterial({ color: 0x5b4034, roughness: .62, clearcoat: .12, side: THREE.DoubleSide });
+    const inner = prof(36.2, 25.2, 3.2), outer = prof(36.2 + 2 * BT, 25.2 + 2 * BT, 3.2);
+    const bp = [], bi = [];
+    for (let i = 0; i < N; i++) {
+      const [ix, iy] = inner[i], [ox, oy] = outer[i];
+      [-BW / 2, BW / 2].forEach((zz) => { bp.push(ix, iy + YC, zz); }); // 0,1 inner z0,z1
+      [-BW / 2, BW / 2].forEach((zz) => { bp.push(ox, oy + YC, zz); }); // 2,3 outer z0,z1
+    }
+    for (let i = 0; i < N; i++) {
+      const j = (i + 1) % N, a0 = i * 4, b0 = j * 4;
+      bi.push(a0 + 2, b0 + 2, a0 + 3, a0 + 3, b0 + 2, b0 + 3);      // outer face
+      bi.push(a0, a0 + 1, b0, b0, a0 + 1, b0 + 1);                  // inner face
+      bi.push(a0, b0, a0 + 2, a0 + 2, b0, b0 + 2);                  // edge z0
+      bi.push(a0 + 1, a0 + 3, b0 + 1, b0 + 1, a0 + 3, b0 + 3);      // edge z1
+    }
+    const bgeo = new THREE.BufferGeometry(); bgeo.setAttribute('position', new THREE.Float32BufferAttribute(bp, 3)); bgeo.setIndex(bi); bgeo.computeVertexNormals();
+    const band = new THREE.Mesh(bgeo, bandMat); g.add(band);
+    // stitching along both edges
+    const thread = new THREE.MeshStandardMaterial({ color: 0xd6b894, roughness: .7 });
+    [-BW / 2 + 2.6, BW / 2 - 2.6].forEach((zz) => {
+      const pts = prof(36.2 + 2 * BT + .25, 25.2 + 2 * BT + .25, 3.2).map(([x, y]) => new THREE.Vector3(x, y + YC, zz));
+      g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 160, .2, 6, true), thread));
+    });
+    // metal keeper on the side of the grip
+    const metal = new THREE.MeshPhysicalMaterial({ color: 0x8a8a90, metalness: 1, roughness: .28 });
+    const kIn = prof(36.2 + 2 * BT + .1, 25.2 + 2 * BT + .1, 3.2), kOut = prof(36.2 + 2 * BT + 2.6, 25.2 + 2 * BT + 2.6, 3.2);
+    const kp = [], ki = [], KW = 9, ks = [];
+    for (let i = 0; i < N; i++) { const q = i / N * 2 * Math.PI; if (Math.cos(q) > .93) ks.push(i); }
+    ks.forEach((i) => { [-KW / 2, KW / 2].forEach((zz) => kp.push(kIn[i][0], kIn[i][1] + YC, zz)); [-KW / 2, KW / 2].forEach((zz) => kp.push(kOut[i][0], kOut[i][1] + YC, zz)); });
+    for (let k = 0; k < ks.length - 1; k++) { const a0 = k * 4, b0 = (k + 1) * 4; ki.push(a0 + 2, b0 + 2, a0 + 3, a0 + 3, b0 + 2, b0 + 3, a0, a0 + 1, b0, b0, a0 + 1, b0 + 1, a0, b0, a0 + 2, a0 + 2, b0, b0 + 2, a0 + 1, a0 + 3, b0 + 1, b0 + 1, a0 + 3, b0 + 3); }
+    ki.push(2, 3, 0, 0, 3, 1); const ke = (ks.length - 1) * 4; ki.push(ke + 2, ke, ke + 3, ke + 3, ke, ke + 1);
+    const kgeo = new THREE.BufferGeometry(); kgeo.setAttribute('position', new THREE.Float32BufferAttribute(kp, 3)); kgeo.setIndex(ki); kgeo.computeVertexNormals();
+    g.add(new THREE.Mesh(kgeo, new THREE.MeshPhysicalMaterial({ color: 0x8a8a90, metalness: 1, roughness: .28, side: THREE.DoubleSide })));
+    // sensor pocket in the band (visible when the sensor is detached)
+    const pocket = new THREE.Mesh(new THREE.CylinderGeometry(12.6, 12.6, .5, 72), new THREE.MeshStandardMaterial({ color: 0x1a1210, roughness: .8 }));
+    pocket.position.y = 25.2 / 2 + BT + YC - .1; g.add(pocket);
+    const TOPY = 25.2 / 2 + BT + YC + .2;
+    // sensor lifts out of / drops into the band
+    const sensorParts = g.children.filter((c) => ![paddle, strings, band, pocket].includes(c) && c.geometry && c.geometry.type !== 'TubeGeometry' && c.geometry !== kgeo && c.material !== metal && c.material !== wrapMat && c.material !== bandMat);
+    const holder = new THREE.Group(); sensorParts.forEach((c) => { g.remove(c); holder.add(c); }); holder.position.y = TOPY; g.add(holder);
     let target = 1, cur = 1, last = performance.now();
     g.userData.api = {
       toggle() { target = target ? 0 : 1; return !!target; },
@@ -117,10 +146,8 @@ function build(mode) {
         const now = performance.now(), dt = Math.min((now - last) / 1000, .05); last = now;
         if (Math.abs(cur - target) < .0005) { cur = target; return; }
         cur += Math.sign(target - cur) * Math.min(Math.abs(target - cur), dt * 1.15);
-        const e = cur * cur * (3 - 2 * cur); // ease
-        holder.position.y = (1 - e) * 46;
-        const hump = .85 + 1.1 * e;
-        bands.forEach((m) => { m.geometry.dispose(); m.geometry = new THREE.TubeGeometry(bandCurve(hump), 160, .62, 10, true); });
+        const e = cur * cur * (3 - 2 * cur);
+        holder.position.y = TOPY + (1 - e) * 46;
       },
     };
     g.userData.strings = strings;
@@ -175,8 +202,8 @@ export function mount(el) {
   const cam = new THREE.PerspectiveCamera(26, 1, 1, 400); cam.position.set(0, 0, 74);
 
   const obj = build(mode); scene.add(obj);
-  const camZ = mode === 'paddle' ? 285 : 98;
-  scene.fog = mode === 'paddle' ? new THREE.Fog(0xf0f0f3, 320, 520) : new THREE.Fog(0xf0f0f3, 105, 175);
+  const camZ = mode === 'paddle' ? 360 : 98;
+  scene.fog = mode === 'paddle' ? new THREE.Fog(0xf0f0f3, 400, 640) : new THREE.Fog(0xf0f0f3, 105, 175);
   obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.62, -0.85, 0.0) : new THREE.Euler(0.62, -0.7, 0.05));
   const strings = obj.getObjectByName('strings');
   canvas.__obj = obj; canvas.__auto = () => { auto = false; };
