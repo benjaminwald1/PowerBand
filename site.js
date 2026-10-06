@@ -11,18 +11,26 @@ document.querySelectorAll('.blur-in').forEach((el, i) => (el.style.animationDela
 $('#lede').style.animation = 'blurIn 1s .7s var(--ease) both';
 
 /* live metric cards */
+const I = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const cards = [
-  ['SS', 'Swing speed', '78 mph, personal best'], ['BS', 'Ball speed', '112 mph first serve'],
-  ['SP', 'Spin', '2,840 rpm topspin'], ['RP', 'Racquet path', 'Inside-out, 4° closed'],
-  ['IP', 'Impact point', 'Sweet spot, 94%'], ['SV', 'Serve speed', 'Fastest this week: 118 mph'],
-  ['CS', 'Club speed', '104 mph driver'], ['PW', 'Punch power', '1,240 N cross'],
-  ['TM', 'Tempo', '3 : 1, perfectly smooth'], ['SH', 'Session saved', '212 swings logged'],
+  ['Swing speed', '78 mph, personal best', I('<path d="M4 18a9 9 0 1116 0"/><path d="M12 18l4-6"/>'), '#2f9e5a', '#e5f7ec'],
+  ['Ball speed', '112 mph first serve', I('<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>'), '#c98a00', '#fdf3d6'],
+  ['Spin', '2,840 rpm topspin', I('<path d="M20 12a8 8 0 01-14 5M4 12a8 8 0 0114-5"/><path d="M18 3v4h-4M6 21v-4h4"/>'), '#7a5af0', '#eeeaff'],
+  ['Racquet path', 'Inside-out, 4° closed', I('<path d="M3 18c6 0 9-4 12-8s4-5 6-5"/><circle cx="15" cy="10" r="2"/>'), '#2a6fdb', '#e4eeff'],
+  ['Impact point', 'Sweet spot, 94%', I('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'), '#d6455f', '#ffe8ec'],
+  ['Serve speed', 'Fastest this week: 118 mph', I('<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>'), '#e07a1f', '#ffeedd'],
+  ['Club speed', '104 mph driver', I('<path d="M7 21V4l10 4-10 4"/>'), '#168f86', '#dcf5f2'],
+  ['Punch power', '1,240 N cross', I('<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>'), '#c0392b', '#ffe9e6'],
+  ['Tempo', '3 : 1, perfectly smooth', I('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 3h6"/>'), '#6f7df0', '#e8eafe'],
+  ['Session saved', '212 swings logged', I('<path d="M5 12l4.5 4.5L19 7"/>'), '#2f9e5a', '#e5f7ec'],
+  ['Everyone synced', 'Coach sees it instantly', I('<path d="M20 11a8 8 0 00-14-4M4 13a8 8 0 0014 4"/><path d="M18 3v4h-4M6 21v-4h4"/>'), '#2a6fdb', '#e4eeff'],
+  ['CSV exported', 'Ready for Excel', I('<rect x="4" y="5" width="16" height="14" rx="3"/><path d="M4 10h16M10 10v9"/>'), '#2f9e5a', '#e5f7ec'],
 ];
-const cardHTML = (c) => `<div class="glass"><div class="row"><span class="ic">${c[0]}</span><span><b>${c[1]}</b><span class="s">${c[2]}</span></span></div><div class="bar"><i style="width:${60 + ((c[1].length * 7) % 40)}%"></i></div></div>`;
+const cardHTML = (c, i) => `<div class="glass"><div class="row"><span class="ic" style="background:${c[4]};color:${c[3]}">${c[2]}</span><span><b>${c[0]}</b><span class="s">${c[1]}</span></span></div><div class="bar"><i style="width:${55 + ((i * 17) % 42)}%"></i></div></div>`;
 const fill = (a, b, list) => { const h = list.map(cardHTML).join(''); $(a).innerHTML = h; $(b).innerHTML = h; };
 fill('#m1', '#m1b', cards);
-fill('#m2', '#m2b', [...cards.slice(5), ...cards.slice(0, 5)]);
-fill('#m3', '#m3b', [...cards.slice(3), ...cards.slice(0, 3)]);
+fill('#m2', '#m2b', [...cards.slice(4), ...cards.slice(0, 4)]);
+fill('#m3', '#m3b', [...cards.slice(8), ...cards.slice(0, 8)]);
 
 /* sports carousel */
 const sports = [

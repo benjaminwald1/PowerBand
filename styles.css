@@ -448,3 +448,8 @@ body.lock{overflow:hidden}
 .mp-top{border-radius:28px 28px 0 0}
 .mp-tabs{border-radius:0 0 28px 28px;padding:12px 0 14px}
 .mini-phone>.mp-tabs{background:#fff}
+
+/* icon tiles on the moving cards */
+.glass .ic{width:39px;height:39px;border-radius:10px;box-shadow:0 0 0 .5px #1315150f}
+.glass .ic svg{width:22px;height:22px}
+@media(max-width:700px){.glass .ic{width:34px;height:34px;border-radius:9px}.glass .ic svg{width:19px;height:19px}}
