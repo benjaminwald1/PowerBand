@@ -579,3 +579,7 @@ body.lock{overflow:hidden}
 .iscreen .mh .sbi{transform:scale(.8);transform-origin:right center}
 .iphone::before,.phone::before{background:linear-gradient(90deg,#9a9aa0,#3c3c40);box-shadow:0 44px 0 #4a4a4f,0 84px 0 #4a4a4f,0 -34px 0 #4a4a4f}
 .iphone::after,.phone::after{background:linear-gradient(270deg,#9a9aa0,#3c3c40)}
+.wsub{display:block;font-weight:600;font-size:9px;letter-spacing:.02em;color:#25e665;margin-top:3px}
+.phone .screen .wrings{margin-bottom:-2px}
+.phone .screen .wrings .wr{width:92px!important;--sz:92px!important}
+.phone .screen .wrings .wr b{font-size:27px}

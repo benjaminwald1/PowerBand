@@ -87,8 +87,9 @@ const BALL = '<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-
 const screens = {
   'Swing speed': () => `${status}${whead('MON, OCT 5', 'Overview')}
     <div class="wrings">${wring(.87, WG, '87', 'POWER', 100, '%')}${wring(.68, WB, '14.2', 'LOAD', 100)}${wring(.92, WS, '92', 'FORM', 100, '%')}</div>
+    <div class="wk2"><div class="wk"><small>SHOTS TODAY</small><b class="wn" data-count="248">0</b><span class="wsub">▲ 36 vs your average</span></div><div class="wk"><small>TOTAL SHOTS</small><b class="wn" data-count="12486">0</b><span class="wsub">Since you started</span></div></div>
     <div class="wc"><div class="wct"><small>SWING SPEED</small><em class="wd">▲ 6%</em></div><div class="wbig wn">78<i>mph</i></div>${wline([42, 47, 45, 52, 50, 58, 56, 63, 61, 70, 66, 78])}</div>
-    <p class="wlh">TODAY'S SESSIONS</p>${wact(BALL, 'Tennis', '1h 12m · 212 swings', '12.4', WB)}${wact(FLAG, 'Golf', '2h 05m · 36 swings', '8.1', WB)}${tabbar(0)}`,
+    <p class="wlh">TODAY'S SESSIONS</p>${wact(BALL, 'Tennis', '1h 12m · 212 shots', '12.4', WB)}${wact(FLAG, 'Golf', '2h 05m · 36 shots', '8.1', WB)}${tabbar(0)}`,
   'Serve': () => `${status}${whead('TENNIS · FIRST SERVE', 'Serve')}
     <div class="wbigrow"><span class="wbig wn">112<i>mph</i></span><em class="wd">★ PERSONAL BEST</em></div>
     <div class="wc wface"><svg viewBox="0 0 300 168"><defs><radialGradient id="wh1"><stop offset="0" stop-color="#25e665" stop-opacity=".95"/><stop offset="1" stop-color="#25e665" stop-opacity="0"/></radialGradient><radialGradient id="wh2"><stop offset="0" stop-color="#ff5a36" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient><clipPath id="wrc"><ellipse cx="150" cy="82" rx="98" ry="74"/></clipPath></defs>
@@ -111,6 +112,11 @@ const screens = {
     <div class="wc wbars">${[['TOPSPIN', 2840, WG], ['SLICE', 1100, WB], ['FLAT', 420, WS]].map((b) => `<div><span>${b[0]}<b class="wn">${b[1].toLocaleString()}</b></span><i><u style="width:${(b[1] / 3500) * 100}%;background:${b[2]};box-shadow:0 0 8px ${b[2]}88"></u></i></div>`).join('')}</div>
     <div class="wk2">${wkpi('KICK HEIGHT', '5.2', 'ft', 70)}${wkpi('BOUNCE ANGLE', '38', '°', 58, WB)}</div>${tabbar(2)}`,
 };
+const countUp = (root) => root.querySelectorAll('[data-count]').forEach((el) => {
+  const to = +el.dataset.count, t0 = performance.now(), dur = 1100;
+  const step = (t) => { const k = Math.min((t - t0) / dur, 1); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString(); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+});
 const tabs = $('#app-tabs'), screen = $('#screen');
 let curScreen = 'Swing speed';
 const showScreen = (k) => {
@@ -118,6 +124,7 @@ const showScreen = (k) => {
   screen.classList.remove('in'); void screen.offsetWidth;
   screen.innerHTML = screens[k]();
   screen.classList.add('in');
+  countUp(screen);
   tabs.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.textContent === k));
 };
 tabs.innerHTML = Object.keys(screens).map((k) => `<button>${k}</button>`).join('');
@@ -254,10 +261,10 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     <div class="mh"><b>9:41</b><span class="sbi"><svg viewBox="0 0 17 11" width="17" height="11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx=".8"/><rect x="4.7" y="5" width="3" height="6" rx=".8"/><rect x="9.4" y="2.6" width="3" height="8.4" rx=".8"/><rect x="14" y="0" width="3" height="11" rx=".8"/></svg><svg viewBox="0 0 16 11" width="15" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1.2 3.6a9.6 9.6 0 0113.6 0M3.5 6a6.3 6.3 0 019 0"/><circle cx="8" cy="9" r="1.3" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 27 12" width="25" height="12" fill="none"><rect x=".6" y=".6" width="22.4" height="10.8" rx="3.3" stroke="currentColor" opacity=".45"/><rect x="2.1" y="2.1" width="17.5" height="7.8" rx="2" fill="currentColor"/><path d="M24.6 4v4c.9-.3 1.5-1.1 1.5-2s-.6-1.7-1.5-2z" fill="currentColor" opacity=".5"/></svg></span></div>
     <div class="mtop"><div><small>MON, OCT 5</small><h6>Overview</h6></div></div>
     <div class="mrings">${wring(.87, WG, '87', 'POWER', 60, '%')}${wring(.68, WB, '14.2', 'LOAD', 60)}${wring(.92, WS, '92', 'FORM', 60, '%')}</div>
-    <div class="mhero"><div class="mhh"><span>WEEKLY LOAD</span><em>▲ 12%</em></div><div class="mbig wn">1,842<i>swings</i></div>
+    <div class="mhero"><div class="mhh"><span>TOTAL SHOTS</span><em>+248 today</em></div><div class="mbig wn">12,486<i>shots</i></div>
       <div class="mbars">${bars.map((h, i) => `<span class="${i === today ? 'on' : ''}"><u style="height:${h}%"></u><s>${days[i]}</s></span>`).join('')}</div></div>
     <p class="mlh">SESSIONS</p>
-    ${row(I(BALL), WB, 'Tennis', '1h 12m · 212 swings', '12.4')}
-    ${row(I(FLAG), WB, 'Golf', '2h 05m · 36 swings', '8.1')}
+    ${row(I(BALL), WB, 'Tennis', '1h 12m · 212 shots', '12.4')}
+    ${row(I(FLAG), WB, 'Golf', '2h 05m · 36 shots', '8.1')}
     ${tabbar(0)}<i class="hi"></i>`;
 })();
