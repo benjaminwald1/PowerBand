@@ -229,3 +229,55 @@ footer .logo{justify-content:center;color:var(--ink);margin-bottom:14px}
 .reveal{opacity:0;transform:translateY(28px);filter:blur(6px);transition:all 1s var(--ease)}
 .reveal.in{opacity:1;transform:none;filter:none}
 @media(prefers-reduced-motion:reduce){.marquee,.product,.path,.blur-in,.shiny{animation:none!important}.path{stroke-dashoffset:0}.reveal{opacity:1;transform:none;filter:none}}
+
+/* ---------- v2: real imagery ---------- */
+.logo img{height:17px;width:auto;display:block}
+header .logo{font-size:0}
+.hero{padding-bottom:0}
+.showcase{position:relative;margin-top:28px;height:clamp(420px,56vw,640px)}
+.showcase .marquees{position:absolute;inset:auto 0 0;padding:0;gap:22px;margin:0 auto;width:min(94vw,1500px);bottom:6%}
+.hero-band{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.hero-band img{width:clamp(300px,42vw,620px);height:auto;filter:drop-shadow(0 50px 40px #0002);
+  animation:bandIn 1.6s .3s var(--ease) both,float 7s 2s ease-in-out infinite;will-change:transform}
+@keyframes bandIn{from{opacity:0;transform:translateY(40px) scale(.92) rotate(-4deg);filter:blur(14px)}to{opacity:1;transform:none;filter:drop-shadow(0 50px 40px #0002)}}
+@keyframes float{50%{transform:translateY(-12px) rotate(-1.2deg)}}
+.cta-block{padding-top:40px}
+@media(max-width:700px){.showcase .marquees .glass{width:240px;padding:10px 14px}.glass b{font-size:14px}.glass span.s{font-size:12.5px}.glass .ic{width:32px;height:32px}}
+
+/* photo sport cards */
+.sport{background:#111}
+.sport img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.sport:hover img{transform:scale(1.05)}
+.sport .cap{background:linear-gradient(to top,#000b 0%,#0000 100%)}
+.sport .tag{background:#fffc;color:#000;backdrop-filter:blur(10px)}
+
+/* bands */
+.band-sec{background:linear-gradient(#fff,var(--alt))}
+.band-stage{display:flex;justify-content:center;margin-top:30px}
+.band-stage img{width:min(92vw,640px);height:auto;transition:opacity .35s,transform .8s var(--ease);filter:drop-shadow(0 40px 30px #0002)}
+.band-stage img.swap{opacity:0;transform:scale(.97)}
+.band-name{text-align:center;font-size:24px;font-weight:500;letter-spacing:-.025em;margin-top:6px}
+.band-name small{display:block;font-size:15px;color:var(--ink-soft);font-weight:400;letter-spacing:0;margin-top:4px}
+.swatch-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+.swatch-row.left{justify-content:flex-start;margin-top:12px}
+.dot{width:34px;height:34px;border-radius:50%;cursor:pointer;position:relative;box-shadow:inset 0 0 0 1px #0002,inset 0 -6px 10px #0003;transition:transform .3s var(--ease)}
+.dot:hover{transform:scale(1.12)}
+.dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;box-shadow:0 0 0 2px transparent;transition:box-shadow .25s}
+.dot.on::after{box-shadow:0 0 0 2px #000}
+.band-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:44px}
+@media(min-width:900px){.band-thumbs{grid-template-columns:repeat(8,1fr)}}
+.band-thumbs button{background:#fff;border-radius:20px;padding:6px;box-shadow:0 0 0 1px var(--line);transition:all .3s var(--ease)}
+.band-thumbs button img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
+.band-thumbs button span{display:block;font-size:12.5px;font-weight:500;color:var(--ink-soft);padding:0 0 6px;text-align:center}
+.band-thumbs button.on{box-shadow:0 0 0 2px #000;transform:translateY(-3px)}
+
+/* detail + gallery imagery */
+.detail-card .vis img{width:min(100%,420px);height:auto;filter:drop-shadow(0 26px 24px #0002)}
+.detail-card .vis.photo{padding:0;background:#ddd}
+.detail-card .vis.photo img{width:100%;height:100%;min-height:440px;object-fit:cover;mix-blend-mode:normal;filter:none}
+.gallery{background:radial-gradient(circle at 50% 40%,#fff,#ececef)}
+.gallery #gal-view{width:86%;display:flex;justify-content:center}
+.gallery #gal-view img{width:100%;height:auto;filter:drop-shadow(0 30px 24px #0002);transition:opacity .3s}
+@media(prefers-reduced-motion:reduce){.hero-band img{animation:none}}
+.btn-pill{white-space:nowrap;flex:none}
+@media(max-width:520px){.btn-pill{padding:0 14px;font-size:13.5px}.logo img{height:15px}}
