@@ -33,18 +33,17 @@
     <p class="lede" id="lede">A coin-sized sensor that tracks swing speed, ball speed, racquet path and spin in tennis, pickleball, padel, golf and boxing. No screen. No fuss. Just play.</p>
   </div>
 
-  <div class="hero-video">
-    <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="images/hero-poster.webp" aria-label="PowerBand swinging in use, with live swing speed, ball speed and spin readouts">
-      <source src="media/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)">
-      <source src="media/hero.mp4" type="video/mp4">
-    </video>
-    <button id="vid-toggle" type="button" aria-label="Pause video"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg></button>
+  <div class="showcase">
+    <div class="marquees">
+      <div class="marquee"><div id="m1"></div><div id="m1b"></div></div>
+      <div class="marquee rev"><div id="m2"></div><div id="m2b"></div></div>
+      <div class="marquee"><div id="m3"></div><div id="m3b"></div></div>
+    </div>
+    <div class="hero-band"><img id="hero-band" src="images/band-mocha.webp" alt="PowerBand wrist band" width="1160" height="840" fetchpriority="high"></div>
   </div>
-
-  <div class="marquees rows">
-    <div class="marquee"><div id="m1"></div><div id="m1b"></div></div>
-    <div class="marquee rev"><div id="m2"></div><div id="m2b"></div></div>
-    <div class="marquee"><div id="m3"></div><div id="m3b"></div></div>
+  <div class="hero-pick">
+    <p class="band-name" id="band-name"></p>
+    <div class="swatch-row" id="hero-swatches"></div>
   </div>
 
   <div class="cta-block">
@@ -83,8 +82,13 @@
         </ul>
         <div class="tabs" id="app-tabs"></div>
       </div>
-      <div class="reveal">
+      <div class="reveal phone-wrap">
         <div class="phone"><div class="screen" id="screen"></div></div>
+        <div class="chips" aria-hidden="true">
+          <div class="chip c1"><i></i>New personal best<b>78 mph</b></div>
+          <div class="chip c2">Sweet spot hit<b>94%</b></div>
+          <div class="chip c3">Session synced<b>212 swings</b></div>
+        </div>
       </div>
     </div>
   </div>
@@ -97,35 +101,37 @@
   </div>
 </section>
 
-<section id="bands" class="pad band-sec">
-  <div class="wrap">
-    <div class="reveal">
-      <h2 class="h2">Pick your band.<br>Make it yours.</h2>
-      <p class="lede sub">The same sensor snaps into every strap. Swap colors for the court, the course or the ring.</p>
-    </div>
-    <div class="band-stage reveal">
-      <img id="band-big" src="images/band-mocha.webp" alt="PowerBand strap" width="1160" height="840">
-    </div>
-    <p class="band-name reveal" id="band-name"></p>
-    <div class="swatch-row reveal" id="band-swatches"></div>
-    <div class="band-thumbs reveal" id="band-thumbs"></div>
-  </div>
-</section>
-
 <section id="details" class="pad" style="padding-top:0">
   <h2 class="h2 reveal">Every detail, on purpose.</h2>
   <div class="detail-tabs reveal" id="detail-tabs"></div>
   <div class="detail-card reveal" id="detail-card"></div>
 </section>
 
-<section class="pad dark">
+<section id="detail" class="pad bento-sec">
   <div class="wrap">
-    <h2 class="h2 reveal">Your data is yours.<br>Only yours.</h2>
-    <div class="trust-grid">
-      <div class="trust reveal"><h3>Stored on device.<span>Synced when you choose.</span></h3><p class="body">Two full days of sessions live on PowerBand itself, so you never need your phone on court.</p></div>
-      <div class="trust reveal"><h3>Encrypted in transit.<span>Sealed at rest.</span></h3><p class="body">Bluetooth pairing is encrypted end to end, and cloud backups are encrypted before they leave your phone.</p></div>
-      <div class="trust reveal"><h3>Never sold.<span>Never traded.</span></h3><p class="body">Your swings are not a product. Not to advertisers, not to data brokers, not to anyone.</p></div>
-      <div class="trust reveal"><h3>Yours to delete.<span>Gone means gone.</span></h3><p class="body">Export every session in one tap, or wipe a session, a month, or all of it.</p></div>
+    <h2 class="h2 reveal">PowerBand, <em>in detail.</em></h2>
+    <div class="bento">
+      <div class="bc wide row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#44c867" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="15"/><circle cx="24" cy="24" r="4" fill="#44c867" stroke="none"/></svg></span><div class="bt"><h3>Screenless</h3><p>One green light. Every number lives in the app.</p></div></div>
+      <div class="bc wide row rev reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#e0728a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 28l8-8M17 31a6 6 0 010-8l4-4a6 6 0 018 0M31 17a6 6 0 010 8l-4 4a6 6 0 01-8 0"/></svg></span><div class="bt"><h3>Zero setup</h3><p>Click it in. It pairs itself in seconds.</p></div></div>
+      <div class="bc tall reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#34c759" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 22a14 14 0 0124-6l3 3M38 26a14 14 0 01-24 6l-3-3"/><path d="M37 10v9h-9M11 38v-9h9"/></svg></span><div class="bt"><h3>Instant</h3><p>Every swing syncs the moment you open the app.</p></div></div>
+      <div class="bc phonecard reveal" aria-hidden="true">
+        <div class="mini-phone"><div class="mp-top"><i></i></div><div class="mp-h">Sessions</div>
+          <div class="mp-row"><b>Tennis</b><span>212 swings</span><em>78 mph</em></div>
+          <div class="mp-row"><b>Padel</b><span>148 swings</span><em>64 mph</em></div>
+          <div class="mp-row"><b>Golf</b><span>36 swings</span><em>104 mph</em></div>
+          <div class="mp-row"><b>Boxing</b><span>9 rounds</span><em>1,240 N</em></div>
+          <div class="mp-row"><b>Pickleball</b><span>96 swings</span><em>52 mph</em></div>
+          <div class="mp-tabs"><i></i><i></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="bc tall reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#6f7df0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="11" y="21" width="26" height="19" rx="5"/><path d="M16 21v-5a8 8 0 0116 0v5"/></svg></span><div class="bt"><h3>Private by default</h3><p>No ads. Nothing sold. Ever.</p></div></div>
+      <div class="bc tall reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#5b8def" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="5"/><rect x="19" y="19" width="10" height="10" rx="2"/><path d="M18 6v6M30 6v6M18 36v6M30 36v6M6 18h6M6 30h6M36 18h6M36 30h6"/></svg></span><div class="bt"><h3>On-device storage</h3><p>Two days of sessions. No phone needed on court.</p></div></div>
+      <div class="bc tall reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#4f8cf0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 28v-8M14 33V15M20 38V10M26 31V17M32 35V13M38 28v-8"/></svg></span><div class="bt"><h3>Knows your sport</h3><p>Swap from racquet to grip and it adapts.</p></div></div>
+      <div class="bc row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#e0728a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14h28M19 14v-4h10v4M14 14l2 24h16l2-24M21 21v10M27 21v10"/></svg></span><div class="bt"><h3>Yours to delete</h3><p>Wipe any session, or all of it.</p></div></div>
+      <div class="bc row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#f0883e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="11" width="30" height="28" rx="6"/><path d="M9 20h30M17 7v8M31 7v8"/></svg></span><div class="bt"><h3>CSV export</h3><p>For Excel, Numbers or your coach.</p></div><span class="csv">CSV</span></div>
+      <div class="bc row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#7a6cf0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M36 28A14 14 0 1120 12a11 11 0 0016 16z"/></svg></span><div class="bt"><h3>Light and dark</h3><p>Follows your phone.</p></div></div>
+      <div class="bc row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#34c759" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="16" width="32" height="16" rx="5"/><path d="M42 21v6"/><path d="M13 22v4M19 22v4M25 22v4"/></svg></span><div class="bt"><h3>Five-day battery</h3><p>Full charge in 30 minutes.</p></div></div>
+      <div class="bc row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#4aa8e8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 8s12 13 12 21a12 12 0 01-24 0c0-8 12-21 12-21z"/></svg></span><div class="bt"><h3>IP67</h3><p>Sweat, rain and splash proof.</p></div></div>
+      <div class="bc row reveal"><span class="bi"><svg viewBox="0 0 48 48" fill="none" stroke="#e9a23b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="24" cy="24" rx="16" ry="10"/><ellipse cx="24" cy="24" rx="16" ry="10" transform="rotate(60 24 24)"/></svg></span><div class="bt"><h3>Eight straps</h3><p>Leather-finish colors that snap on.</p></div></div>
     </div>
   </div>
 </section>
@@ -159,12 +165,7 @@
         <div class="swatch-row left" id="buy-swatches"></div>
         <p class="opt-label">Choose your bundle</p>
         <div class="opts" id="opts"></div>
-        <a href="#buy" id="preorder-btn" class="btn-dark btn-lg">Pre-order now</a>
-        <form id="preorder-form" onsubmit="return false">
-          <input type="email" required placeholder="Your email" aria-label="Email">
-          <button type="submit">Reserve</button>
-        </form>
-        <p class="thanks" id="thanks">You're on the list. We'll email you when pre-orders open.</p>
+        <button type="button" id="preorder-btn" class="btn-dark btn-lg">Pre-order now</button>
         <p class="assure"><span>Free shipping</span><span>30-day money-back</span><span>1 year warranty</span></p>
         <p class="fine">Pricing and ship date are placeholders. Final product design may differ slightly.</p>
       </div>
@@ -206,6 +207,35 @@
   <p>&copy; 2026 PowerBand. Concept product. Specs and pricing are subject to change.</p>
 </footer>
 
+
+<div class="modal" id="checkout" hidden>
+  <div class="scrim" data-close></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="co-title">
+    <button class="x" data-close aria-label="Close">&times;</button>
+    <div class="co-left">
+      <p class="co-eyebrow">Order summary</p>
+      <div class="co-img"><img id="co-img" src="images/band-mocha.webp" alt=""></div>
+      <h3 id="co-title">PowerBand</h3>
+      <div class="co-lines" id="co-lines"></div>
+    </div>
+    <form class="co-right" id="co-form" novalidate>
+      <h4>Contact</h4>
+      <label>Email<input type="email" id="co-email" autocomplete="email" placeholder="you@example.com" required></label>
+      <label>Full name<input type="text" id="co-name" autocomplete="name" placeholder="Your name"></label>
+      <h4>Payment</h4>
+      <div class="co-card" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/></svg>
+        <span>Credit or debit card, Apple Pay and Google Pay</span>
+      </div>
+      <p class="co-note">You'll enter your card and shipping details on a secure payment page. Card numbers never touch this site.</p>
+      <button type="submit" class="btn-dark btn-lg" id="co-pay">Pay with card</button>
+      <p class="co-msg" id="co-msg" hidden></p>
+      <p class="co-fine">Free US shipping &middot; 30-day money-back &middot; 1 year warranty</p>
+    </form>
+  </div>
+</div>
+
+<script src="checkout-config.js"></script>
 <script src="site.js"></script>
 </body>
 </html>

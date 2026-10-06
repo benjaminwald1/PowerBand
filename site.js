@@ -37,27 +37,75 @@ $('#prev').onclick = () => car.scrollBy({ left: -360, behavior: 'smooth' });
 $('#next').onclick = () => car.scrollBy({ left: 360, behavior: 'smooth' });
 
 /* app screens */
-const bars = (vals) => {
-  const w = 280, h = 76, m = Math.max(...vals);
-  const pts = vals.map((v, i) => `${(i / (vals.length - 1)) * w},${h - (v / m) * (h - 10)}`).join(' ');
-  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="#1d1d1f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><polyline points="0,${h} ${pts} ${w},${h}" fill="#c6f432" opacity=".35" stroke="none"/></svg>`;
+const smooth = (pts) => pts.reduce((d, p, i, a) => {
+  if (!i) return `M${p[0]},${p[1]}`;
+  const p0 = a[i - 2] || p, p1 = a[i - 1], p2 = p, p3 = a[i + 1] || p;
+  const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+  return `${d} C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0]},${p2[1]}`;
+}, '');
+const areaChart = (vals, w = 296, h = 118, tip = '') => {
+  const mx = Math.max(...vals) * 1.08, mn = Math.min(...vals) * 0.85;
+  const pts = vals.map((v, i) => [+(10 + (i / (vals.length - 1)) * (w - 20)).toFixed(1), +(h - 12 - ((v - mn) / (mx - mn)) * (h - 30)).toFixed(1)]);
+  const d = smooth(pts), last = pts[pts.length - 1];
+  return `<svg viewBox="0 0 ${w} ${h}" class="ac"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c6f432" stop-opacity=".7"/><stop offset="1" stop-color="#c6f432" stop-opacity="0"/></linearGradient></defs>
+  ${[0, 1, 2, 3].map((i) => `<line x1="0" x2="${w}" y1="${14 + i * 30}" y2="${14 + i * 30}" stroke="#0000000d"/>`).join('')}
+  <path d="${d} L${last[0]},${h} L${pts[0][0]},${h} Z" fill="url(#ag)"/><path d="${d}" fill="none" stroke="#1d1d1f" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="${last[0]}" x2="${last[0]}" y1="${last[1]}" y2="${h}" stroke="#1d1d1f" stroke-dasharray="3 3" opacity=".35"/>
+  <circle cx="${last[0]}" cy="${last[1]}" r="9" fill="#c6f432" opacity=".5"/><circle cx="${last[0]}" cy="${last[1]}" r="4.5" fill="#1d1d1f" stroke="#fff" stroke-width="2"/>
+  ${tip ? `<g transform="translate(${last[0] - 62},${Math.max(last[1] - 34, 2)})"><rect width="60" height="22" rx="11" fill="#1d1d1f"/><text x="30" y="15" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="inherit">${tip}</text></g>` : ''}
+  </svg>`;
 };
+const spark = (vals, col = '#1d1d1f') => { const mx = Math.max(...vals), mn = Math.min(...vals); const pts = vals.map((v, i) => [i * (60 / (vals.length - 1)), 18 - ((v - mn) / (mx - mn || 1)) * 16]); return `<svg viewBox="0 0 60 20" class="sp"><path d="${smooth(pts)}" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round"/></svg>`; };
+const ico = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const tabbar = (on) => `<div class="tb">${[['Home', '<path d="M4 11l8-7 8 7v9H4z"/>'], ['Swings', '<path d="M3 17l5-9 4 6 3-4 6 7"/>'], ['Trends', '<path d="M5 20V10M12 20V4M19 20v-7"/>'], ['You', '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>']].map((t, i) => `<span class="${i === on ? 'on' : ''}">${ico(t[1])}<em>${t[0]}</em></span>`).join('')}</div>`;
+const status = '<div class="sb"><b>9:41</b><span class="sbi"><i></i><i></i><i class="b"></i></span></div>';
+const seg = (a) => `<div class="seg">${['Day', 'Week', 'Month'].map((x, i) => `<span class="${i === a ? 'on' : ''}">${x}</span>`).join('')}</div>`;
+const swing = (n, sp, tag, t) => `<div class="sl"><span class="sd">${n}</span><div><b>${sp}</b><small>${t}</small></div><em>${tag}</em></div>`;
 const screens = {
-  'Swing speed': { t: 'Forehand · Today', big: '78', u: 'mph', chip: '+6% vs last week', c: [40, 52, 48, 60, 58, 70, 66, 78], m: [['Ball speed', '96', 'mph'], ['Spin', '2.8k', 'rpm'], ['Impact', '94', '%'], ['Tempo', '2.9', ':1']] },
-  'Serve': { t: 'First serve · Today', big: '112', u: 'mph', chip: 'Personal best', c: [90, 96, 94, 101, 99, 108, 105, 112], m: [['In %', '68', '%'], ['Spin', '2.2k', 'rpm'], ['Toss', '3.1', 'm'], ['Kick', '4.6', 'ft']] },
-  'Racquet path': { t: 'Backhand · Today', big: '4°', u: 'closed', chip: 'Low-to-high 18°', c: [10, 22, 30, 44, 52, 64, 72, 80], m: [['Path', '18', '°'], ['Face', '2', '°'], ['Contact', '0.4', 'm'], ['Follow', '82', '%']] },
-  'Spin': { t: 'Topspin · Today', big: '2,840', u: 'rpm', chip: 'Heavy topspin', c: [30, 44, 40, 58, 62, 60, 72, 80], m: [['Top', '2.8k', 'rpm'], ['Slice', '1.1k', 'rpm'], ['Kick', '5.2', 'ft'], ['Bounce', '38', '°']] },
+  'Swing speed': () => `${status}<div class="ah"><div><small>Tennis · Forehand</small><h5>Today</h5></div>${seg(0)}</div>
+    <div class="hero-n"><span>78</span><i>mph</i><em class="up">▲ 6% vs last week</em></div>${areaChart([42, 47, 45, 52, 50, 58, 56, 63, 61, 70, 66, 78], 296, 118, '78 mph')}
+    <div class="g2"><div class="m"><small>Ball speed</small><b>96<i>mph</i></b>${spark([60, 70, 66, 80, 78, 96])}</div><div class="m"><small>Spin</small><b>2.8k<i>rpm</i></b>${spark([40, 52, 48, 60, 58, 70], '#7aa800')}</div><div class="m"><small>Impact</small><b>94<i>%</i></b>${spark([60, 66, 70, 72, 80, 94])}</div><div class="m"><small>Tempo</small><b>2.9<i>:1</i></b>${spark([3.4, 3.1, 3.2, 3.0, 2.9, 2.9], '#7aa800')}</div></div>
+    <p class="lh">Recent swings</p>${swing(1, '78 mph', 'Best', 'Forehand · 2:14 PM')}${swing(2, '74 mph', 'Topspin', 'Forehand · 2:13 PM')}${tabbar(1)}`,
+  'Serve': () => `${status}<div class="ah"><div><small>Tennis · First serve</small><h5>Serve</h5></div>${seg(0)}</div>
+    <div class="hero-n"><span>112</span><i>mph</i><em class="up">★ Personal best</em></div>
+    <div class="face"><svg viewBox="0 0 300 176"><defs><radialGradient id="h1"><stop offset="0" stop-color="#ff5a36" stop-opacity=".85"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient><radialGradient id="h2"><stop offset="0" stop-color="#c6f432" stop-opacity=".95"/><stop offset="1" stop-color="#c6f432" stop-opacity="0"/></radialGradient><clipPath id="rc"><ellipse cx="150" cy="86" rx="98" ry="76"/></clipPath></defs>
+      <ellipse cx="150" cy="86" rx="98" ry="76" fill="#fff" stroke="#1d1d1f" stroke-width="5"/>
+      <g clip-path="url(#rc)" stroke="#0000001f" stroke-width="1">${[...Array(13)].map((_, i) => `<path d="M${58 + i * 15} 0V176"/>`).join('')}${[...Array(11)].map((_, i) => `<path d="M0 ${20 + i * 15}H300"/>`).join('')}
+        <ellipse cx="144" cy="82" rx="34" ry="28" fill="url(#h2)" stroke="none"/><ellipse cx="180" cy="104" rx="22" ry="18" fill="url(#h1)" stroke="none"/></g>
+      <circle cx="144" cy="82" r="27" fill="none" stroke="#1d1d1f" stroke-dasharray="3 4" stroke-width="1.6"/>
+      ${[[138, 78], [150, 86], [144, 90], [156, 76], [133, 88], [182, 104], [176, 108]].map((p) => `<circle cx="${p[0]}" cy="${p[1]}" r="3.4" fill="#1d1d1f" stroke="#fff" stroke-width="1.5"/>`).join('')}
+      <rect x="140" y="148" width="20" height="40" rx="6" fill="#1d1d1f"/></svg><span class="fl">Sweet spot 94%</span></div>
+    <div class="g2"><div class="m"><small>First serve in</small><b>68<i>%</i></b>${spark([55, 60, 58, 64, 66, 68])}</div><div class="m"><small>Spin</small><b>2.2k<i>rpm</i></b>${spark([30, 40, 38, 44, 50, 52], '#7aa800')}</div></div>
+    <p class="lh">Last 5 serves</p><div class="pills"><span>112</span><span>109</span><span class="d">104</span><span>111</span><span>108</span></div>${tabbar(1)}`,
+  'Racquet path': () => `${status}<div class="ah"><div><small>Tennis · Backhand</small><h5>Racquet path</h5></div>${seg(0)}</div>
+    <div class="hero-n"><span>4°</span><i>closed face</i><em class="up">Low-to-high 18°</em></div>
+    <div class="face path"><svg viewBox="0 0 300 150"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c6f432" stop-opacity="0"/><stop offset="1" stop-color="#9ac81a"/></linearGradient></defs>
+      <path d="M12 134H288" stroke="#0000001f"/><path d="M18 118C70 120 110 100 150 80S232 36 276 24" fill="none" stroke="url(#pg)" stroke-width="9" stroke-linecap="round"/>
+      <path d="M18 118C70 120 110 100 150 80S232 36 276 24" fill="none" stroke="#1d1d1f" stroke-width="1.6" stroke-dasharray="2 5"/>
+      <g transform="translate(150 80) rotate(-28)"><rect x="-4" y="-34" width="8" height="68" rx="4" fill="#1d1d1f"/></g><circle cx="150" cy="80" r="9" fill="#fff" stroke="#1d1d1f" stroke-width="2"/>
+      <text x="162" y="62" font-size="10" font-weight="600" fill="#1d1d1f" font-family="inherit">Contact</text><text x="196" y="34" font-size="10" fill="#6e6e73" font-family="inherit">Follow-through</text><text x="20" y="108" font-size="10" fill="#6e6e73" font-family="inherit">Backswing</text></svg></div>
+    <div class="g2"><div class="m"><small>Path angle</small><b>18<i>°</i></b>${spark([10, 12, 14, 15, 17, 18])}</div><div class="m"><small>Face angle</small><b>4<i>° closed</i></b>${spark([8, 7, 6, 5, 5, 4], '#7aa800')}</div><div class="m"><small>Contact point</small><b>0.4<i>m</i></b>${spark([.2, .3, .3, .4, .4, .4])}</div><div class="m"><small>Follow-through</small><b>82<i>%</i></b>${spark([60, 66, 70, 74, 80, 82], '#7aa800')}</div></div>${tabbar(1)}`,
+  'Spin': () => `${status}<div class="ah"><div><small>Tennis · Topspin</small><h5>Spin</h5></div>${seg(0)}</div>
+    <div class="gauge"><svg viewBox="0 0 300 168"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d9f77a"/><stop offset="1" stop-color="#7ab800"/></linearGradient></defs>
+      <path d="M30 150A120 120 0 0 1 270 150" fill="none" stroke="#0000000f" stroke-width="20" stroke-linecap="round"/><path d="M30 150A120 120 0 0 1 270 150" fill="none" stroke="url(#gg)" stroke-width="20" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="${377 - 377 * 0.8}"/>
+      ${[0, 1, 2, 3, 4].map((i) => `<text x="${30 + i * 60}" y="${i === 0 || i === 4 ? 166 : i === 2 ? 14 : 62 - (i === 1 || i === 3 ? 0 : 0)}" font-size="0"></text>`).join('')}
+      <text x="150" y="112" text-anchor="middle" font-size="46" font-weight="600" fill="#1d1d1f" font-family="inherit" letter-spacing="-2">2,840</text><text x="150" y="136" text-anchor="middle" font-size="14" fill="#6e6e73" font-family="inherit">rpm · Heavy topspin</text></svg></div>
+    <div class="bars">${[['Topspin', 2840, 3500, '#9ac81a'], ['Slice', 1100, 3500, '#1d1d1f'], ['Flat', 420, 3500, '#b9b9bf']].map((b) => `<div><span>${b[0]}<b>${b[1].toLocaleString()} rpm</b></span><i><u style="width:${(b[1] / b[2]) * 100}%;background:${b[3]}"></u></i></div>`).join('')}</div>
+    <div class="g2"><div class="m"><small>Kick height</small><b>5.2<i>ft</i></b>${spark([3, 3.6, 4, 4.4, 5, 5.2])}</div><div class="m"><small>Bounce angle</small><b>38<i>°</i></b>${spark([30, 32, 34, 36, 37, 38], '#7aa800')}</div></div>${tabbar(2)}`,
 };
 const tabs = $('#app-tabs'), screen = $('#screen');
+let curScreen = 'Swing speed';
 const showScreen = (k) => {
-  const s = screens[k];
-  screen.innerHTML = `<div class="s-title">${s.t}</div><div class="s-big">${s.big}<small>${s.u}</small></div><span class="s-chip">${s.chip}</span><div class="chart">${bars(s.c)}</div><div class="minis">${s.m.map((m) => `<div class="mini"><span>${m[0]}</span><b>${m[1]}<i>${m[2]}</i></b></div>`).join('')}</div>`;
+  curScreen = k;
+  screen.classList.remove('in'); void screen.offsetWidth;
+  screen.innerHTML = screens[k]();
+  screen.classList.add('in');
   tabs.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.textContent === k));
 };
 tabs.innerHTML = Object.keys(screens).map((k) => `<button>${k}</button>`).join('');
 tabs.onclick = (e) => e.target.tagName === 'BUTTON' && showScreen(e.target.textContent);
 showScreen('Swing speed');
-let ti = 0; const auto = setInterval(() => showScreen(Object.keys(screens)[++ti % 4]), 4200);
+let ti = 0; const auto = setInterval(() => showScreen(Object.keys(screens)[++ti % 4]), 5200);
 tabs.addEventListener('click', () => clearInterval(auto));
 
 /* metric cloud */
@@ -72,25 +120,23 @@ const bandsList = [
 ];
 let band = 'mocha';
 const bandImg = (k) => `images/band-${k}.webp`;
-const dots = (el) => { el.innerHTML = bandsList.map((b) => `<span class="dot ${b[0] === band ? 'on' : ''}" role="button" tabindex="0" title="${b[1]}" data-b="${b[0]}" style="background:${b[3]}"></span>`).join(''); };
+const dots = (el) => { el.innerHTML = bandsList.map((b) => `<span class="dot ${b[0] === band ? 'on' : ''}" role="button" tabindex="0" title="${b[1]}" aria-label="${b[1]}" data-b="${b[0]}" style="background:${b[3]}"></span>`).join(''); };
 const setBand = (k) => {
   band = k; const b = bandsList.find((x) => x[0] === k);
-  const big = $('#band-big'); big.classList.add('swap');
-  setTimeout(() => { big.src = bandImg(k); big.classList.remove('swap'); }, 200);
+  const hb = $('#hero-band'); hb.classList.add('swap');
+  setTimeout(() => { hb.src = bandImg(k); hb.classList.remove('swap'); }, 180);
   $('#band-name').innerHTML = `${b[1]}<small>${b[2]}</small>`;
-  dots($('#band-swatches')); dots($('#buy-swatches'));
-  document.querySelectorAll('#band-thumbs button').forEach((t) => t.classList.toggle('on', t.dataset.b === k));
+  dots($('#hero-swatches')); dots($('#buy-swatches'));
   if (typeof refreshGallery === 'function') refreshGallery();
 };
-$('#band-thumbs').innerHTML = bandsList.map((b) => `<button data-b="${b[0]}"><img src="${bandImg(b[0])}" alt="${b[1]} band" loading="lazy"><span>${b[1]}</span></button>`).join('');
-['#band-swatches', '#buy-swatches', '#band-thumbs'].forEach((id) => $(id).addEventListener('click', (e) => { const t = e.target.closest('[data-b]'); if (t) setBand(t.dataset.b); }));
+['#hero-swatches', '#buy-swatches'].forEach((id) => $(id).addEventListener('click', (e) => { const t = e.target.closest('[data-b]'); if (t) setBand(t.dataset.b); }));
 bandsList.forEach((b) => { new Image().src = bandImg(b[0]); });
 
 /* details */
 const photo = (f) => `<img src="images/${f}.webp" alt="" loading="lazy">`;
 const details = {
-  'Sensor': ['A coin-sized sensor. Six grams.', 'Ø24 mm by 7 mm. Nine axes of motion sensing sampled a thousand times a second, from a gentle dink to a 130 mph serve.', () => `<img src="images/sensor-top.webp" alt="PowerBand sensor, top">`, ''],
-  'Underside': ['Charge pins, nothing else.', 'Two gold contacts snap onto the magnetic charger. No ports, no flaps, nothing to leak sweat or rain.', () => `<img src="images/sensor-bottom.webp" alt="PowerBand sensor, underside">`, ''],
+  'Sensor': ['A coin-sized sensor. Six grams.', 'Ø24 mm by 7 mm. Nine axes of motion sensing sampled a thousand times a second, from a gentle dink to a 130 mph serve.', () => `<img class="mult" src="images/sensor-top.webp" alt="PowerBand sensor, top">`, ''],
+  'Underside': ['Charge pins, nothing else.', 'Two gold contacts snap onto the magnetic charger. No ports, no flaps, nothing to leak sweat or rain.', () => `<img class="mult" src="images/sensor-bottom.webp" alt="PowerBand sensor, underside">`, ''],
   'Racquet': ['Clicks into the strings.', 'Sits in the string bed at the throat. Weighs less than the dampener it replaces, so balance and feel stay put.', () => photo('tennis'), 'photo'],
   'Paddle': ['Flush in the paddle face.', 'Seats into pickleball and padel paddles without changing the swing weight.', () => photo('padel'), 'photo'],
   'Grip': ['Hidden in the grip.', 'Slides into the butt of a golf club grip. Measures club speed and tempo from the shaft.', () => photo('golf'), 'photo'],
@@ -112,7 +158,7 @@ const gal = $('#gallery');
 let gview = 'Band';
 const gsrc = () => ({ Band: bandImg(band), Sensor: 'images/sensor-top.webp', Underside: 'images/sensor-bottom.webp' })[gview];
 gal.innerHTML = `<div id="gal-view"><img alt="PowerBand"></div><div class="gal-tabs"><button class="on">Band</button><button>Sensor</button><button>Underside</button></div>`;
-const refreshGallery = () => { $('#gal-view img').src = gsrc(); };
+const refreshGallery = () => { const im = $('#gal-view img'); im.src = gsrc(); im.classList.toggle('mult', gview !== 'Band'); };
 gal.querySelector('.gal-tabs').onclick = (e) => {
   if (e.target.tagName !== 'BUTTON') return;
   gview = e.target.textContent;
@@ -123,8 +169,36 @@ const bundles = [['1× PowerBand', '', 149, 179, ''], ['2× PowerBand', 'Train w
 const opts = $('#opts');
 opts.innerHTML = bundles.map((b, i) => `<button class="opt ${i === 1 ? 'on' : ''}">${b[4] ? `<span class="badge">${b[4]}</span>` : ''}<span class="n">${b[0]}${b[1] ? `<small>${b[1]}</small>` : ''}</span><span class="p">$${b[2]}<s>$${b[3]}</s></span></button>`).join('');
 opts.onclick = (e) => { const o = e.target.closest('.opt'); if (o) opts.querySelectorAll('.opt').forEach((x) => x.classList.toggle('on', x === o)); };
-$('#preorder-btn').onclick = (e) => { e.preventDefault(); $('#preorder-form').classList.add('show'); $('#preorder-form input').focus(); };
-$('#preorder-form').onsubmit = (e) => { e.preventDefault(); e.target.classList.remove('show'); $('#thanks').style.display = 'block'; return false; };
+let bundleIdx = 1;
+opts.onclick = (e) => { const o = e.target.closest('.opt'); if (o) { opts.querySelectorAll('.opt').forEach((x) => x.classList.toggle('on', x === o)); bundleIdx = [...opts.children].indexOf(o); } };
+
+/* checkout */
+const co = $('#checkout'), coForm = $('#co-form'), coMsg = $('#co-msg');
+const money = (n) => `$${n.toLocaleString()}`;
+const openCo = () => {
+  const b = bundles[bundleIdx], bd = bandsList.find((x) => x[0] === band);
+  $('#co-img').src = bandImg(band);
+  $('#co-title').textContent = b[0];
+  $('#co-lines').innerHTML = `<div><span>${b[0]}</span><b>${money(b[3])}</b></div><div><span>Launch discount</span><b class="g">&minus;${money(b[3] - b[2])}</b></div><div><span>Band</span><b>${bd[1]}</b></div><div><span>Shipping</span><b>Free</b></div><div class="tot"><span>Total</span><b>${money(b[2])}</b></div>`;
+  coMsg.hidden = true; co.hidden = false; document.body.classList.add('lock');
+  setTimeout(() => $('#co-email').focus(), 50);
+};
+const closeCo = () => { co.hidden = true; document.body.classList.remove('lock'); };
+$('#preorder-btn').onclick = openCo;
+co.addEventListener('click', (e) => e.target.hasAttribute('data-close') && closeCo());
+addEventListener('keydown', (e) => e.key === 'Escape' && !co.hidden && closeCo());
+coForm.onsubmit = (e) => {
+  e.preventDefault();
+  const email = $('#co-email').value.trim();
+  if (!/^\S+@\S+\.\S+$/.test(email)) { coMsg.hidden = false; coMsg.className = 'co-msg err'; coMsg.textContent = 'Enter a valid email so we can send your receipt.'; return; }
+  const link = ((window.POWERBAND_CHECKOUT || {}).links || {})[bundleIdx + 1];
+  if (link) {
+    const u = new URL(link); u.searchParams.set('prefilled_email', email); u.searchParams.set('client_reference_id', `bundle${bundleIdx + 1}-${band}`);
+    $('#co-pay').textContent = 'Redirecting to secure payment...'; location.href = u.toString(); return;
+  }
+  coMsg.hidden = false; coMsg.className = 'co-msg';
+  coMsg.textContent = 'Card payments open at launch. Your pick is noted, and we will email you the moment checkout goes live.';
+};
 setBand('mocha');
 
 /* specs */
@@ -148,20 +222,3 @@ $('#faq').innerHTML = faq.map((f) => `<details><summary>${f[0]}</summary><p>${f[
 /* scroll reveal */
 const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-/* hero video */
-(() => {
-  const v = $('#hero-video'), t = $('#vid-toggle');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) v.removeAttribute('autoplay'), v.pause();
-  else {
-    const kick = () => v.paused && !v.dataset.manual && v.play().catch(() => {});
-    kick(); addEventListener('pointerdown', kick, { once: true }); addEventListener('scroll', kick, { once: true, passive: true });
-    new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? kick() : v.pause())), { threshold: 0.05 }).observe(v);
-  }
-  t.onclick = () => {
-    const play = v.paused; v.dataset.manual = play ? '' : '1'; play ? v.play() : v.pause();
-    t.setAttribute('aria-label', play ? 'Pause video' : 'Play video');
-    t.innerHTML = play ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg>' : '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9-5.5z"/></svg>';
-  };
-})();
