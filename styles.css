@@ -281,3 +281,13 @@ header .logo{font-size:0}
 @media(prefers-reduced-motion:reduce){.hero-band img{animation:none}}
 .btn-pill{white-space:nowrap;flex:none}
 @media(max-width:520px){.btn-pill{padding:0 14px;font-size:13.5px}.logo img{height:15px}}
+
+/* hero video */
+.hero-video{position:relative;width:100%;margin-top:26px;aspect-ratio:4/3;overflow:hidden;background:#fff}
+@media(min-width:768px){.hero-video{aspect-ratio:2.4/1;margin-top:10px}}
+.hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-video::after{content:"";position:absolute;inset:auto 0 0;height:14%;background:linear-gradient(to bottom,transparent,#fff);pointer-events:none}
+#vid-toggle{position:absolute;right:16px;bottom:16px;z-index:2;width:36px;height:36px;border-radius:50%;background:#0000000f;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;transition:background .2s}
+#vid-toggle:hover{background:#0000001a}
+.marquees.rows{position:relative;inset:auto;width:100%;margin:6px 0 0;padding:0;bottom:auto}
+.hero-video video{filter:brightness(1.02)}

@@ -77,7 +77,6 @@ const setBand = (k) => {
   band = k; const b = bandsList.find((x) => x[0] === k);
   const big = $('#band-big'); big.classList.add('swap');
   setTimeout(() => { big.src = bandImg(k); big.classList.remove('swap'); }, 200);
-  $('#hero-band').src = bandImg(k);
   $('#band-name').innerHTML = `${b[1]}<small>${b[2]}</small>`;
   dots($('#band-swatches')); dots($('#buy-swatches'));
   document.querySelectorAll('#band-thumbs button').forEach((t) => t.classList.toggle('on', t.dataset.b === k));
@@ -149,3 +148,20 @@ $('#faq').innerHTML = faq.map((f) => `<details><summary>${f[0]}</summary><p>${f[
 /* scroll reveal */
 const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+/* hero video */
+(() => {
+  const v = $('#hero-video'), t = $('#vid-toggle');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) v.removeAttribute('autoplay'), v.pause();
+  else {
+    const kick = () => v.paused && !v.dataset.manual && v.play().catch(() => {});
+    kick(); addEventListener('pointerdown', kick, { once: true }); addEventListener('scroll', kick, { once: true, passive: true });
+    new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? kick() : v.pause())), { threshold: 0.05 }).observe(v);
+  }
+  t.onclick = () => {
+    const play = v.paused; v.dataset.manual = play ? '' : '1'; play ? v.play() : v.pause();
+    t.setAttribute('aria-label', play ? 'Pause video' : 'Play video');
+    t.innerHTML = play ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg>' : '<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9-5.5z"/></svg>';
+  };
+})();

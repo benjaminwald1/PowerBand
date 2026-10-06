@@ -33,13 +33,18 @@
     <p class="lede" id="lede">A coin-sized sensor that tracks swing speed, ball speed, racquet path and spin in tennis, pickleball, padel, golf and boxing. No screen. No fuss. Just play.</p>
   </div>
 
-  <div class="showcase">
-    <div class="marquees">
-      <div class="marquee"><div id="m1"></div><div id="m1b"></div></div>
-      <div class="marquee rev"><div id="m2"></div><div id="m2b"></div></div>
-      <div class="marquee"><div id="m3"></div><div id="m3b"></div></div>
-    </div>
-    <div class="hero-band"><img id="hero-band" src="images/band-mocha.webp" alt="PowerBand worn on the wrist in mocha leather" width="1160" height="840" fetchpriority="high"></div>
+  <div class="hero-video">
+    <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="images/hero-poster.webp" aria-label="PowerBand swinging in use, with live swing speed, ball speed and spin readouts">
+      <source src="media/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)">
+      <source src="media/hero.mp4" type="video/mp4">
+    </video>
+    <button id="vid-toggle" type="button" aria-label="Pause video"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg></button>
+  </div>
+
+  <div class="marquees rows">
+    <div class="marquee"><div id="m1"></div><div id="m1b"></div></div>
+    <div class="marquee rev"><div id="m2"></div><div id="m2b"></div></div>
+    <div class="marquee"><div id="m3"></div><div id="m3b"></div></div>
   </div>
 
   <div class="cta-block">
