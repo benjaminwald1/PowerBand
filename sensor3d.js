@@ -125,15 +125,34 @@ function build(mode) {
     };
     g.userData.strings = strings;
   } else {
-  const nylon = new THREE.MeshPhysicalMaterial({ color: 0xf1f1ee, roughness: .38, clearcoat: .3 });
-  [-9.8, 9.8].forEach((x) => {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 44, 16), nylon);
-    m.rotation.x = Math.PI / 2; m.position.set(x, 1.95, 0); strings.add(m);
-  });
-  [-15, 15].forEach((z) => {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 34, 16), nylon);
-    m.rotation.z = Math.PI / 2; m.position.set(0, .7, z); strings.add(m);
-  });
+    // woven racquet string bed: mains run along Z, crosses along X, alternating over/under at every crossing.
+    // The sensor sits on top and grips the two main strings at x = +/-9.8 in its side grooves.
+    const nylon = new THREE.MeshPhysicalMaterial({ color: 0xc6e830, roughness: .38, clearcoat: .5 });
+    const SP = 19.6, CS = 18, A = .66, R = .6, MX = [-49, -29.4, -9.8, 9.8, 29.4, 49], CZ = [-36, -18, 0, 18, 36];
+    const sm = (e0, e1, v) => { const t = Math.min(1, Math.max(0, (v - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
+    const tube = (pts) => new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .3), pts.length * 3, R, 10, false), nylon);
+    // phase of each main: +1 means "over the z=0 cross"
+    const mainPhase = (x) => { const k = Math.round((Math.abs(x) - 9.8) / SP); return k % 2 === 0 ? 1 : -1; };
+    MX.forEach((x) => {
+      const ph = mainPhase(x), pts = [];
+      for (let z = -44; z <= 44.01; z += 2.5) {
+        let y = ph * A * Math.cos(Math.PI * z / CS);
+        if (Math.abs(x) === 9.8) { const w = 1 - sm(7, 11.5, Math.abs(z)); y = y + (1.95 - y) * w; } // lifted into the sensor grooves
+        pts.push(new THREE.Vector3(x, y, z));
+      }
+      strings.add(tube(pts));
+    });
+    CZ.forEach((z, j) => {
+      const pts = [], sgn = (j % 2 === 0) ? 1 : -1; // z=0 (j=2) is under the two grooved mains
+      for (let x = -62; x <= 62.01; x += 2.5) {
+        const ax = Math.abs(x);
+        let y;
+        if (ax <= 9.8) y = -sgn * A; else y = -sgn * A * Math.cos(Math.PI * (ax - 9.8) / SP);
+        if (z === 0 && ax < 12) y = Math.min(y, -A) - 0.65 * (1 - sm(9.8, 12, ax)); // passes beneath the sensor body
+        pts.push(new THREE.Vector3(x, y, z));
+      }
+      strings.add(tube(pts));
+    });
   }
   strings.name = 'strings'; g.add(strings);
   return g;
@@ -156,8 +175,8 @@ export function mount(el) {
   const cam = new THREE.PerspectiveCamera(26, 1, 1, 400); cam.position.set(0, 0, 74);
 
   const obj = build(mode); scene.add(obj);
-  const camZ = mode === 'paddle' ? 285 : 74;
-  if (mode === 'paddle') scene.fog = new THREE.Fog(0xf0f0f3, 320, 520);
+  const camZ = mode === 'paddle' ? 285 : 98;
+  scene.fog = mode === 'paddle' ? new THREE.Fog(0xf0f0f3, 320, 520) : new THREE.Fog(0xf0f0f3, 105, 175);
   obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.62, -0.85, 0.0) : new THREE.Euler(0.62, -0.7, 0.05));
   const strings = obj.getObjectByName('strings');
   canvas.__obj = obj; canvas.__auto = () => { auto = false; };
