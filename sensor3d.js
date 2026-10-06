@@ -152,30 +152,28 @@ function build(mode) {
     };
     g.userData.strings = strings;
   } else {
-    // woven racquet string bed: mains run along Z, crosses along X, alternating over/under at every crossing.
-    // The sensor sits on top and grips the two main strings at x = +/-9.8 in its side grooves.
+    // woven racquet string bed: a square grid, 19.6 mm between strings both ways, alternating over/under at every crossing.
+    // The sensor sits in the MIDDLE of one cell: its groove (radius ~9.8) grips all four surrounding strings,
+    // two mains (x = +/-9.8) and two crosses (z = +/-9.8).
     const nylon = new THREE.MeshPhysicalMaterial({ color: 0xc6e830, roughness: .38, clearcoat: .5 });
-    const SP = 19.6, CS = 18, A = .66, R = .6, MX = [-49, -29.4, -9.8, 9.8, 29.4, 49], CZ = [-36, -18, 0, 18, 36];
+    const SP = 19.6, A = .66, R = .6, G = [-49, -29.4, -9.8, 9.8, 29.4, 49];
     const sm = (e0, e1, v) => { const t = Math.min(1, Math.max(0, (v - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
     const tube = (pts) => new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', .3), pts.length * 3, R, 10, false), nylon);
-    // phase of each main: +1 means "over the z=0 cross"
-    const mainPhase = (x) => { const k = Math.round((Math.abs(x) - 9.8) / SP); return k % 2 === 0 ? 1 : -1; };
-    MX.forEach((x) => {
-      const ph = mainPhase(x), pts = [];
-      for (let z = -44; z <= 44.01; z += 2.5) {
-        let y = ph * A * Math.cos(Math.PI * z / CS);
-        if (Math.abs(x) === 9.8) { const w = 1 - sm(7, 11.5, Math.abs(z)); y = y + (1.95 - y) * w; } // lifted into the sensor grooves
+    const cosw = (v) => Math.cos(Math.PI * (v - 9.8) / SP);
+    G.forEach((x, i) => { // main strings run along Z
+      const si = i % 2 === 0 ? 1 : -1, pts = [];
+      for (let z = -62; z <= 62.01; z += 2.45) {
+        let y = A * si * cosw(z);
+        if (Math.abs(x) === 9.8) { const w = 1 - sm(6.5, 11.5, Math.abs(z)); y += (1.95 - y) * w; } // lifted into the sensor groove
         pts.push(new THREE.Vector3(x, y, z));
       }
       strings.add(tube(pts));
     });
-    CZ.forEach((z, j) => {
-      const pts = [], sgn = (j % 2 === 0) ? 1 : -1; // z=0 (j=2) is under the two grooved mains
-      for (let x = -62; x <= 62.01; x += 2.5) {
-        const ax = Math.abs(x);
-        let y;
-        if (ax <= 9.8) y = -sgn * A; else y = -sgn * A * Math.cos(Math.PI * (ax - 9.8) / SP);
-        if (z === 0 && ax < 12) y = Math.min(y, -A) - 0.65 * (1 - sm(9.8, 12, ax)); // passes beneath the sensor body
+    G.forEach((z) => { // cross strings run along X; at every crossing they sit on the opposite side of the main
+      const cj = cosw(z), pts = [];
+      for (let x = -62; x <= 62.01; x += 2.45) {
+        let y = A * cj * cosw(x);
+        if (Math.abs(z) === 9.8) { const w = 1 - sm(6.5, 11.5, Math.abs(x)); y += (1.95 - y) * w; } // lifted into the sensor groove
         pts.push(new THREE.Vector3(x, y, z));
       }
       strings.add(tube(pts));
