@@ -59,36 +59,71 @@ function build(mode) {
 
   // gold charge pins underneath
   const gold = new THREE.MeshStandardMaterial({ color: 0xd9a441, metalness: 1, roughness: .28 });
-  [-2.1, 2.1].forEach((px) => { const pin = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .3, 24), gold); pin.position.set(px, -.02, 0); pin.visible = mode !== 'paddle'; g.add(pin); });
+  [-2.1, 2.1].forEach((px) => { const pin = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .3, 24), gold); pin.position.set(px, -.02, 0); g.add(pin); });
 
   const strings = new THREE.Group();
   if (mode === 'paddle') {
-    // pickleball paddle section: edge guard + face skin with a fine dimple texture
-    const rr = (w, h, r) => { const sh = new THREE.Shape(); sh.moveTo(-w / 2 + r, -h / 2); sh.lineTo(w / 2 - r, -h / 2); sh.absarc(w / 2 - r, -h / 2 + r, r, -Math.PI / 2, 0); sh.lineTo(w / 2, h / 2 - r); sh.absarc(w / 2 - r, h / 2 - r, r, 0, Math.PI / 2); sh.lineTo(-w / 2 + r, h / 2); sh.absarc(-w / 2 + r, h / 2 - r, r, Math.PI / 2, Math.PI); sh.lineTo(-w / 2, -h / 2 + r); sh.absarc(-w / 2 + r, -h / 2 + r, r, Math.PI, Math.PI * 1.5); return sh; };
-    const slabG = new THREE.ExtrudeGeometry(rr(88, 108, 14), { depth: 12, bevelEnabled: true, bevelThickness: .8, bevelSize: .8, bevelSegments: 4, curveSegments: 24 });
-    slabG.rotateX(-Math.PI / 2);
-    const guard = new THREE.Mesh(slabG, new THREE.MeshPhysicalMaterial({ color: 0xc6f432, roughness: .5, clearcoat: .4 }));
-    guard.position.set(0, -13.35, 0); g.add(guard);
-    const tc = document.createElement('canvas'); tc.width = tc.height = 128; const tx = tc.getContext('2d');
-    tx.fillStyle = '#1d2024'; tx.fillRect(0, 0, 128, 128);
-    for (let i = 0; i < 520; i++) { tx.fillStyle = Math.random() > .5 ? '#2a2e33' : '#14171a'; tx.beginPath(); tx.arc(Math.random() * 128, Math.random() * 128, .9, 0, 7); tx.fill(); }
-    const tex = new THREE.CanvasTexture(tc); tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(8, 10); tex.colorSpace = THREE.SRGBColorSpace;
-    const skinG = new THREE.ExtrudeGeometry(rr(84, 104, 12), { depth: .5, bevelEnabled: false, curveSegments: 24 });
-    skinG.rotateX(-Math.PI / 2);
-    // fix UVs so the texture tiles across the face
-    const uv = skinG.attributes.uv; const pos = skinG.attributes.position;
-    for (let i = 0; i < uv.count; i++) uv.setXY(i, pos.getX(i) / 84 + .5, pos.getZ(i) / 104 + .5);
-    const skin = new THREE.Mesh(skinG, new THREE.MeshPhysicalMaterial({ map: tex, roughness: .55, metalness: .1, clearcoat: .25 }));
-    skin.position.set(0, -.5, 0); g.add(skin);
-    // two elastic bands wrap the paddle and run through the sensor's side grooves
-    const band = new THREE.MeshPhysicalMaterial({ color: 0xf4f4f1, roughness: .55, clearcoat: .2 });
-    const P = (x, y) => new THREE.Vector3(x, y, 0);
-    const loop = [P(-44.6, .75), P(-14, .75), P(-9.2, 1.95), P(0, 1.95), P(9.2, 1.95), P(14, .75), P(44.6, .75), P(47.6, -.8), P(47.6, -11.6), P(44.6, -13.6), P(0, -13.6), P(-44.6, -13.6), P(-47.6, -11.6), P(-47.6, -.8)];
-    [-9.8, 9.8].forEach((z) => {
-      const curve = new THREE.CatmullRomCurve3(loop, true, 'catmullrom', .08);
-      const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 220, .62, 12, true), band); m.position.z = z; strings.add(m);
-    });
-    g.rotation.y = 0;
+    // ---- full pickleball paddle: face + throat + handle, lofted from superellipse cross-sections ----
+    const N = 72;
+    const prof = (w, t, n) => { const out = []; for (let i = 0; i < N; i++) { const q = i / N * Math.PI * 2, c = Math.cos(q), sn = Math.sin(q); out.push([Math.sign(c) * Math.pow(Math.abs(c), 2 / n) * w / 2, Math.sign(sn) * Math.pow(Math.abs(sn), 2 / n) * t / 2]); } return out; };
+    const YC = -12; // cross-section centre: handle top sits at y = 0 under the sensor
+    const secs = [
+      { z: 62, w: 33, t: 24, n: 3.2 }, { z: 58, w: 36, t: 25, n: 3.2 }, { z: 40, w: 36, t: 25, n: 3.2 }, { z: -60, w: 36, t: 25, n: 3.2 },
+      { z: -74, w: 42, t: 24, n: 3.4 }, { z: -88, w: 78, t: 19, n: 3.8 }, { z: -104, w: 150, t: 15, n: 4.2 }, { z: -125, w: 190, t: 14, n: 5 }, { z: -300, w: 190, t: 14, n: 5 },
+    ];
+    const pos = [], col = [], idx = [];
+    const GRIP = [.035, .037, .042], SKIN = [.115, .13, .15], EDGE = [.78, .96, .2];
+    secs.forEach((sc) => prof(sc.w, sc.t, sc.n).forEach(([x, y]) => {
+      pos.push(x, y + YC, sc.z);
+      let c; if (sc.z > -80) c = GRIP; else { const u = Math.abs(y) / (sc.t / 2); c = u > .72 ? SKIN : EDGE; }
+      col.push(...c);
+    }));
+    for (let si = 0; si < secs.length - 1; si++) for (let i = 0; i < N; i++) {
+      const a0 = si * N + i, a1 = si * N + (i + 1) % N, b0 = (si + 1) * N + i, b1 = (si + 1) * N + (i + 1) % N;
+      idx.push(a0, b0, a1, a1, b0, b1);
+    }
+    [0, secs.length - 1].forEach((si) => { const base = pos.length / 3; pos.push(0, YC, secs[si].z); col.push(...GRIP); for (let i = 0; i < N; i++) { const j = (i + 1) % N; idx.push(base, si * N + j, si * N + i); } if (si === 0) { /* butt face winding */ } });
+    const pg = new THREE.BufferGeometry();
+    pg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); pg.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); pg.setIndex(idx); pg.computeVertexNormals();
+    const paddle = new THREE.Mesh(pg, new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: .55, metalness: .1, clearcoat: .35, side: THREE.DoubleSide }));
+    g.add(paddle);
+    // overgrip wrap lines on the handle
+    const wrapMat = new THREE.MeshStandardMaterial({ color: 0x2a2c30, roughness: .8 });
+    for (let k = 0; k < 14; k++) {
+      const z = -52 + k * 7.6; const pts = prof(36.6, 25.6, 3.2).map(([x, y]) => new THREE.Vector3(x, y + YC, z));
+      const ring = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 90, .28, 6, true), wrapMat); g.add(ring);
+    }
+    // two soft silicone bands wrapped around the grip, running through the sensor's side grooves
+    const bandMat = new THREE.MeshPhysicalMaterial({ color: 0xc6f432, roughness: .5, clearcoat: .3 });
+    const bandCurve = (hump) => {
+      const p = prof(36, 24.4, 3.2).map(([x, y]) => {
+        const l = Math.hypot(x, y) || 1; let px = x + x / l * .85, py = y + y / l * .85 + YC;
+        if (py > -4 && Math.abs(px) < 12) { const w = Math.min(1, Math.max(0, (12 - Math.abs(px)) / 6)), wv = w * w * (3 - 2 * w); py = py + (hump - py) * wv; }
+        return new THREE.Vector3(px, py, 0);
+      });
+      return new THREE.CatmullRomCurve3(p, true, 'catmullrom', .2);
+    };
+    const bands = [-9.8, 9.8].map((z) => { const m = new THREE.Mesh(new THREE.TubeGeometry(bandCurve(1.95), 160, .62, 10, true), bandMat); m.position.z = z; strings.add(m); return m; });
+    // attach / detach animation: the sensor lowers onto the grip and the bands snap up into its grooves
+    const puck = [];
+    g.children.forEach((c) => { if (c !== paddle && !strings.children.includes(c) && c.type !== 'Mesh' ? false : false) puck.push(c); });
+    const sensorParts = g.children.filter((c) => c !== paddle && c !== strings && !c.geometry?.type?.startsWith('Tube'));
+    const holder = new THREE.Group(); sensorParts.forEach((c) => { g.remove(c); holder.add(c); }); g.add(holder);
+    let target = 1, cur = 1, last = performance.now();
+    g.userData.api = {
+      toggle() { target = target ? 0 : 1; return !!target; },
+      get attached() { return !!target; },
+      tick() {
+        const now = performance.now(), dt = Math.min((now - last) / 1000, .05); last = now;
+        if (Math.abs(cur - target) < .0005) { cur = target; return; }
+        cur += Math.sign(target - cur) * Math.min(Math.abs(target - cur), dt * 1.15);
+        const e = cur * cur * (3 - 2 * cur); // ease
+        holder.position.y = (1 - e) * 46;
+        const hump = .85 + 1.1 * e;
+        bands.forEach((m) => { m.geometry.dispose(); m.geometry = new THREE.TubeGeometry(bandCurve(hump), 160, .62, 10, true); });
+      },
+    };
+    g.userData.strings = strings;
   } else {
   const nylon = new THREE.MeshPhysicalMaterial({ color: 0xf1f1ee, roughness: .38, clearcoat: .3 });
   [-9.8, 9.8].forEach((x) => {
@@ -121,9 +156,9 @@ export function mount(el) {
   const cam = new THREE.PerspectiveCamera(26, 1, 1, 400); cam.position.set(0, 0, 74);
 
   const obj = build(mode); scene.add(obj);
-  const camZ = mode === 'paddle' ? 205 : 74;
-  if (mode === 'paddle') scene.fog = new THREE.Fog(0xf0f0f3, 230, 340);
-  obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.75, -0.55, 0.02) : new THREE.Euler(0.62, -0.7, 0.05));
+  const camZ = mode === 'paddle' ? 285 : 74;
+  if (mode === 'paddle') scene.fog = new THREE.Fog(0xf0f0f3, 320, 520);
+  obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.62, -0.85, 0.0) : new THREE.Euler(0.62, -0.7, 0.05));
   const strings = obj.getObjectByName('strings');
   canvas.__obj = obj; canvas.__auto = () => { auto = false; };
 
@@ -143,7 +178,9 @@ export function mount(el) {
   const up = () => { drag = false; idle = 0; el.classList.remove('grabbing'); };
   canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
   const tog = el.querySelector('.vtog');
-  if (tog) tog.onclick = () => { strings.visible = !strings.visible; tog.classList.toggle('on', strings.visible); };
+  const api = obj.userData.api;
+  if (tog && api) { tog.textContent = 'Detach sensor'; tog.onclick = () => { const on = api.toggle(); tog.textContent = on ? 'Detach sensor' : 'Attach sensor'; tog.classList.toggle('on', on); }; }
+  else if (tog) tog.onclick = () => { strings.visible = !strings.visible; tog.classList.toggle('on', strings.visible); };
 
   let visible = true;
   new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.05 }).observe(el);
@@ -157,6 +194,7 @@ export function mount(el) {
       else if (auto && !reduce) spin(.0045, .0006);
       else if (!auto && ++idle > 420 && !reduce) auto = true;
     }
+    if (api) api.tick();
     renderer.render(scene, cam);
   };
   loop();
