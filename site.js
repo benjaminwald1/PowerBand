@@ -69,37 +69,47 @@ const tabbar = (on) => `<div class="tb">${[['Home', '<path d="M4 11l8-7 8 7v9H4z
 const status = '<div class="sb"><b>9:41</b><span class="sbi"><i></i><i></i><i class="b"></i></span></div>';
 const seg = (a) => `<div class="seg">${['Day', 'Week', 'Month'].map((x, i) => `<span class="${i === a ? 'on' : ''}">${x}</span>`).join('')}</div>`;
 const swing = (n, sp, tag, t) => `<div class="sl"><span class="sd">${n}</span><div><b>${sp}</b><small>${t}</small></div><em>${tag}</em></div>`;
+const WG = '#25e665', WB = '#1c9bff', WS = '#7ba1bb';
+const wring = (pct, col, val, lbl, sz = 96, unit = '') => `<div class="wr" style="width:${sz}px;--sz:${sz}px"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#ffffff1c" stroke-width="8"/><circle cx="50" cy="50" r="42" fill="none" stroke="${col}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${(263.9 * pct).toFixed(1)} 264" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 5px ${col}88)"/></svg><b class="wn">${val}<i>${unit}</i></b><small>${lbl}</small></div>`;
+const wline = (vals, w = 296, h = 96, col = WG) => {
+  const mx = Math.max(...vals) * 1.06, mn = Math.min(...vals) * 0.82;
+  const pts = vals.map((v, i) => [+(8 + (i / (vals.length - 1)) * (w - 16)).toFixed(1), +(h - 10 - ((v - mn) / (mx - mn)) * (h - 22)).toFixed(1)]);
+  const d = smooth(pts), l = pts[pts.length - 1];
+  return `<svg viewBox="0 0 ${w} ${h}" class="wl"><defs><linearGradient id="wg${col.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".38"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+  ${[0, 1, 2].map((i) => `<line x1="0" x2="${w}" y1="${12 + i * 30}" y2="${12 + i * 30}" stroke="#ffffff12" stroke-dasharray="2 4"/>`).join('')}
+  <path d="${d} L${l[0]},${h} L${pts[0][0]},${h} Z" fill="url(#wg${col.slice(1)})"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linecap="round" style="filter:drop-shadow(0 0 4px ${col}99)"/>
+  <circle cx="${l[0]}" cy="${l[1]}" r="8" fill="${col}" opacity=".25"/><circle cx="${l[0]}" cy="${l[1]}" r="3.6" fill="#fff"/></svg>`;
+};
+const whead = (kick, title, tog = true) => `<div class="wh"><div><small>${kick}</small><h5>${title}</h5></div>${tog ? '<div class="wseg"><span class="on">DAY</span><span>WEEK</span></div>' : ''}</div>`;
+const wact = (iconPath, name, meta, val, col) => `<div class="wa"><span class="wi" style="color:${col};box-shadow:0 0 0 1.5px ${col}55 inset">${ico(iconPath)}</span><div><b>${name}</b><small>${meta}</small></div><em class="wn" style="color:${col}">${val}</em></div>`;
+const wkpi = (lbl, val, unit, bar, col = WG) => `<div class="wk"><small>${lbl}</small><b class="wn">${val}<i>${unit}</i></b><span class="wbar"><u style="width:${bar}%;background:${col};box-shadow:0 0 8px ${col}88"></u></span></div>`;
+const BALL = '<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>', FLAG = '<path d="M7 21V4l10 4-10 4"/>', FIST = '<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>';
 const screens = {
-  'Swing speed': () => `${status}<div class="ah"><div><small>Tennis · Forehand</small><h5>Today</h5></div>${seg(0)}</div>
-    <div class="hero-n"><span>78</span><i>mph</i><em class="up">▲ 6% vs last week</em></div>${areaChart([42, 47, 45, 52, 50, 58, 56, 63, 61, 70, 66, 78], 296, 118, '78 mph')}
-    <div class="g2"><div class="m"><small>Ball speed</small><b>96<i>mph</i></b>${spark([60, 70, 66, 80, 78, 96])}</div><div class="m"><small>Spin</small><b>2.8k<i>rpm</i></b>${spark([40, 52, 48, 60, 58, 70], '#7aa800')}</div><div class="m"><small>Impact</small><b>94<i>%</i></b>${spark([60, 66, 70, 72, 80, 94])}</div><div class="m"><small>Tempo</small><b>2.9<i>:1</i></b>${spark([3.4, 3.1, 3.2, 3.0, 2.9, 2.9], '#7aa800')}</div></div>
-    <p class="lh">Recent swings</p>${swing(1, '78 mph', 'Best', 'Forehand · 2:14 PM')}${swing(2, '74 mph', 'Topspin', 'Forehand · 2:13 PM')}${tabbar(1)}`,
-  'Serve': () => `${status}<div class="ah"><div><small>Tennis · First serve</small><h5>Serve</h5></div>${seg(0)}</div>
-    <div class="hero-n"><span>112</span><i>mph</i><em class="up">★ Personal best</em></div>
-    <div class="face"><svg viewBox="0 0 300 176"><defs><radialGradient id="h1"><stop offset="0" stop-color="#ff5a36" stop-opacity=".85"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient><radialGradient id="h2"><stop offset="0" stop-color="#c6f432" stop-opacity=".95"/><stop offset="1" stop-color="#c6f432" stop-opacity="0"/></radialGradient><clipPath id="rc"><ellipse cx="150" cy="86" rx="98" ry="76"/></clipPath></defs>
-      <ellipse cx="150" cy="86" rx="98" ry="76" fill="#fff" stroke="#1d1d1f" stroke-width="5"/>
-      <g clip-path="url(#rc)" stroke="#0000001f" stroke-width="1">${[...Array(13)].map((_, i) => `<path d="M${58 + i * 15} 0V176"/>`).join('')}${[...Array(11)].map((_, i) => `<path d="M0 ${20 + i * 15}H300"/>`).join('')}
-        <ellipse cx="144" cy="82" rx="34" ry="28" fill="url(#h2)" stroke="none"/><ellipse cx="180" cy="104" rx="22" ry="18" fill="url(#h1)" stroke="none"/></g>
-      <circle cx="144" cy="82" r="27" fill="none" stroke="#1d1d1f" stroke-dasharray="3 4" stroke-width="1.6"/>
-      ${[[138, 78], [150, 86], [144, 90], [156, 76], [133, 88], [182, 104], [176, 108]].map((p) => `<circle cx="${p[0]}" cy="${p[1]}" r="3.4" fill="#1d1d1f" stroke="#fff" stroke-width="1.5"/>`).join('')}
-      <rect x="140" y="148" width="20" height="40" rx="6" fill="#1d1d1f"/></svg><span class="fl">Sweet spot 94%</span></div>
-    <div class="g2"><div class="m"><small>First serve in</small><b>68<i>%</i></b>${spark([55, 60, 58, 64, 66, 68])}</div><div class="m"><small>Spin</small><b>2.2k<i>rpm</i></b>${spark([30, 40, 38, 44, 50, 52], '#7aa800')}</div></div>
-    <p class="lh">Last 5 serves</p><div class="pills"><span>112</span><span>109</span><span class="d">104</span><span>111</span><span>108</span></div>${tabbar(1)}`,
-  'Racquet path': () => `${status}<div class="ah"><div><small>Tennis · Backhand</small><h5>Racquet path</h5></div>${seg(0)}</div>
-    <div class="hero-n"><span>4°</span><i>closed face</i><em class="up">Low-to-high 18°</em></div>
-    <div class="face path"><svg viewBox="0 0 300 150"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c6f432" stop-opacity="0"/><stop offset="1" stop-color="#9ac81a"/></linearGradient></defs>
-      <path d="M12 134H288" stroke="#0000001f"/><path d="M18 118C70 120 110 100 150 80S232 36 276 24" fill="none" stroke="url(#pg)" stroke-width="9" stroke-linecap="round"/>
-      <path d="M18 118C70 120 110 100 150 80S232 36 276 24" fill="none" stroke="#1d1d1f" stroke-width="1.6" stroke-dasharray="2 5"/>
-      <g transform="translate(150 80) rotate(-28)"><rect x="-4" y="-34" width="8" height="68" rx="4" fill="#1d1d1f"/></g><circle cx="150" cy="80" r="9" fill="#fff" stroke="#1d1d1f" stroke-width="2"/>
-      <text x="162" y="62" font-size="10" font-weight="600" fill="#1d1d1f" font-family="inherit">Contact</text><text x="196" y="34" font-size="10" fill="#6e6e73" font-family="inherit">Follow-through</text><text x="20" y="108" font-size="10" fill="#6e6e73" font-family="inherit">Backswing</text></svg></div>
-    <div class="g2"><div class="m"><small>Path angle</small><b>18<i>°</i></b>${spark([10, 12, 14, 15, 17, 18])}</div><div class="m"><small>Face angle</small><b>4<i>° closed</i></b>${spark([8, 7, 6, 5, 5, 4], '#7aa800')}</div><div class="m"><small>Contact point</small><b>0.4<i>m</i></b>${spark([.2, .3, .3, .4, .4, .4])}</div><div class="m"><small>Follow-through</small><b>82<i>%</i></b>${spark([60, 66, 70, 74, 80, 82], '#7aa800')}</div></div>${tabbar(1)}`,
-  'Spin': () => `${status}<div class="ah"><div><small>Tennis · Topspin</small><h5>Spin</h5></div>${seg(0)}</div>
-    <div class="gauge"><svg viewBox="0 0 300 168"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d9f77a"/><stop offset="1" stop-color="#7ab800"/></linearGradient></defs>
-      <path d="M30 150A120 120 0 0 1 270 150" fill="none" stroke="#0000000f" stroke-width="20" stroke-linecap="round"/><path d="M30 150A120 120 0 0 1 270 150" fill="none" stroke="url(#gg)" stroke-width="20" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="${377 - 377 * 0.8}"/>
-      ${[0, 1, 2, 3, 4].map((i) => `<text x="${30 + i * 60}" y="${i === 0 || i === 4 ? 166 : i === 2 ? 14 : 62 - (i === 1 || i === 3 ? 0 : 0)}" font-size="0"></text>`).join('')}
-      <text x="150" y="112" text-anchor="middle" font-size="46" font-weight="600" fill="#1d1d1f" font-family="inherit" letter-spacing="-2">2,840</text><text x="150" y="136" text-anchor="middle" font-size="14" fill="#6e6e73" font-family="inherit">rpm · Heavy topspin</text></svg></div>
-    <div class="bars">${[['Topspin', 2840, 3500, '#9ac81a'], ['Slice', 1100, 3500, '#1d1d1f'], ['Flat', 420, 3500, '#b9b9bf']].map((b) => `<div><span>${b[0]}<b>${b[1].toLocaleString()} rpm</b></span><i><u style="width:${(b[1] / b[2]) * 100}%;background:${b[3]}"></u></i></div>`).join('')}</div>
-    <div class="g2"><div class="m"><small>Kick height</small><b>5.2<i>ft</i></b>${spark([3, 3.6, 4, 4.4, 5, 5.2])}</div><div class="m"><small>Bounce angle</small><b>38<i>°</i></b>${spark([30, 32, 34, 36, 37, 38], '#7aa800')}</div></div>${tabbar(2)}`,
+  'Swing speed': () => `${status}${whead('MON, OCT 5', 'Overview')}
+    <div class="wrings">${wring(.87, WG, '87', 'POWER', 100, '%')}${wring(.68, WB, '14.2', 'LOAD', 100)}${wring(.92, WS, '92', 'FORM', 100, '%')}</div>
+    <div class="wc"><div class="wct"><small>SWING SPEED</small><em class="wd">▲ 6%</em></div><div class="wbig wn">78<i>mph</i></div>${wline([42, 47, 45, 52, 50, 58, 56, 63, 61, 70, 66, 78])}</div>
+    <p class="wlh">TODAY'S SESSIONS</p>${wact(BALL, 'Tennis', '1h 12m · 212 swings', '12.4', WB)}${wact(FLAG, 'Golf', '2h 05m · 36 swings', '8.1', WB)}${tabbar(0)}`,
+  'Serve': () => `${status}${whead('TENNIS · FIRST SERVE', 'Serve')}
+    <div class="wbigrow"><span class="wbig wn">112<i>mph</i></span><em class="wd">★ PERSONAL BEST</em></div>
+    <div class="wc wface"><svg viewBox="0 0 300 168"><defs><radialGradient id="wh1"><stop offset="0" stop-color="#25e665" stop-opacity=".95"/><stop offset="1" stop-color="#25e665" stop-opacity="0"/></radialGradient><radialGradient id="wh2"><stop offset="0" stop-color="#ff5a36" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient><clipPath id="wrc"><ellipse cx="150" cy="82" rx="98" ry="74"/></clipPath></defs>
+      <g clip-path="url(#wrc)"><ellipse cx="144" cy="78" rx="36" ry="30" fill="url(#wh1)"/><ellipse cx="184" cy="102" rx="24" ry="20" fill="url(#wh2)"/>
+      <g stroke="#ffffff26">${[...Array(13)].map((_, i) => `<path d="M${58 + i * 15} 0V170"/>`).join('')}${[...Array(11)].map((_, i) => `<path d="M0 ${16 + i * 15}H300"/>`).join('')}</g></g>
+      <ellipse cx="150" cy="82" rx="98" ry="74" fill="none" stroke="#fff" stroke-width="4"/><circle cx="144" cy="78" r="27" fill="none" stroke="#fff" stroke-dasharray="3 4" stroke-width="1.5"/>
+      ${[[138, 74], [150, 82], [144, 86], [156, 72], [133, 84], [184, 102], [178, 106]].map((p) => `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="#fff"/>`).join('')}</svg><span class="wchip">SWEET SPOT 94%</span></div>
+    <div class="wk2">${wkpi('FIRST SERVE IN', '68', '%', 68)}${wkpi('SPIN', '2.2k', 'rpm', 62, WB)}</div>
+    <p class="wlh">LAST 5 SERVES</p><div class="wbars5">${[112, 109, 104, 111, 108].map((v, i) => `<span><u style="height:${(v - 80) * 2.4}px;${i === 0 ? `background:${WG};box-shadow:0 0 10px ${WG}88` : ''}"></u><s class="wn">${v}</s></span>`).join('')}</div>${tabbar(1)}`,
+  'Racquet path': () => `${status}${whead('TENNIS · BACKHAND', 'Racquet path')}
+    <div class="wbigrow"><span class="wbig wn">4°<i>closed face</i></span><em class="wd">LOW-TO-HIGH 18°</em></div>
+    <div class="wc"><svg viewBox="0 0 300 150" class="wl"><defs><linearGradient id="wpg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#25e665" stop-opacity="0"/><stop offset="1" stop-color="#25e665"/></linearGradient></defs>
+      ${[0, 1, 2, 3].map((i) => `<line x1="0" x2="300" y1="${24 + i * 34}" y2="${24 + i * 34}" stroke="#ffffff12" stroke-dasharray="2 4"/>`).join('')}
+      <path d="M14 120C70 124 110 102 150 82S232 38 284 26" fill="none" stroke="url(#wpg)" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 6px #25e66599)"/>
+      <g transform="translate(150 82) rotate(-28)"><rect x="-4" y="-34" width="8" height="68" rx="4" fill="#fff"/></g><circle cx="150" cy="82" r="9" fill="#000" stroke="#25e665" stroke-width="2.4"/>
+      <text x="164" y="64" font-size="10" font-weight="700" fill="#fff" font-family="inherit">CONTACT</text><text x="196" y="36" font-size="9" fill="#8a949c" font-family="inherit">FOLLOW-THROUGH</text><text x="18" y="110" font-size="9" fill="#8a949c" font-family="inherit">BACKSWING</text></svg></div>
+    <div class="wk2">${wkpi('PATH ANGLE', '18', '°', 72)}${wkpi('FACE ANGLE', '4', '° closed', 30, WB)}${wkpi('CONTACT POINT', '0.4', 'm', 54, WS)}${wkpi('FOLLOW-THROUGH', '82', '%', 82)}</div>${tabbar(1)}`,
+  'Spin': () => `${status}${whead('TENNIS · TOPSPIN', 'Spin')}
+    <div class="wspin">${wring(.81, WG, '2,840', 'RPM · HEAVY TOPSPIN', 190)}</div>
+    <div class="wc wbars">${[['TOPSPIN', 2840, WG], ['SLICE', 1100, WB], ['FLAT', 420, WS]].map((b) => `<div><span>${b[0]}<b class="wn">${b[1].toLocaleString()}</b></span><i><u style="width:${(b[1] / 3500) * 100}%;background:${b[2]};box-shadow:0 0 8px ${b[2]}88"></u></i></div>`).join('')}</div>
+    <div class="wk2">${wkpi('KICK HEIGHT', '5.2', 'ft', 70)}${wkpi('BOUNCE ANGLE', '38', '°', 58, WB)}</div>${tabbar(2)}`,
 };
 const tabs = $('#app-tabs'), screen = $('#screen');
 let curScreen = 'Swing speed';
@@ -238,17 +248,15 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 (() => {
   const el = $('#mini-app'); if (!el) return;
   const bars = [46, 62, 38, 74, 58, 88, 30], days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'], today = 5;
-  const ring = (pct, col, val, lbl) => `<div class="rg"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="17" fill="none" stroke="#0000000f" stroke-width="5"/><circle cx="22" cy="22" r="17" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(106.8 * pct).toFixed(1)} 107" transform="rotate(-90 22 22)"/></svg><b>${val}</b><small>${lbl}</small></div>`;
-  const row = (icon, bg, fg, name, meta, val) => `<div class="mr"><span class="mt" style="background:${bg};color:${fg}">${icon}</span><div><b>${name}</b><small>${meta}</small></div><em>${val}</em></div>`;
+  const row = (icon, col, name, meta, val) => `<div class="mr"><span class="mt" style="color:${col};box-shadow:0 0 0 1.2px ${col}66 inset">${icon}</span><div><b>${name}</b><small>${meta}</small></div><em class="wn" style="color:${col}">${val}</em></div>`;
   el.innerHTML = `
     <div class="mh"><b>9:41</b><span class="sbi"><i></i><i></i><i class="b"></i></span></div>
-    <div class="mtop"><div><small>Sep 28 – Oct 4</small><h6>This week</h6></div><span class="av">A</span></div>
-    <div class="mhero"><div class="mhh"><span>Weekly load</span><em>▲ 12%</em></div><div class="mbig">1,842<i>swings</i></div>
+    <div class="mtop"><div><small>MON, OCT 5</small><h6>Overview</h6></div></div>
+    <div class="mrings">${wring(.87, WG, '87', 'POWER', 60, '%')}${wring(.68, WB, '14.2', 'LOAD', 60)}${wring(.92, WS, '92', 'FORM', 60, '%')}</div>
+    <div class="mhero"><div class="mhh"><span>WEEKLY LOAD</span><em>▲ 12%</em></div><div class="mbig wn">1,842<i>swings</i></div>
       <div class="mbars">${bars.map((h, i) => `<span class="${i === today ? 'on' : ''}"><u style="height:${h}%"></u><s>${days[i]}</s></span>`).join('')}</div></div>
-    <div class="mrings">${ring(.78, '#8bc10a', '78', 'mph')}${ring(.92, '#1d1d1f', '92', 'Form')}${ring(.6, '#4a8cf0', '6/10', 'Goal')}</div>
-    <p class="mlh">Recent sessions</p>
-    ${row(I('<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>'), '#fdf3d6', '#c98a00', 'Tennis', '212 swings · 1h 12m', '78')}
-    ${row(I('<path d="M7 21V4l10 4-10 4"/>'), '#dcf5f2', '#168f86', 'Golf', '36 swings · 2h 05m', '104')}
-    ${row(I('<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>'), '#ffe9e6', '#c0392b', 'Boxing', '9 rounds · 27m', '1.2k')}
+    <p class="mlh">SESSIONS</p>
+    ${row(I(BALL), WB, 'Tennis', '1h 12m · 212 swings', '12.4')}
+    ${row(I(FLAG), WB, 'Golf', '2h 05m · 36 swings', '8.1')}
     ${tabbar(0)}<i class="hi"></i>`;
 })();
