@@ -592,3 +592,17 @@ body.lock{overflow:hidden}
 .faq summary .w{display:inline-block}
 em .w{font-style:italic}
 @media(prefers-reduced-motion:reduce){.w,.blk{opacity:1;filter:none;transform:none;transition:none}}
+
+/* legal pages */
+.legal-page{background:#fff}
+.legal{max-width:760px;margin:0 auto;padding:128px 24px 80px}
+.legal h1{font-size:clamp(34px,5vw,52px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
+.legal .upd{color:var(--ink-mute);font-size:14px;margin:10px 0 26px}
+.legal h2{font-size:21px;font-weight:600;letter-spacing:-.02em;margin:38px 0 10px}
+.legal p,.legal li{font-size:16.5px;line-height:1.65;color:#3a3a3d}
+.legal p{margin:0 0 14px}
+.legal ul{padding-left:22px;margin:0 0 14px;list-style:disc}
+.legal li{margin:0 0 8px}
+.legal strong{color:var(--ink);font-weight:600}
+.legal .ph{background:#fff6c9;border-radius:6px;padding:1px 6px;font-weight:500}
+footer a{text-decoration:underline;text-underline-offset:3px}
