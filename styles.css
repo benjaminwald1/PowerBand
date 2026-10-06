@@ -416,3 +416,7 @@ body.lock{overflow:hidden}
 .co-msg{font-size:14px;line-height:1.5;padding:12px 14px;border-radius:14px;background:#eefbd2;color:#3a4d00}.co-msg.err{background:#ffe9e7;color:#8a1c12}
 .co-msg[hidden]{display:none}
 .co-fine{font-size:12px;color:var(--ink-mute);text-align:center}
+
+/* hero band: smaller */
+.hero-band img{width:clamp(240px,34vw,500px)}
+.showcase{height:clamp(360px,44vw,540px)}
