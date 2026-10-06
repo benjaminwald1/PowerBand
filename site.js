@@ -230,3 +230,22 @@ $('#faq').innerHTML = faq.map((f) => `<details><summary>${f[0]}</summary><p>${f[
 /* scroll reveal */
 const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+/* mini app inside the detail grid */
+(() => {
+  const el = $('#mini-app'); if (!el) return;
+  const bars = [46, 62, 38, 74, 58, 88, 30], days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'], today = 5;
+  const ring = (pct, col, val, lbl) => `<div class="rg"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="17" fill="none" stroke="#0000000f" stroke-width="5"/><circle cx="22" cy="22" r="17" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(106.8 * pct).toFixed(1)} 107" transform="rotate(-90 22 22)"/></svg><b>${val}</b><small>${lbl}</small></div>`;
+  const row = (icon, bg, fg, name, meta, val) => `<div class="mr"><span class="mt" style="background:${bg};color:${fg}">${icon}</span><div><b>${name}</b><small>${meta}</small></div><em>${val}</em></div>`;
+  el.innerHTML = `
+    <div class="mh"><b>9:41</b><span class="sbi"><i></i><i></i><i class="b"></i></span></div>
+    <div class="mtop"><div><small>Sep 28 – Oct 4</small><h6>This week</h6></div><span class="av">A</span></div>
+    <div class="mhero"><div class="mhh"><span>Weekly load</span><em>▲ 12%</em></div><div class="mbig">1,842<i>swings</i></div>
+      <div class="mbars">${bars.map((h, i) => `<span class="${i === today ? 'on' : ''}"><u style="height:${h}%"></u><s>${days[i]}</s></span>`).join('')}</div></div>
+    <div class="mrings">${ring(.78, '#8bc10a', '78', 'mph')}${ring(.92, '#1d1d1f', '92', 'Form')}${ring(.6, '#4a8cf0', '6/10', 'Goal')}</div>
+    <p class="mlh">Recent sessions</p>
+    ${row(I('<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>'), '#fdf3d6', '#c98a00', 'Tennis', '212 swings · 1h 12m', '78')}
+    ${row(I('<path d="M7 21V4l10 4-10 4"/>'), '#dcf5f2', '#168f86', 'Golf', '36 swings · 2h 05m', '104')}
+    ${row(I('<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>'), '#ffe9e6', '#c0392b', 'Boxing', '9 rounds · 27m', '1.2k')}
+    ${tabbar(0)}<i class="hi"></i>`;
+})();
