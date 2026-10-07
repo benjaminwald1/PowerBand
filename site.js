@@ -307,26 +307,23 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 })();
 
 
-/* hero: the real pre-order band, tilts in 3D when you drag it */
+/* hero: the real pre-order band, flat. Drag around it to spin it a full 360 degrees like a dial */
 (() => {
   const root = $('#hero-band3d'), stage = $('#hb-stage'); if (!root || !stage) return;
   stage.style.setProperty('--img', 'url(images/band-mocha.webp)');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const clamp = (v, m) => Math.max(-m, Math.min(m, v));
-  let rx = 0, ry = 0, drag = false, lx = 0, ly = 0, idle = 0, t = 0, visible = true;
-  root.addEventListener('pointerdown', (e) => { drag = true; root.setPointerCapture(e.pointerId); lx = e.clientX; ly = e.clientY; root.classList.add('grabbing', 'touched'); });
-  root.addEventListener('pointermove', (e) => { if (!drag) return; ry = clamp(ry + (e.clientX - lx) * 0.5, 44); rx = clamp(rx - (e.clientY - ly) * 0.5, 34); lx = e.clientX; ly = e.clientY; });
-  const up = () => { drag = false; idle = 0; root.classList.remove('grabbing'); };
+  let rot = 0, vel = 0, drag = false, last = 0, lastT = 0;
+  const center = () => { const r = stage.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  const angle = (e) => { const c = center(); return Math.atan2(e.clientY - c.y, e.clientX - c.x) * 180 / Math.PI; };
+  const norm = (d) => (d > 180 ? d - 360 : d < -180 ? d + 360 : d);
+  const apply = () => { stage.style.transform = `rotate(${rot}deg)`; };
+  root.addEventListener('pointerdown', (e) => { drag = true; vel = 0; last = angle(e); lastT = performance.now(); root.setPointerCapture(e.pointerId); root.classList.add('grabbing', 'touched'); });
+  root.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const a = angle(e), d = norm(a - last), now = performance.now();
+    rot += d; vel = d / Math.max(now - lastT, 8) * 16; last = a; lastT = now; apply();
+  });
+  const up = () => { drag = false; root.classList.remove('grabbing'); };
   root.addEventListener('pointerup', up); root.addEventListener('pointercancel', up);
-  new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.05 }).observe(root);
-  const tick = () => {
-    requestAnimationFrame(tick);
-    if (!visible) return;
-    t += 0.016;
-    if (!drag && ++idle > 30) { rx *= 0.94; ry *= 0.94; }
-    const fy = reduce ? 0 : Math.sin(t * 1.3) * 5;
-    stage.style.transform = `translateY(${fy}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    stage.style.setProperty('--sx', `${34 + ry * 1.3}%`); stage.style.setProperty('--sy', `${26 - rx * 1.1}%`);
-  };
+  const tick = () => { requestAnimationFrame(tick); if (!drag && Math.abs(vel) > 0.02) { rot += vel; vel *= 0.95; apply(); } };
   tick();
 })();

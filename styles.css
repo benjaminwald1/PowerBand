@@ -640,3 +640,12 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .hb-stage img.swap{opacity:0}
 .hb-sheen{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(circle at var(--sx,34%) var(--sy,26%),#ffffffd9 0,#fff0 58%);-webkit-mask-image:var(--img);mask-image:var(--img);-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
 @media(prefers-reduced-motion:reduce){.hero-band3d{animation:none}}
+
+/* flat version: no perspective, no sheen, no shadow, no float; it only rotates */
+.hero-band3d{perspective:none;touch-action:none}
+.hb-stage{transform-style:flat;will-change:transform;touch-action:none}
+.hb-stage img{filter:none}
+.hb-sheen{display:none}
+.hero-band3d{height:clamp(340px,44vw,520px)}
+.hb-stage{width:min(62%,420px)}
+@media(max-width:700px){.hb-stage{width:min(78%,340px)}.hero-band3d{height:clamp(300px,86vw,420px)}}
