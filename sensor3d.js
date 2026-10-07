@@ -26,7 +26,76 @@ function slotPath(cx, cy, w, h) {
   return p;
 }
 
+
+/* ---------- the PowerBand wrist band: leather strap + rounded-square sensor module ---------- */
+function roundRect(w, h, r) {
+  const sh = new THREE.Shape();
+  sh.moveTo(-w / 2 + r, -h / 2); sh.lineTo(w / 2 - r, -h / 2); sh.absarc(w / 2 - r, -h / 2 + r, r, -Math.PI / 2, 0);
+  sh.lineTo(w / 2, h / 2 - r); sh.absarc(w / 2 - r, h / 2 - r, r, 0, Math.PI / 2); sh.lineTo(-w / 2 + r, h / 2);
+  sh.absarc(-w / 2 + r, h / 2 - r, r, Math.PI / 2, Math.PI); sh.lineTo(-w / 2, -h / 2 + r); sh.absarc(-w / 2 + r, -h / 2 + r, r, Math.PI, Math.PI * 1.5);
+  return sh;
+}
+
+function buildBand() {
+  const g = new THREE.Group();
+  const RX = 33, RY = 26, T = 2.6, BW = 40, N = 160;     // wrist-shaped loop, strap thickness, strap width
+  const leather = new THREE.MeshPhysicalMaterial({ color: 0x6b4a3b, roughness: .64, clearcoat: .1, side: THREE.DoubleSide });
+  const ring = (off, th) => { const p = []; for (let i = 0; i < N; i++) { const a = i / N * Math.PI * 2, c = Math.cos(a), s = Math.sin(a); let nx = c / RX, ny = s / RY; const l = Math.hypot(nx, ny); nx /= l; ny /= l; p.push([RX * c + nx * (off + th), RY * s + ny * (off + th)]); } return p; };
+
+  // strap: inner and outer surface plus both edges, extruded along Z
+  const inner = ring(0, 0), outer = ring(0, T), pos = [], idx = [];
+  for (let i = 0; i < N; i++) [-BW / 2, BW / 2].forEach((z) => pos.push(inner[i][0], inner[i][1], z)), [-BW / 2, BW / 2].forEach((z) => pos.push(outer[i][0], outer[i][1], z));
+  for (let i = 0; i < N; i++) {
+    const j = (i + 1) % N, a = i * 4, b = j * 4;
+    idx.push(a + 2, b + 2, a + 3, a + 3, b + 2, b + 3, a, a + 1, b, b, a + 1, b + 1, a, b, a + 2, a + 2, b, b + 2, a + 1, a + 3, b + 1, b + 1, a + 3, b + 3);
+  }
+  const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); sg.setIndex(idx); sg.computeVertexNormals();
+  g.add(new THREE.Mesh(sg, leather));
+
+  // stitching along both edges
+  const thread = new THREE.MeshStandardMaterial({ color: 0xd8bd9b, roughness: .7 });
+  [-BW / 2 + 3, BW / 2 - 3].forEach((z) => {
+    const pts = ring(0.15, T).map(([x, y]) => new THREE.Vector3(x, y, z));
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 320, .22, 6, true), thread));
+  });
+
+  // metal keeper on the lower right of the loop
+  const metal = new THREE.MeshPhysicalMaterial({ color: 0x8c8c92, metalness: 1, roughness: .26, side: THREE.DoubleSide });
+  const kIn = ring(0.1, T), kOut = ring(0.1, T + 2.2), kp = [], ki = [], ks = [];
+  for (let i = 0; i < N; i++) { const a = i / N * 360; if (a > 305 && a < 330) ks.push(i); }
+  ks.forEach((i) => { [-6, 6].forEach((z) => kp.push(kIn[i][0], kIn[i][1], z)); [-6, 6].forEach((z) => kp.push(kOut[i][0], kOut[i][1], z)); });
+  for (let k = 0; k < ks.length - 1; k++) { const a = k * 4, b = (k + 1) * 4; ki.push(a + 2, b + 2, a + 3, a + 3, b + 2, b + 3, a, a + 1, b, b, a + 1, b + 1, a, b, a + 2, a + 2, b, b + 2, a + 1, a + 3, b + 1, b + 1, a + 3, b + 3); }
+  const e = (ks.length - 1) * 4; ki.push(2, 3, 0, 0, 3, 1, e + 2, e, e + 3, e + 3, e, e + 1);
+  const kg = new THREE.BufferGeometry(); kg.setAttribute('position', new THREE.Float32BufferAttribute(kp, 3)); kg.setIndex(ki); kg.computeVertexNormals();
+  g.add(new THREE.Mesh(kg, metal));
+
+  // sensor module on top of the strap (long side runs along the strap)
+  const base = RY + T;
+  const titanium = new THREE.MeshPhysicalMaterial({ color: 0x5a5a60, metalness: .95, roughness: .3, clearcoat: .4 });
+  const bezelGeo = new THREE.ExtrudeGeometry(roundRect(37, 26, 9.5), { depth: 3.4, bevelEnabled: true, bevelThickness: 1, bevelSize: 1, bevelSegments: 6, curveSegments: 32 });
+  bezelGeo.rotateX(-Math.PI / 2);
+  const bezel = new THREE.Mesh(bezelGeo, titanium); bezel.position.y = base - .8; g.add(bezel);
+  const faceMat = new THREE.MeshPhysicalMaterial({ color: 0x0e0e10, roughness: .42, metalness: .15, clearcoat: .55, clearcoatRoughness: .3 });
+  const faceGeo = new THREE.ExtrudeGeometry(roundRect(31.6, 20.6, 7.2), { depth: .5, bevelEnabled: true, bevelThickness: .5, bevelSize: .5, bevelSegments: 4, curveSegments: 32 });
+  faceGeo.rotateX(-Math.PI / 2);
+  const faceY = base + 3.4 - .1;
+  const face = new THREE.Mesh(faceGeo, faceMat); face.position.y = faceY; g.add(face);
+  const top = faceY + 1.5;
+  // upright PowerBand "P" (upper left of the face) and the green light (lower left)
+  const decal = new THREE.Mesh(new THREE.PlaneGeometry(9.5, 9.5), new THREE.MeshBasicMaterial({ map: logoTexture(), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }));
+  decal.rotation.x = -Math.PI / 2; decal.position.set(-7, top + .02, -2.6); g.add(decal);
+  const led = new THREE.Mesh(new THREE.CapsuleGeometry(.5, 4, 8, 16), new THREE.MeshBasicMaterial({ color: 0xa8ff4a }));
+  led.rotation.z = Math.PI / 2; led.position.set(-7, top + .1, 5); g.add(led);
+  const glow = new THREE.Mesh(new THREE.CapsuleGeometry(1.3, 4.6, 8, 16), new THREE.MeshBasicMaterial({ color: 0x7dff2a, transparent: true, opacity: .16, depthWrite: false }));
+  glow.rotation.z = Math.PI / 2; glow.position.copy(led.position); g.add(glow);
+
+  g.userData.setColor = (hex) => { leather.color.set(hex); const l = (0.2126 * leather.color.r + 0.7152 * leather.color.g + 0.0722 * leather.color.b); leather.color.multiplyScalar(0.62 + 0.38 * l); };
+  g.userData.setColor('#6b4a3b');
+  return g;
+}
+
 function build(mode) {
+  if (mode === 'hero') return buildBand();
   const g = new THREE.Group();
   const dark = new THREE.MeshPhysicalMaterial({ color: 0x1f1f23, roughness: 0.34, metalness: 0.3, clearcoat: 0.9, clearcoatRoughness: 0.22 });
   const rim = new THREE.MeshPhysicalMaterial({ color: 0x4a4a50, roughness: 0.32, metalness: 0.55 });
@@ -197,16 +266,18 @@ export function mount(el) {
   const fill = new THREE.DirectionalLight(0xdfe8ff, 1.2); fill.position.set(-40, -20, 30); scene.add(fill);
   const back = new THREE.DirectionalLight(0xffffff, 1.4); back.position.set(-10, 30, -50); scene.add(back);
   scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a95, 0.9));
-  const cam = new THREE.PerspectiveCamera(26, 1, 1, 400); cam.position.set(0, 0, 74);
+  const cam = new THREE.PerspectiveCamera(mode === 'hero' ? 14 : 26, 1, 1, 600); cam.position.set(0, 0, 74);
 
   const obj = build(mode); scene.add(obj);
-  const camZ = mode === 'paddle' ? 360 : mode === 'hero' ? 64 : 98;
-  scene.fog = mode === 'paddle' ? new THREE.Fog(0xf0f0f3, 400, 640) : new THREE.Fog(0xf0f0f3, 105, 175);
+  const camZ = mode === 'paddle' ? 360 : mode === 'hero' ? 270 : 98;
+  scene.fog = mode === 'hero' ? null : mode === 'paddle' ? new THREE.Fog(0xf0f0f3, 400, 640) : new THREE.Fog(0xf0f0f3, 105, 175);
   const home = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0)); // head-on: the top face looks straight at the viewer
   if (mode === 'hero') obj.quaternion.copy(home);
   else obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.62, -0.85, 0.0) : new THREE.Euler(0.62, -0.7, 0.05));
   const strings = obj.getObjectByName('strings');
   canvas.__obj = obj; canvas.__auto = () => { auto = false; };
+  canvas.__setColor = (hex) => obj.userData.setColor && obj.userData.setColor(hex);
+  if (mode === 'hero' && window.__heroColor) canvas.__setColor(window.__heroColor);
 
   const size = () => {
     const w = el.clientWidth || 400, h = el.clientHeight || 400;

@@ -620,3 +620,11 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .hero-stage .marquee>div{gap:14px;padding-right:14px}
 @media(max-width:700px){.hero-stage .glass{width:206px}.hero-stage .marquees.rows{width:100vw;margin-top:-40px}}
 @media(prefers-reduced-motion:reduce){.hero-sensor{animation:none}}
+
+.hero-sensor{width:min(700px,94vw);height:clamp(300px,40vw,430px)}
+.hero-pick{position:relative;z-index:4;margin-top:-10px;padding:0 24px}
+.hero-pick .band-name{margin-top:0;font-size:20px}
+.hero-stage .marquees.rows{margin-top:-18px}
+.hero-stage .marquees.rows{margin-top:22px}
+.hero-pick{margin-top:-4px}
+.hero-sensor{height:clamp(320px,42vw,460px)}
