@@ -327,3 +327,37 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   const tick = () => { requestAnimationFrame(tick); if (!drag && Math.abs(vel) > 0.02) { rot += vel; vel *= 0.95; apply(); } };
   tick();
 })();
+
+
+/* sparkling starfield inside the dark buttons (the "magic" effect) */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const make = (btn) => {
+    if (btn.querySelector(':scope > canvas.stars')) return;
+    const cv = document.createElement('canvas'); cv.className = 'stars'; cv.setAttribute('aria-hidden', 'true'); btn.prepend(cv);
+    const ctx = cv.getContext('2d'); let w = 0, h = 0, stars = [], visible = true;
+    const seed = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2); w = btn.clientWidth; h = btn.clientHeight;
+      cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.max(18, Math.round(w * h / 230));
+      stars = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, r: 0.35 + Math.random() * 1.05, ph: Math.random() * 6.28, sp: 0.8 + Math.random() * 2.2, vx: -0.012 - Math.random() * 0.03, vy: (Math.random() - 0.5) * 0.012 }));
+    };
+    seed(); new ResizeObserver(seed).observe(btn);
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.01 }).observe(btn);
+    const draw = (t) => {
+      ctx.clearRect(0, 0, w, h);
+      for (const s of stars) {
+        if (!reduce) { s.x += s.vx; s.y += s.vy; if (s.x < -2) s.x = w + 2; if (s.y < -2) s.y = h + 2; if (s.y > h + 2) s.y = -2; }
+        const tw = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t / 1000 * s.sp + s.ph));
+        ctx.globalAlpha = tw * (0.55 + s.r * 0.35);
+        ctx.fillStyle = s.r > 1 ? '#e9e4ff' : '#ffffff';
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.2832); ctx.fill();
+        if (s.r > 1.1 && tw > 0.8) { ctx.globalAlpha = tw * 0.35; ctx.fillRect(s.x - 3, s.y - 0.3, 6, 0.6); ctx.fillRect(s.x - 0.3, s.y - 3, 0.6, 6); } // little twinkle cross
+      }
+    };
+    const loop = (t) => { requestAnimationFrame(loop); if (visible) draw(t); };
+    if (reduce) draw(0); else requestAnimationFrame(loop);
+  };
+  const scan = () => document.querySelectorAll('.btn-dark').forEach(make);
+  scan(); new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+})();
