@@ -332,28 +332,50 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 /* sparkling starfield inside the dark buttons (the "magic" effect) */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TINTS = ['#ffffff', '#ffffff', '#ffffff', '#dfe6ff', '#efe4ff', '#d6f0ff', '#fff3d6'];
   const make = (btn) => {
     if (btn.querySelector(':scope > canvas.stars')) return;
     const cv = document.createElement('canvas'); cv.className = 'stars'; cv.setAttribute('aria-hidden', 'true'); btn.prepend(cv);
-    const ctx = cv.getContext('2d'); let w = 0, h = 0, stars = [], visible = true;
+    const ctx = cv.getContext('2d'); let w = 0, h = 0, stars = [], visible = true, boost = 0, hover = false, shoot = null, nextShoot = 1500;
     const seed = () => {
       const dpr = Math.min(devicePixelRatio || 1, 2); w = btn.clientWidth; h = btn.clientHeight;
       cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.max(18, Math.round(w * h / 230));
-      stars = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, r: 0.35 + Math.random() * 1.05, ph: Math.random() * 6.28, sp: 0.8 + Math.random() * 2.2, vx: -0.012 - Math.random() * 0.03, vy: (Math.random() - 0.5) * 0.012 }));
+      const n = Math.max(40, Math.round(w * h / 85));
+      stars = Array.from({ length: n }, () => {
+        const big = Math.random() < 0.09;
+        return { x: Math.random() * w, y: Math.random() * h, r: big ? 1.2 + Math.random() * 0.9 : 0.35 + Math.random() * 0.95, big,
+          ph: Math.random() * 6.28, sp: 1 + Math.random() * 3.4, vx: -0.02 - Math.random() * 0.07, vy: (Math.random() - 0.5) * 0.03, c: TINTS[(Math.random() * TINTS.length) | 0] };
+      });
     };
     seed(); new ResizeObserver(seed).observe(btn);
     new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.01 }).observe(btn);
+    btn.addEventListener('pointerenter', () => { hover = true; }); btn.addEventListener('pointerleave', () => { hover = false; });
+    let prev = 0;
     const draw = (t) => {
+      const dt = Math.min(t - prev, 50); prev = t;
+      boost += ((hover ? 1 : 0) - boost) * 0.08;
       ctx.clearRect(0, 0, w, h);
+      const speed = 1 + boost * 2.2;
       for (const s of stars) {
-        if (!reduce) { s.x += s.vx; s.y += s.vy; if (s.x < -2) s.x = w + 2; if (s.y < -2) s.y = h + 2; if (s.y > h + 2) s.y = -2; }
-        const tw = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t / 1000 * s.sp + s.ph));
-        ctx.globalAlpha = tw * (0.55 + s.r * 0.35);
-        ctx.fillStyle = s.r > 1 ? '#e9e4ff' : '#ffffff';
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.2832); ctx.fill();
-        if (s.r > 1.1 && tw > 0.8) { ctx.globalAlpha = tw * 0.35; ctx.fillRect(s.x - 3, s.y - 0.3, 6, 0.6); ctx.fillRect(s.x - 0.3, s.y - 3, 0.6, 6); } // little twinkle cross
+        if (!reduce) { s.x += s.vx * speed * (dt / 16); s.y += s.vy * speed * (dt / 16); if (s.x < -4) s.x = w + 4; if (s.y < -4) s.y = h + 4; if (s.y > h + 4) s.y = -4; }
+        const tw = 0.12 + 0.88 * Math.pow(0.5 + 0.5 * Math.sin(t / 1000 * s.sp * (1 + boost) + s.ph), 1.6);
+        const a = Math.min(1, tw * (0.8 + s.r * 0.45) * (1 + boost * 0.5));
+        ctx.globalAlpha = a; ctx.fillStyle = s.c;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r * (1 + boost * 0.25), 0, 6.2832); ctx.fill();
+        if (s.r > 0.95) { ctx.globalAlpha = a * 0.28; ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 3.2, 0, 6.2832); ctx.fill(); }   // soft halo
+        if (s.big && tw > 0.55) { const L = 3 + s.r * 3 * tw; ctx.globalAlpha = a * 0.7; ctx.fillRect(s.x - L, s.y - 0.35, L * 2, 0.7); ctx.fillRect(s.x - 0.35, s.y - L, 0.7, L * 2); }   // four-point sparkle
       }
+      // shooting star
+      nextShoot -= dt; if (!reduce && !shoot && nextShoot <= 0) { shoot = { x: Math.random() * w * 0.5 + w * 0.45, y: Math.random() * h * 0.4, life: 0 }; nextShoot = (hover ? 700 : 1800) + Math.random() * 2500; }
+      if (shoot) {
+        shoot.life += dt / 420; shoot.x -= dt * 0.28; shoot.y += dt * 0.07;
+        const k = shoot.life, al = Math.sin(Math.min(k, 1) * Math.PI);
+        const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x + 46, shoot.y - 11);
+        g.addColorStop(0, `rgba(255,255,255,${al})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x + 46, shoot.y - 11); ctx.stroke();
+        if (k >= 1) shoot = null;
+      }
+      ctx.globalAlpha = 1;
     };
     const loop = (t) => { requestAnimationFrame(loop); if (visible) draw(t); };
     if (reduce) draw(0); else requestAnimationFrame(loop);

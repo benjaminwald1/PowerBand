@@ -662,3 +662,11 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .btn-dark:hover{box-shadow:inset 0 1px #ffffff2e,0 14px 34px -14px #000b,0 0 30px -8px #9a86ff66}
 .btn-dark::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;opacity:0;transition:opacity .5s;background:radial-gradient(120% 140% at 50% 130%,#8f7cff44,transparent 60%)}
 .btn-dark:hover::before{opacity:1}
+
+/* deeper "night sky" behind the stars */
+.btn-dark{background:radial-gradient(120% 170% at 12% -20%,#1c2358 0,#0000 56%),radial-gradient(110% 150% at 92% 130%,#34176a 0,#0000 58%),linear-gradient(145deg,#12142b,#06070f);box-shadow:inset 0 1px #ffffff2a,0 0 0 1px #ffffff0f}
+.btn-dark:hover{box-shadow:inset 0 1px #ffffff38,0 14px 38px -14px #000c,0 0 38px -6px #8f7cffaa,0 0 0 1px #ffffff1a}
+.btn-dark canvas.stars{opacity:1}
+.btn-dark::after{mix-blend-mode:screen}
+.btn-dark{text-shadow:0 0 10px #000d,0 1px 2px #000a}
+.btn-dark .shiny{text-shadow:none}
