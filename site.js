@@ -152,7 +152,7 @@ const bandsList = [
   ['stone', 'Stone', 'Light grey', '#d7d4cf'], ['sky', 'Sky', 'Washed blue', '#6f94b8'],
 ];
 let band = 'mocha';
-const bandImg = (k) => `images/band-${k}.webp`;
+const bandImg = (k) => `images/band-${k}.webp?v=4`;
 const dots = (el) => { el.innerHTML = bandsList.map((b) => `<span class="dot ${b[0] === band ? 'on' : ''}" role="button" tabindex="0" title="${b[1]}" aria-label="${b[1]}" data-b="${b[0]}" style="background:${b[3]}"></span>`).join(''); };
 const setBand = (k) => {
   band = k; const b = bandsList.find((x) => x[0] === k);
