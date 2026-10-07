@@ -628,3 +628,15 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .hero-stage .marquees.rows{margin-top:22px}
 .hero-pick{margin-top:-4px}
 .hero-sensor{height:clamp(320px,42vw,460px)}
+
+/* ---------- hero: the real pre-order band, tilts in 3D on drag ---------- */
+.hero-sensor{display:none}
+.hero-band3d{position:relative;z-index:3;width:min(700px,94vw);height:clamp(300px,40vw,450px);margin:2px auto 0;perspective:1100px;cursor:grab;touch-action:pan-y;user-select:none;display:flex;align-items:center;justify-content:center;animation:sensorIn 1.3s .15s var(--ease) both}
+.hero-band3d.grabbing{cursor:grabbing}
+.hero-band3d .vhint{bottom:6px}
+.hero-band3d.touched .vhint{opacity:0}
+.hb-stage{position:relative;width:min(86%,560px);transform-style:preserve-3d;will-change:transform}
+.hb-stage img{display:block;width:100%;height:auto;filter:drop-shadow(0 40px 34px #0003);transition:opacity .25s,filter .25s;pointer-events:none}
+.hb-stage img.swap{opacity:0}
+.hb-sheen{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(circle at var(--sx,34%) var(--sy,26%),#ffffffd9 0,#fff0 58%);-webkit-mask-image:var(--img);mask-image:var(--img);-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+@media(prefers-reduced-motion:reduce){.hero-band3d{animation:none}}
