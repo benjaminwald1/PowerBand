@@ -148,13 +148,10 @@ const bandImg = (k) => `images/band-${k}.webp`;
 const dots = (el) => { el.innerHTML = bandsList.map((b) => `<span class="dot ${b[0] === band ? 'on' : ''}" role="button" tabindex="0" title="${b[1]}" aria-label="${b[1]}" data-b="${b[0]}" style="background:${b[3]}"></span>`).join(''); };
 const setBand = (k) => {
   band = k; const b = bandsList.find((x) => x[0] === k);
-  const hb = $('#hero-band'); hb.classList.add('swap');
-  setTimeout(() => { hb.src = bandImg(k); hb.classList.remove('swap'); }, 180);
-  $('#band-name').innerHTML = `${b[1]}<small>${b[2]}</small>`;
-  dots($('#hero-swatches')); dots($('#buy-swatches'));
+  dots($('#buy-swatches'));
   if (typeof refreshGallery === 'function') refreshGallery();
 };
-['#hero-swatches', '#buy-swatches'].forEach((id) => $(id).addEventListener('click', (e) => { const t = e.target.closest('[data-b]'); if (t) setBand(t.dataset.b); }));
+['#buy-swatches'].forEach((id) => $(id).addEventListener('click', (e) => { const t = e.target.closest('[data-b]'); if (t) setBand(t.dataset.b); }));
 bandsList.forEach((b) => { new Image().src = bandImg(b[0]); });
 
 /* details */
@@ -305,3 +302,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   };
   window.splitText = prep; prep();
 })();
+
+
+/* hero: draggable head-on sensor */
+(() => { const hs = $('#hero-sensor'); if (!hs) return; if (window.mountSensor3D) window.mountSensor3D(hs); else window.__mountHero = hs; })();

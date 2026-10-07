@@ -52,7 +52,7 @@ function build(mode) {
 
   // LED
   const led = new THREE.Mesh(new THREE.CapsuleGeometry(.28, 3.0, 8, 16), new THREE.MeshBasicMaterial({ color: 0xa8ff4a }));
-  led.rotation.z = Math.PI / 2; led.position.set(0, H - 1.05, 7.6); led.rotation.x = .0; g.add(led);
+  led.rotation.z = Math.PI / 2; led.position.set(0, H - 0.12, 7.4); led.rotation.x = .0; g.add(led);
   const glow = new THREE.Mesh(new THREE.CapsuleGeometry(.7, 3.4, 8, 16), new THREE.MeshBasicMaterial({ color: 0x7dff2a, transparent: true, opacity: .16, depthWrite: false }));
   glow.rotation.z = Math.PI / 2; glow.position.copy(led.position); g.add(glow);
   led.lookAt; // keep horizontal, sits on the curved shoulder
@@ -151,7 +151,7 @@ function build(mode) {
       },
     };
     g.userData.strings = strings;
-  } else {
+  } else if (mode !== 'hero') {
     // woven racquet string bed: a square grid, 19.6 mm between strings both ways, alternating over/under at every crossing.
     // The sensor sits in the MIDDLE of one cell: its groove (radius ~9.8) grips all four surrounding strings,
     // two mains (x = +/-9.8) and two crosses (z = +/-9.8).
@@ -200,9 +200,11 @@ export function mount(el) {
   const cam = new THREE.PerspectiveCamera(26, 1, 1, 400); cam.position.set(0, 0, 74);
 
   const obj = build(mode); scene.add(obj);
-  const camZ = mode === 'paddle' ? 360 : 98;
+  const camZ = mode === 'paddle' ? 360 : mode === 'hero' ? 64 : 98;
   scene.fog = mode === 'paddle' ? new THREE.Fog(0xf0f0f3, 400, 640) : new THREE.Fog(0xf0f0f3, 105, 175);
-  obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.62, -0.85, 0.0) : new THREE.Euler(0.62, -0.7, 0.05));
+  const home = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI / 2, 0, 0)); // head-on: the top face looks straight at the viewer
+  if (mode === 'hero') obj.quaternion.copy(home);
+  else obj.quaternion.setFromEuler(mode === 'paddle' ? new THREE.Euler(0.62, -0.85, 0.0) : new THREE.Euler(0.62, -0.7, 0.05));
   const strings = obj.getObjectByName('strings');
   canvas.__obj = obj; canvas.__auto = () => { auto = false; };
 
@@ -215,7 +217,7 @@ export function mount(el) {
 
   // 360 degree drag on both axes (no polar clamp), with inertia
   const X = new THREE.Vector3(1, 0, 0), Y = new THREE.Vector3(0, 1, 0), qa = new THREE.Quaternion(), qb = new THREE.Quaternion();
-  let drag = false, lx = 0, ly = 0, vx = 0, vy = 0, auto = true, idle = 0;
+  let drag = false, lx = 0, ly = 0, vx = 0, vy = 0, auto = mode !== 'hero', idle = 0;
   const spin = (dx, dy) => { qa.setFromAxisAngle(Y, dx); qb.setFromAxisAngle(X, dy); obj.quaternion.premultiply(qa).premultiply(qb); };
   canvas.addEventListener('pointerdown', (e) => { drag = true; auto = false; lx = e.clientX; ly = e.clientY; vx = vy = 0; canvas.setPointerCapture(e.pointerId); el.classList.add('grabbing'); el.classList.add('touched'); });
   canvas.addEventListener('pointermove', (e) => { if (!drag) return; const dx = (e.clientX - lx) * .011, dy = (e.clientY - ly) * .011; lx = e.clientX; ly = e.clientY; vx = dx; vy = dy; spin(dx, dy); });
@@ -235,6 +237,7 @@ export function mount(el) {
     if (!visible) return;
     if (!drag) {
       if (Math.abs(vx) + Math.abs(vy) > 0.0004) { spin(vx, vy); vx *= .94; vy *= .94; }
+      else if (mode === 'hero') { if (++idle > 45) obj.quaternion.slerp(home, 0.06); }   // glide back to head-on after you let go
       else if (auto && !reduce) spin(.0045, .0006);
       else if (!auto && ++idle > 420 && !reduce) auto = true;
     }
@@ -246,3 +249,4 @@ export function mount(el) {
 
 window.mountSensor3D = mount;
 if (window.__mount3d) { mount(window.__mount3d); window.__mount3d = null; }
+if (window.__mountHero) { mount(window.__mountHero); window.__mountHero = null; }
