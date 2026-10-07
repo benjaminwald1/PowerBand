@@ -306,34 +306,6 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   window.splitText = prep; prep();
 })();
 
-
-/* hero: the real pre-order band, flat and upright. Drag left/right and it turns around its vertical axis, a full 360 degrees */
-(() => {
-  const root = $('#hero-band3d'), stage = $('#hb-stage'), front = $('#hero-band-img'); if (!root || !stage || !front) return;
-  stage.style.setProperty('--img', 'url(images/band-mocha.webp)');
-  const layer = (cls, z, extra = '') => { const d = document.createElement('div'); d.className = `hb-layer ${cls}`; d.setAttribute('aria-hidden', 'true'); d.style.transform = `translateZ(${z}px) ${extra}`; return d; };
-  front.classList.add('hb-front');
-  const DEPTH = 9;
-  for (let i = -DEPTH + 2; i <= DEPTH - 2; i += 2) stage.insertBefore(layer('hb-core', i), front);   // the thickness you see when it turns edge-on
-  stage.insertBefore(layer('hb-back', -DEPTH, 'rotateY(180deg) scaleX(-1)'), front);
-  front.style.transform = `translateZ(${DEPTH}px)`;
-  let rot = 0, vel = 0, drag = false, lx = 0, idle = 0;
-  const apply = () => { stage.style.transform = `rotateY(${rot}deg)`; };
-  root.addEventListener('pointerdown', (e) => { drag = true; vel = 0; lx = e.clientX; root.setPointerCapture(e.pointerId); root.classList.add('grabbing', 'touched'); });
-  root.addEventListener('pointermove', (e) => { if (!drag) return; const d = (e.clientX - lx) * 0.6; lx = e.clientX; rot += d; vel = d; apply(); });
-  const up = () => { drag = false; idle = 0; root.classList.remove('grabbing'); };
-  root.addEventListener('pointerup', up); root.addEventListener('pointercancel', up);
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const tick = () => {
-    requestAnimationFrame(tick);
-    if (drag) return;
-    if (Math.abs(vel) > 0.05) { rot += vel; vel *= 0.94; apply(); return; }
-    // after you let go it glides back to the flat, front-facing pose (the nearest full turn)
-    if (++idle > 70 && !reduce) { const target = Math.round(rot / 360) * 360; const d = target - rot; if (Math.abs(d) > 0.1) { rot += d * 0.07; apply(); } else if (rot !== target) { rot = target; apply(); } }
-  };
-  tick();
-})();
-
 /* sparkling starfield inside the dark buttons (the "magic" effect) */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

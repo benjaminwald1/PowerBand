@@ -690,3 +690,5 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .btn-dark{background:radial-gradient(120% 170% at 12% -20%,#3a3a3a 0,#0000 56%),radial-gradient(110% 150% at 92% 130%,#262626 0,#0000 58%),linear-gradient(145deg,#171717,#050505)}
 .btn-dark::before{background:radial-gradient(120% 140% at 50% 130%,#ffffff33,transparent 60%)}
 .btn-dark:hover{box-shadow:inset 0 1px #ffffff38,0 14px 38px -14px #000c,0 0 38px -6px #ffffff88,0 0 0 1px #ffffff1a}
+.hero-band3d{cursor:default;touch-action:auto}
+.hb-stage{transform:none!important}
