@@ -13,6 +13,10 @@ $('#lede').style.animation = 'blurIn 1s .7s var(--ease) both';
 /* live metric cards */
 const I = (p) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const cards = [
+  ['Daily movement', '82, moving well', I('<circle cx="12" cy="5" r="2"/><path d="M10 22l2-7-3-3 1-4 4 2 3 2M12 15l3 3v4"/>'), '#2f9e5a', '#e5f7ec'],
+  ['Steps', '8,412, goal reached', I('<path d="M5 20c0-4 2-6 4-6s3 2 3 5M13 10c0-4 2-6 4-6s3 2 3 5"/>'), '#2a6fdb', '#e4eeff'],
+  ['Stretch break', 'Up after 62 minutes still', I('<path d="M12 3v18M5 8l7-5 7 5"/>'), '#e07a1f', '#ffeedd'],
+  ['12 day streak', 'Moved every day', I('<path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>'), '#d6455f', '#ffe8ec'],
   ['Swing speed', '78 mph, personal best', I('<path d="M4 18a9 9 0 1116 0"/><path d="M12 18l4-6"/>'), '#2f9e5a', '#e5f7ec'],
   ['Ball speed', '112 mph first serve', I('<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>'), '#c98a00', '#fdf3d6'],
   ['Spin', '2,840 rpm topspin', I('<path d="M20 12a8 8 0 01-14 5M4 12a8 8 0 0114-5"/><path d="M18 3v4h-4M6 21v-4h4"/>'), '#7a5af0', '#eeeaff'],
@@ -29,8 +33,8 @@ const cards = [
 const cardHTML = (c, i) => `<div class="glass"><div class="row"><span class="ic" style="background:${c[4]};color:${c[3]}">${c[2]}</span><span><b>${c[0]}</b><span class="s">${c[1]}</span></span></div><div class="bar"><i style="width:${55 + ((i * 17) % 42)}%"></i></div></div>`;
 const fill = (a, b, list) => { const h = list.map(cardHTML).join(''); $(a).innerHTML = h; $(b).innerHTML = h; };
 fill('#m1', '#m1b', cards);
-fill('#m2', '#m2b', [...cards.slice(4), ...cards.slice(0, 4)]);
-fill('#m3', '#m3b', [...cards.slice(8), ...cards.slice(0, 8)]);
+fill('#m2', '#m2b', [...cards.slice(5), ...cards.slice(0, 5)]);
+fill('#m3', '#m3b', [...cards.slice(10), ...cards.slice(0, 10)]);
 
 /* sports carousel */
 const sports = [
@@ -85,6 +89,10 @@ const wact = (iconPath, name, meta, val, col) => `<div class="wa"><span class="w
 const wkpi = (lbl, val, unit, bar, col = WG) => `<div class="wk"><small>${lbl}</small><b class="wn">${val}<i>${unit}</i></b><span class="wbar"><u style="width:${bar}%;background:${col};box-shadow:0 0 8px ${col}88"></u></span></div>`;
 const BALL = '<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>', FLAG = '<path d="M7 21V4l10 4-10 4"/>', FIST = '<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>';
 const screens = {
+  'Daily movement': () => `${status}${whead('TUE, OCT 6', 'Today')}
+    <div class="wspin">${wring(.82, WG, '82', 'MOVING WELL', 132)}</div>
+    <div class="wk2">${wkpi('STEPS', '8,412', '', 100)}${wkpi('ACTIVE HOURS', '7', ' hrs', 88, WB)}</div>
+    <p class="wlh">LAST 7 DAYS</p><div class="wbars5">${[6200, 9100, 7400, 10200, 5800, 8800, 8412].map((v, i) => `<span><u style="height:${v / 170}px;${i === 6 ? `background:${WG};box-shadow:0 0 10px ${WG}88` : ''}"></u><s class="wn">${'MTWTFSS'[i]}</s></span>`).join('')}</div>${tabbar(0)}`,
   'Swing speed': () => `${status}${whead('MON, OCT 5', 'Overview')}
     <div class="wrings">${wring(.87, WG, '87', 'POWER', 100, '%')}${wring(.68, WB, '14.2', 'LOAD', 100)}${wring(.92, WS, '92', 'FORM', 100, '%')}</div>
     <div class="wk2"><div class="wk"><small>SHOTS TODAY</small><b class="wn" data-count="248">0</b><span class="wsub">▲ 36 vs your average</span></div><div class="wk"><small>TOTAL SHOTS</small><b class="wn" data-count="12486">0</b><span class="wsub">Since you started</span></div></div>
@@ -118,7 +126,7 @@ const countUp = (root) => root.querySelectorAll('[data-count]').forEach((el) => 
   requestAnimationFrame(step);
 });
 const tabs = $('#app-tabs'), screen = $('#screen');
-let curScreen = 'Swing speed';
+let curScreen = 'Daily movement';
 const showScreen = (k) => {
   curScreen = k;
   screen.classList.remove('in'); void screen.offsetWidth;
@@ -129,12 +137,12 @@ const showScreen = (k) => {
 };
 tabs.innerHTML = Object.keys(screens).map((k) => `<button>${k}</button>`).join('');
 tabs.onclick = (e) => e.target.tagName === 'BUTTON' && showScreen(e.target.textContent);
-showScreen('Swing speed');
-let ti = 0; const auto = setInterval(() => showScreen(Object.keys(screens)[++ti % 4]), 5200);
+showScreen('Daily movement');
+let ti = 0; const auto = setInterval(() => showScreen(Object.keys(screens)[++ti % Object.keys(screens).length]), 5200);
 tabs.addEventListener('click', () => clearInterval(auto));
 
 /* metric cloud */
-$('#cloud').innerHTML = ['Swing speed', 'Ball speed', 'Racquet path', 'Spin rate', 'Serve speed', 'Impact point', 'Swing tempo', 'Club speed', 'Face angle', 'Punch power', 'Shot count', 'Rally length', 'Calories', 'Consistency score', 'Fatigue', 'Session replay'].map((m) => `<span>${m}</span>`).join('');
+$('#cloud').innerHTML = ['Movement score', 'Steps', 'Active hours', 'Stretch breaks', 'Weekly summary', 'Swing speed', 'Ball speed', 'Racquet path', 'Spin rate', 'Serve speed', 'Impact point', 'Swing tempo', 'Club speed', 'Face angle', 'Punch power', 'Shot count', 'Rally length', 'Calories', 'Consistency score', 'Fatigue', 'Session replay'].map((m) => `<span>${m}</span>`).join('');
 
 /* bands */
 const bandsList = [
@@ -232,15 +240,16 @@ coForm.onsubmit = (e) => {
 setBand('mocha');
 
 /* specs */
-const specs = [['6 grams', 'Lighter than the dampener it replaces.'], ['Ø24 × 7 mm', 'Coin-sized. Disappears into any grip or racquet.'], ['1,000 Hz', 'Motion sampled at the moment of impact.'], ['5 days', 'One charge. Gone all week.'], ['Local storage', 'Two days of sessions, no phone needed.'], ['Screenless', 'One green light. All the data in the app.'], ['IP67', 'Sweat, rain and splash proof.'], ['8 band colors', 'Leather-finish straps that snap on in a second.']];
+const specs = [['6 grams', 'Lighter than the dampener it replaces.'], ['Ø24 × 7 mm', 'Coin-sized. Disappears into any grip or racquet.'], ['1,000 Hz', 'Motion sampled at the moment of impact.'], ['5 days', 'One charge. Gone all week.'], ['Local storage', 'Two days of sessions, no phone needed.'], ['Screenless', 'One quiet light. Your day in the app.'], ['IP67', 'Sweat, rain and splash proof.'], ['8 band colors', 'Leather-finish straps that snap on in a second.']];
 $('#spec-grid').innerHTML = specs.map((s) => `<div class="spec reveal"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
 
 /* faq */
 const faq = [
-  ['What is PowerBand?', 'PowerBand is a tiny, screenless sensor that measures your swing and shows you the data in the PowerBand app. On a racquet it is the size of a coin. For boxing and other sports it snaps into a soft wrist band.'],
-  ['Which sports does it work with?', 'Tennis, pickleball, padel, golf and boxing at launch, with more sports on the way.'],
-  ['What does it track?', 'Swing speed, ball speed, racquet path, spin, serve speed, impact point, tempo and more, depending on the sport.'],
-  ['How do I attach it?', 'The sensor slides between two racquet strings and grips in place, a paddle face or a golf grip, and snaps into the wrist band for boxing.'],
+  ['What is PowerBand?', 'PowerBand is a tiny, screenless wearable you wear all day. The app turns your movement into a simple daily score, and when you play a sport the same sensor measures your swing.'],
+  ['Is it only for athletes?', 'No. It is built for everyone. Wear it to walk, work and live, and use the movement score, stretch nudges and weekly summary. Sport tracking is there when you want it.'],
+  ['Which sports does it work with?', 'Tennis, pickleball, padel, golf and boxing at launch, with more on the way.'],
+  ['What does it track?', 'Daily movement, steps and active time, plus swing speed, ball speed, racquet path, spin and tempo when you play.'],
+  ['How do I wear it?', 'Snap the sensor into the soft wrist band for all-day wear. For sport, click it into a racquet, paddle or golf grip.'],
   ['Do I need my phone while I play?', 'No. PowerBand stores two days of sessions on the device and syncs when you open the app.'],
   ['Will it change how my racquet feels?', 'It weighs just six grams, less than a standard dampener, so balance and feel stay put.'],
   ['How long does the battery last?', 'Around five days of regular play, and a full charge takes 30 minutes on the magnetic puck.'],
