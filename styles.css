@@ -670,3 +670,13 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .btn-dark::after{mix-blend-mode:screen}
 .btn-dark{text-shadow:0 0 10px #000d,0 1px 2px #000a}
 .btn-dark .shiny{text-shadow:none}
+
+/* turntable: flat upright band that turns left/right around its vertical axis */
+.hero-band3d{perspective:1500px;touch-action:pan-y;cursor:grab}
+.hb-stage{transform-style:preserve-3d;touch-action:pan-y;aspect-ratio:1160/840;width:min(78%,560px)}
+.hb-stage img.hb-front{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;filter:none}
+.hb-layer{position:absolute;inset:0;background:var(--img) center/100% 100% no-repeat;pointer-events:none}
+.hb-core{filter:brightness(.4) saturate(.7)}
+.hb-back{backface-visibility:hidden;filter:brightness(.8)}
+.hero-band3d::after{content:"";position:absolute;left:50%;bottom:8%;width:56%;height:26px;transform:translateX(-50%);background:radial-gradient(ellipse at center,#0000002e 0,#0000 70%);filter:blur(6px);pointer-events:none;z-index:-1}
+@media(max-width:700px){.hb-stage{width:min(88%,380px)}}
