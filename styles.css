@@ -702,3 +702,9 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .ev-card p{font-size:14px;line-height:1.5;color:#515154;margin:6px 0 0}
 @media(max-width:980px){.everyone-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.everyone-grid{grid-template-columns:1fr}}
+
+/* flat front-on hero band (drawn, so it stays level and recolors with the swatches) */
+.hb-stage{aspect-ratio:1160/520;width:min(86%,640px);--band:#6b4a3b}
+.hb-flat{display:block;width:100%;height:auto;filter:drop-shadow(0 26px 22px #0000002e);overflow:visible}
+.hb-flat .hb-strap{fill:var(--band);transition:fill .35s}
+.hero-band3d{height:auto}

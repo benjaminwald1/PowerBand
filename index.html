@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1791342400">
+<link rel="stylesheet" href="styles.css?v=1791343000">
 </head>
 <body>
 
@@ -40,7 +40,29 @@
 
   <div class="hero-stage">
     <div class="hero-band3d" id="hero-band3d" aria-label="PowerBand wrist band">
-      <div class="hb-stage" id="hb-stage"><img id="hero-band-img" src="images/band-mocha.webp" alt="PowerBand wrist band in mocha leather" width="1160" height="840" fetchpriority="high" draggable="false"></div>
+      <div class="hb-stage" id="hb-stage"><svg id="hero-band-svg" class="hb-flat" viewBox="0 0 1160 520" role="img" aria-label="PowerBand wrist band, front view">
+        <defs>
+          <linearGradient id="hbShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".38"/></linearGradient>
+          <linearGradient id="hbEdge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".08" stop-color="#000" stop-opacity="0"/><stop offset=".92" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+          <linearGradient id="hbMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d9094"/><stop offset=".5" stop-color="#d9dbde"/><stop offset="1" stop-color="#7c7f84"/></linearGradient>
+          <linearGradient id="hbBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3e"/><stop offset="1" stop-color="#121214"/></linearGradient>
+          <linearGradient id="hbBezel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b7e83"/><stop offset=".5" stop-color="#2b2c2f"/><stop offset="1" stop-color="#5a5d62"/></linearGradient>
+          <radialGradient id="hbLed"><stop offset="0" stop-color="#9dffb4"/><stop offset="1" stop-color="#3be26b" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect x="14" y="150" width="1132" height="220" rx="46" class="hb-strap"/>
+        <rect x="14" y="150" width="1132" height="220" rx="46" fill="url(#hbShade)"/>
+        <rect x="14" y="150" width="1132" height="220" rx="46" fill="url(#hbEdge)"/>
+        <rect x="34" y="172" width="1092" height="176" rx="30" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="2.4" stroke-dasharray="9 8"/>
+        <rect x="200" y="132" width="40" height="256" rx="8" fill="url(#hbMetal)"/>
+        <rect x="920" y="132" width="86" height="256" rx="10" fill="url(#hbMetal)"/>
+        <text x="963" y="260" fill="#3b3d41" font-size="30" font-weight="700" font-family="Inter,system-ui,sans-serif" letter-spacing="1" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 963 260)">PowerBand</text>
+        <rect x="396" y="92" width="368" height="336" rx="104" fill="url(#hbBezel)"/>
+        <rect x="408" y="104" width="344" height="312" rx="94" fill="url(#hbBody)"/>
+        <rect x="408" y="104" width="344" height="312" rx="94" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="2"/>
+        <text x="580" y="268" fill="#0a0a0b" stroke="#ffffff22" stroke-width="1.5" font-size="132" font-weight="900" font-style="italic" font-family="Inter,system-ui,sans-serif" text-anchor="middle" dominant-baseline="middle">P</text>
+        <circle cx="580" cy="372" r="22" fill="url(#hbLed)"/>
+        <rect x="556" y="368" width="48" height="8" rx="4" fill="#7dff9e"/>
+      </svg></div>
     </div>
     <div class="hero-pick">
       <p class="band-name" id="band-name"></p>
@@ -259,8 +281,8 @@
 </div>
 
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-<script src="checkout-config.js?v=1791342400"></script>
-<script type="module" src="sensor3d.js?v=1791342400"></script>
-<script src="site.js?v=1791342400"></script>
+<script src="checkout-config.js?v=1791343000"></script>
+<script type="module" src="sensor3d.js?v=1791343000"></script>
+<script src="site.js?v=1791343000"></script>
 </body>
 </html>
