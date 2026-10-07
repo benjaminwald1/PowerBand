@@ -18,13 +18,13 @@ const cards = [
   ['Stretch break', 'Up after 62 minutes still', I('<path d="M12 3v18M5 8l7-5 7 5"/>'), '#e07a1f', '#ffeedd'],
   ['12 day streak', 'Moved every day', I('<path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>'), '#d6455f', '#ffe8ec'],
   ['Swing speed', '78 mph, personal best', I('<path d="M4 18a9 9 0 1116 0"/><path d="M12 18l4-6"/>'), '#2f9e5a', '#e5f7ec'],
-  ['Ball speed', '112 mph first serve', I('<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>'), '#c98a00', '#fdf3d6'],
-  ['Spin', '2,840 rpm topspin', I('<path d="M20 12a8 8 0 01-14 5M4 12a8 8 0 0114-5"/><path d="M18 3v4h-4M6 21v-4h4"/>'), '#7a5af0', '#eeeaff'],
-  ['Racquet path', 'Inside-out, 4° closed', I('<path d="M3 18c6 0 9-4 12-8s4-5 6-5"/><circle cx="15" cy="10" r="2"/>'), '#2a6fdb', '#e4eeff'],
+  ['Pace', '8:42 per mile, steady', I('<circle cx="12" cy="12" r="8"/><path d="M5 9c4 1 10 1 14 0M5 15c4-1 10-1 14 0"/>'), '#c98a00', '#fdf3d6'],
+  ['Cadence', '172 steps per minute', I('<path d="M20 12a8 8 0 01-14 5M4 12a8 8 0 0114-5"/><path d="M18 3v4h-4M6 21v-4h4"/>'), '#7a5af0', '#eeeaff'],
+  ['Rep count', '4 sets, 12 reps each', I('<path d="M3 18c6 0 9-4 12-8s4-5 6-5"/><circle cx="15" cy="10" r="2"/>'), '#2a6fdb', '#e4eeff'],
   ['Impact point', 'Sweet spot, 94%', I('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'), '#d6455f', '#ffe8ec'],
-  ['Serve speed', 'Fastest this week: 118 mph', I('<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>'), '#e07a1f', '#ffeedd'],
+  ['Active minutes', '46 today, goal reached', I('<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>'), '#e07a1f', '#ffeedd'],
   ['Club speed', '104 mph driver', I('<path d="M7 21V4l10 4-10 4"/>'), '#168f86', '#dcf5f2'],
-  ['Punch power', '1,240 N cross', I('<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>'), '#c0392b', '#ffe9e6'],
+  ['Jump height', '24 inches, new best', I('<path d="M8 11V6a2 2 0 014 0v4M12 9a2 2 0 014 0v2M16 11a2 2 0 014 0v3a7 7 0 01-7 7h-1a6 6 0 01-5-3l-3-5a2 2 0 013-2l2 2"/>'), '#c0392b', '#ffe9e6'],
   ['Tempo', '3 : 1, perfectly smooth', I('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 3h6"/>'), '#6f7df0', '#e8eafe'],
   ['Session saved', '212 swings logged', I('<path d="M5 12l4.5 4.5L19 7"/>'), '#2f9e5a', '#e5f7ec'],
   ['Everyone synced', 'Coach sees it instantly', I('<path d="M20 11a8 8 0 00-14-4M4 13a8 8 0 0014 4"/><path d="M18 3v4h-4M6 21v-4h4"/>'), '#2a6fdb', '#e4eeff'],
@@ -38,12 +38,16 @@ fill('#m3', '#m3b', [...cards.slice(10), ...cards.slice(0, 10)]);
 
 /* sports carousel */
 const sports = [
+  ['Walking & running', 'Wrist band', 'Steps, pace, distance and cadence from your wrist, all day and on every run.', null, '<circle cx="14" cy="4.5" r="2"/><path d="M9 21l3-6-3-3 2-5 4 2 3 3M12 15l4 2 1 4"/>', 'linear-gradient(160deg,#2b6a4a,#0f2a20)'],
+  ['Gym & strength', 'Wrist band', 'Counts reps and sets automatically and shows how hard each session really was.', null, '<path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/>', 'linear-gradient(160deg,#4a3b7a,#17132b)'],
+  ['Cycling & hiking', 'Wrist band', 'Tracks active time and effort over long days, even when your phone stays in your bag.', null, '<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8l5 8"/>', 'linear-gradient(160deg,#a6542b,#2b130a)'],
+  ['Yoga & mobility', 'Wrist band', 'Gentle movement counts too. Get credit for stretching, flow and recovery days.', null, '<circle cx="12" cy="5" r="2"/><path d="M5 20l7-9 7 9M12 11v-1M7 13h10"/>', 'linear-gradient(160deg,#2a5f86,#0c1e2d)'],
   ['Tennis', 'Racquet insert', 'Slides between two strings and grips in place. Swing speed, spin, serve speed and racquet path on every stroke.', 'tennis'],
   ['Pickleball & padel', 'Paddle insert', 'Seats flush in the paddle face. Track dinks, drives, bandejas and smashes.', 'padel'],
   ['Golf', 'Grip insert', 'Hides in the butt of the grip. Club speed, tempo and swing plane from the shaft.', 'golf'],
   ['Boxing', 'Wrist band', 'Snaps into a wrist band. Punch power, speed and combos counted round by round.', 'boxing'],
 ];
-$('#carousel').innerHTML = sports.map((s) => `<article class="sport"><img src="images/${s[3]}.webp?v=3" alt="PowerBand sensor in a ${s[0].toLowerCase()} setup" loading="lazy"><span class="tag">${s[1]}</span><div class="cap"><h3>${s[0]}</h3><p>${s[2]}</p></div></article>`).join('');
+$('#carousel').innerHTML = sports.map((s) => `<article class="sport">${s[3] ? `<img src="images/${s[3]}.webp?v=3" alt="PowerBand sensor in a ${s[0].toLowerCase()} setup" loading="lazy">` : `<div class="sport-art" style="background:${s[5]}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${s[4]}</svg></div>`}<span class="tag">${s[1]}</span><div class="cap"><h3>${s[0]}</h3><p>${s[2]}</p></div></article>`).join('');
 const car = $('#carousel');
 $('#prev').onclick = () => car.scrollBy({ left: -360, behavior: 'smooth' });
 $('#next').onclick = () => car.scrollBy({ left: 360, behavior: 'smooth' });
@@ -98,27 +102,14 @@ const screens = {
     <div class="wk2"><div class="wk"><small>SHOTS TODAY</small><b class="wn" data-count="248">0</b><span class="wsub">▲ 36 vs your average</span></div><div class="wk"><small>TOTAL SHOTS</small><b class="wn" data-count="12486">0</b><span class="wsub">Since you started</span></div></div>
     <div class="wc"><div class="wct"><small>SWING SPEED</small><em class="wd">▲ 6%</em></div><div class="wbig wn">78<i>mph</i></div>${wline([42, 47, 45, 52, 50, 58, 56, 63, 61, 70, 66, 78])}</div>
     <p class="wlh">TODAY'S SESSIONS</p>${wact(BALL, 'Tennis', '1h 12m · 212 shots', '12.4', WB)}${wact(FLAG, 'Golf', '2h 05m · 36 shots', '8.1', WB)}${tabbar(0)}`,
-  'Serve': () => `${status}${whead('TENNIS · FIRST SERVE', 'Serve')}
-    <div class="wbigrow"><span class="wbig wn">112<i>mph</i></span><em class="wd">★ PERSONAL BEST</em></div>
-    <div class="wc wface"><svg viewBox="0 0 300 168"><defs><radialGradient id="wh1"><stop offset="0" stop-color="#25e665" stop-opacity=".95"/><stop offset="1" stop-color="#25e665" stop-opacity="0"/></radialGradient><radialGradient id="wh2"><stop offset="0" stop-color="#ff5a36" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient><clipPath id="wrc"><ellipse cx="150" cy="82" rx="98" ry="74"/></clipPath></defs>
-      <g clip-path="url(#wrc)"><ellipse cx="144" cy="78" rx="36" ry="30" fill="url(#wh1)"/><ellipse cx="184" cy="102" rx="24" ry="20" fill="url(#wh2)"/>
-      <g stroke="#ffffff26">${[...Array(13)].map((_, i) => `<path d="M${58 + i * 15} 0V170"/>`).join('')}${[...Array(11)].map((_, i) => `<path d="M0 ${16 + i * 15}H300"/>`).join('')}</g></g>
-      <ellipse cx="150" cy="82" rx="98" ry="74" fill="none" stroke="#fff" stroke-width="4"/><circle cx="144" cy="78" r="27" fill="none" stroke="#fff" stroke-dasharray="3 4" stroke-width="1.5"/>
-      ${[[138, 74], [150, 82], [144, 86], [156, 72], [133, 84], [184, 102], [178, 106]].map((p) => `<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="#fff"/>`).join('')}</svg><span class="wchip">SWEET SPOT 94%</span></div>
-    <div class="wk2">${wkpi('FIRST SERVE IN', '68', '%', 68)}${wkpi('SPIN', '2.2k', 'rpm', 62, WB)}</div>
-    <p class="wlh">LAST 5 SERVES</p><div class="wbars5">${[112, 109, 104, 111, 108].map((v, i) => `<span><u style="height:${(v - 80) * 2.4}px;${i === 0 ? `background:${WG};box-shadow:0 0 10px ${WG}88` : ''}"></u><s class="wn">${v}</s></span>`).join('')}</div>${tabbar(1)}`,
-  'Racquet path': () => `${status}${whead('TENNIS · BACKHAND', 'Racquet path')}
-    <div class="wbigrow"><span class="wbig wn">4°<i>closed face</i></span><em class="wd">LOW-TO-HIGH 18°</em></div>
-    <div class="wc"><svg viewBox="0 0 300 150" class="wl"><defs><linearGradient id="wpg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#25e665" stop-opacity="0"/><stop offset="1" stop-color="#25e665"/></linearGradient></defs>
-      ${[0, 1, 2, 3].map((i) => `<line x1="0" x2="300" y1="${24 + i * 34}" y2="${24 + i * 34}" stroke="#ffffff12" stroke-dasharray="2 4"/>`).join('')}
-      <path d="M14 120C70 124 110 102 150 82S232 38 284 26" fill="none" stroke="url(#wpg)" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 6px #25e66599)"/>
-      <g transform="translate(150 82) rotate(-28)"><rect x="-4" y="-34" width="8" height="68" rx="4" fill="#fff"/></g><circle cx="150" cy="82" r="9" fill="#000" stroke="#25e665" stroke-width="2.4"/>
-      <text x="164" y="64" font-size="10" font-weight="700" fill="#fff" font-family="inherit">CONTACT</text><text x="196" y="36" font-size="9" fill="#8a949c" font-family="inherit">FOLLOW-THROUGH</text><text x="18" y="110" font-size="9" fill="#8a949c" font-family="inherit">BACKSWING</text></svg></div>
-    <div class="wk2">${wkpi('PATH ANGLE', '18', '°', 72)}${wkpi('FACE ANGLE', '4', '° closed', 30, WB)}${wkpi('CONTACT POINT', '0.4', 'm', 54, WS)}${wkpi('FOLLOW-THROUGH', '82', '%', 82)}</div>${tabbar(1)}`,
-  'Spin': () => `${status}${whead('TENNIS · TOPSPIN', 'Spin')}
-    <div class="wspin">${wring(.81, WG, '2,840', 'RPM · HEAVY TOPSPIN', 190)}</div>
-    <div class="wc wbars">${[['TOPSPIN', 2840, WG], ['SLICE', 1100, WB], ['FLAT', 420, WS]].map((b) => `<div><span>${b[0]}<b class="wn">${b[1].toLocaleString()}</b></span><i><u style="width:${(b[1] / 3500) * 100}%;background:${b[2]};box-shadow:0 0 8px ${b[2]}88"></u></i></div>`).join('')}</div>
-    <div class="wk2">${wkpi('KICK HEIGHT', '5.2', 'ft', 70)}${wkpi('BOUNCE ANGLE', '38', '°', 58, WB)}</div>${tabbar(2)}`,
+  'Run': () => `${status}${whead('MORNING RUN', 'Run')}
+    <div class="wbigrow"><span class="wbig wn">8:42<i>/mi</i></span><em class="wd">▲ 12 SEC FASTER</em></div>
+    <div class="wc"><div class="wct"><small>PACE</small><em class="wd">STEADY</em></div>${wline([9.4, 9.1, 8.9, 8.8, 8.7, 8.9, 8.6, 8.5, 8.7, 8.4, 8.5, 8.3])}</div>
+    <div class="wk2">${wkpi('DISTANCE', '3.1', 'mi', 62)}${wkpi('CADENCE', '172', 'spm', 78, WB)}</div>${tabbar(1)}`,
+  'Workout': () => `${status}${whead('PUSH DAY', 'Workout')}
+    <div class="wspin">${wring(.75, WG, '48', 'MINUTES · STRONG SESSION', 150)}</div>
+    <div class="wk2">${wkpi('REPS', '186', '', 80)}${wkpi('SETS', '15', '', 60, WB)}</div>
+    <p class="wlh">EXERCISES</p>${wact(FIST, 'Bench press', '4 sets · 12 reps', '48', WB)}${wact(FLAG, 'Overhead press', '3 sets · 10 reps', '30', WB)}${tabbar(1)}`,
 };
 const countUp = (root) => root.querySelectorAll('[data-count]').forEach((el) => {
   const to = +el.dataset.count, t0 = performance.now(), dur = 1100;
@@ -142,7 +133,7 @@ let ti = 0; const auto = setInterval(() => showScreen(Object.keys(screens)[++ti 
 tabs.addEventListener('click', () => clearInterval(auto));
 
 /* metric cloud */
-$('#cloud').innerHTML = ['Movement score', 'Steps', 'Active hours', 'Stretch breaks', 'Weekly summary', 'Swing speed', 'Ball speed', 'Racquet path', 'Spin rate', 'Serve speed', 'Impact point', 'Swing tempo', 'Club speed', 'Face angle', 'Punch power', 'Shot count', 'Rally length', 'Calories', 'Consistency score', 'Fatigue', 'Session replay'].map((m) => `<span>${m}</span>`).join('');
+$('#cloud').innerHTML = ['Movement score', 'Steps', 'Active hours', 'Stretch breaks', 'Weekly summary', 'Pace', 'Cadence', 'Distance', 'Rep count', 'Jump height', 'Swing speed', 'Ball speed', 'Racquet path', 'Spin rate', 'Club speed', 'Punch power', 'Shot count', 'Calories', 'Consistency score', 'Fatigue', 'Session replay'].map((m) => `<span>${m}</span>`).join('');
 
 /* bands */
 const bandsList = [
@@ -247,8 +238,8 @@ $('#spec-grid').innerHTML = specs.map((s) => `<div class="spec reveal"><b>${s[0]
 const faq = [
   ['What is PowerBand?', 'PowerBand is a tiny, screenless wearable you wear all day. The app turns your movement into a simple daily score, and when you play a sport the same sensor measures your swing.'],
   ['Is it only for athletes?', 'No. It is built for everyone. Wear it to walk, work and live, and use the movement score, stretch nudges and weekly summary. Sport tracking is there when you want it.'],
-  ['Which sports does it work with?', 'Tennis, pickleball, padel, golf and boxing at launch, with more on the way.'],
-  ['What does it track?', 'Daily movement, steps and active time, plus swing speed, ball speed, racquet path, spin and tempo when you play.'],
+  ['Which activities does it work with?', 'Walking, running, cycling, gym workouts and yoga from the wrist band, plus tennis, pickleball, padel, golf and boxing with the sport inserts. More are on the way.'],
+  ['What does it track?', 'Daily movement, steps, pace, cadence, reps and active time, plus swing speed, ball speed, racquet path and spin when you play a racquet or club sport.'],
   ['How do I wear it?', 'Snap the sensor into the soft wrist band for all-day wear. For sport, click it into a racquet, paddle or golf grip.'],
   ['Do I need my phone while I play?', 'No. PowerBand stores two days of sessions on the device and syncs when you open the app.'],
   ['Will it change how my racquet feels?', 'It weighs just six grams, less than a standard dampener, so balance and feel stay put.'],
