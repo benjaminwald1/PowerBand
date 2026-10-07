@@ -708,3 +708,7 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .hb-flat{display:block;width:100%;height:auto;filter:drop-shadow(0 26px 22px #0000002e);overflow:visible}
 .hb-flat .hb-strap{fill:var(--band);transition:fill .35s}
 .hero-band3d{height:auto}
+
+/* the photo band, rotated so its sensor and strap sit level on a 180 degree line */
+.hb-stage{aspect-ratio:1160/840;width:min(78%,560px)}
+.hb-stage img.hb-level{position:static;transform:rotate(-12deg);transform-origin:50% 50%;filter:drop-shadow(0 30px 26px #0003);width:100%;height:auto}
