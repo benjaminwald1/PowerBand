@@ -38,16 +38,16 @@ fill('#m3', '#m3b', [...cards.slice(10), ...cards.slice(0, 10)]);
 
 /* sports carousel */
 const sports = [
-  ['Walking & running', 'Wrist band', 'Steps, pace, distance and cadence from your wrist, all day and on every run.', null, '<circle cx="14" cy="4.5" r="2"/><path d="M9 21l3-6-3-3 2-5 4 2 3 3M12 15l4 2 1 4"/>', 'linear-gradient(160deg,#2b6a4a,#0f2a20)'],
-  ['Gym & strength', 'Wrist band', 'Counts reps and sets automatically and shows how hard each session really was.', null, '<path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/>', 'linear-gradient(160deg,#4a3b7a,#17132b)'],
-  ['Cycling & hiking', 'Wrist band', 'Tracks active time and effort over long days, even when your phone stays in your bag.', null, '<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8l5 8"/>', 'linear-gradient(160deg,#a6542b,#2b130a)'],
-  ['Yoga & mobility', 'Wrist band', 'Gentle movement counts too. Get credit for stretching, flow and recovery days.', null, '<circle cx="12" cy="5" r="2"/><path d="M5 20l7-9 7 9M12 11v-1M7 13h10"/>', 'linear-gradient(160deg,#2a5f86,#0c1e2d)'],
+  ['Walking & running', 'Wrist band', 'Steps, pace, distance and cadence from your wrist, all day and on every run.', 'run'],
+  ['Gym & strength', 'Wrist band', 'Counts reps and sets automatically and shows how hard each session really was.', 'gym'],
+  ['Cycling & hiking', 'Wrist band', 'Tracks active time and effort over long days, even when your phone stays in your bag.', 'bike'],
+  ['Yoga & mobility', 'Wrist band', 'Gentle movement counts too. Get credit for stretching, flow and recovery days.', 'yoga'],
   ['Tennis', 'Racquet insert', 'Slides between two strings and grips in place. Swing speed, spin, serve speed and racquet path on every stroke.', 'tennis'],
   ['Pickleball & padel', 'Paddle insert', 'Seats flush in the paddle face. Track dinks, drives, bandejas and smashes.', 'padel'],
   ['Golf', 'Grip insert', 'Hides in the butt of the grip. Club speed, tempo and swing plane from the shaft.', 'golf'],
   ['Boxing', 'Wrist band', 'Snaps into a wrist band. Punch power, speed and combos counted round by round.', 'boxing'],
 ];
-$('#carousel').innerHTML = sports.map((s) => `<article class="sport">${s[3] ? `<img src="images/${s[3]}.webp?v=3" alt="PowerBand sensor in a ${s[0].toLowerCase()} setup" loading="lazy">` : `<div class="sport-art" style="background:${s[5]}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${s[4]}</svg></div>`}<span class="tag">${s[1]}</span><div class="cap"><h3>${s[0]}</h3><p>${s[2]}</p></div></article>`).join('');
+$('#carousel').innerHTML = sports.map((s) => `<article class="sport">${s[3] ? `<img src="images/${s[3]}.webp?v=4" alt="${s[0]} with PowerBand" loading="lazy">` : `<div class="sport-art" style="background:${s[5]}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${s[4]}</svg></div>`}<span class="tag">${s[1]}</span><div class="cap"><h3>${s[0]}</h3><p>${s[2]}</p></div></article>`).join('');
 const car = $('#carousel');
 $('#prev').onclick = () => car.scrollBy({ left: -360, behavior: 'smooth' });
 $('#next').onclick = () => car.scrollBy({ left: 360, behavior: 'smooth' });
