@@ -337,7 +337,7 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 /* sparkling starfield inside the dark buttons (the "magic" effect) */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const TINTS = ['#ffffff', '#ffffff', '#ffffff', '#dfe6ff', '#efe4ff', '#d6f0ff', '#fff3d6'];
+  const TINTS = ['#ffffff', '#ffffff', '#ffffff', '#ececec', '#f6f6f6', '#dcdcdc', '#ffffff'];
   const make = (btn) => {
     if (btn.querySelector(':scope > canvas.stars')) return;
     const cv = document.createElement('canvas'); cv.className = 'stars'; cv.setAttribute('aria-hidden', 'true'); btn.prepend(cv);
@@ -387,4 +387,13 @@ document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   };
   const scan = () => document.querySelectorAll('.btn-dark').forEach(make);
   scan(); new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+})();
+
+/* hero: scroll-linked lift like Persona's scrubbed hero (monochrome) */
+(() => {
+  const root = document.querySelector('#hero-band3d'); if (!root || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const hero = root.closest('.hero'); let tick = false;
+  const upd = () => { tick = false; const h = Math.max(1, hero ? hero.offsetHeight : 900); const p = Math.min(1, Math.max(0, scrollY / h));
+    root.style.setProperty('--sp', p.toFixed(3)); };
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
 })();
