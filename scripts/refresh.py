@@ -59,6 +59,23 @@ with tempfile.TemporaryDirectory() as tmp:
             "cap_pct": cfg["max_position_pct"], "buys": buys, "risk_summary": {"passed": sum(r["verdict"] == "PASS" for r in risk["results"]), "blocked": sum(r["verdict"] == "BLOCK" for r in risk["results"])},
             "rebalance": {"band": reb["band"], "rows": reb["rows"], "trades": reb.get("orders") or reb.get("trades") or []},
             "harvest": {"candidates": har.get("candidates", []), "orders": har.get("orders", [])}, "tax": rep})
+    # SEC skills need a name and email in the request header. It lives in a git-ignored local file and is never written to the site's data.
+    ua = os.environ.get("SEC_USER_AGENT") or (open(os.path.join(ROOT, ".local", "sec_user_agent")).read().strip() if os.path.exists(os.path.join(ROOT, ".local", "sec_user_agent")) else "")
+    if ua:
+        a = jrun("trader-analyst", "facts.py", [*tickers, "--user-agent", ua, "--metrics", "trader/metrics.json", "--json", "--no-filings"], tmp, ok=(0,))
+        m = json.load(open(os.path.join(tmp, "trader", "metrics.json")))
+        keep = ("ticker", "name", "period_end", "revenue_ttm", "net_income_ttm", "eps_ttm", "revenue_growth_yoy", "eps_growth_yoy", "gross_margin", "operating_margin", "net_margin")
+        plan["analyst"] = [{k: c.get(k) for k in keep} for c in m["companies"]]
+        rules = seed("rules.json")
+        sc = jrun("trader-screener", "screen.py", ["trader/metrics.json", "--rules", os.path.join(ROOT, "data", "seed", "rules.json"), "--prices", "trader/prices.json", "--json"], tmp)
+        plan["screen"] = {"name": rules["name"], "rules": rules["rules"], "passed": sc["passed"], "failed": sc["failed"]}
+        nw = jrun("trader-news", "news.py", ["--user-agent", ua, "--json", "--dry-run", "--hours", "72", "--tickers", *tickers], tmp, ok=(0,))
+        plan["news"] = [{k: i.get(k) for k in ("source", "kind", "ticker", "title", "link", "time", "tags")} for i in nw["items"][:14]]
+        plan["sec_skills"] = True
+    else:
+        for k in ("analyst", "screen", "news"):
+            if k in old: plan[k] = old[k]
+        plan["sec_skills"] = bool(old.get("sec_skills"))
     try:
         f = jrun("trader-pelosi", "ptr.py", ["index", "--member", "Pelosi", "--year", str(datetime.date.today().year), "--limit", "6", "--json"], tmp, ok=(0,))
         plan["congress"] = [{"filed": x["filed"], "name": x["name"], "district": x["district"], "url": x["url"]} for x in f]
