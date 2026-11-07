@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://powerband.fit/sitemap.xml
