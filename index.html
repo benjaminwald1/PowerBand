@@ -16,43 +16,52 @@
 
 <main class="wrap">
   <section class="hero">
-    <h1>What if you copied Berkshire with $10,000?</h1>
-    <p class="lead">Two paper portfolios follow the public SEC filing of Berkshire Hathaway's top five stocks. Every order is sized to a budget, checked against risk rules, and never sent to a broker.</p>
+    <h1>Today's plan: what the skills would do</h1>
+    <p class="lead">Eleven open-source skills copy Berkshire Hathaway's public SEC filing, size every trade to a budget, check it against risk rules, and propose orders. On this page you can see all of it. <b>Nothing is ever placed.</b></p>
+    <p class="status" id="status"></p>
   </section>
 
   <div class="tabs" role="tablist" id="tabs"></div>
-
   <section class="cards" id="cards"></section>
 
-  <section class="panel">
-    <h2>Holdings</h2>
+  <section class="panel"><h2>Planned buys</h2>
+    <p class="fine top0">Orders the Budget Manager proposes, each checked by the Risk Manager. A real account would also need a person's yes for every one.</p>
+    <div class="tablewrap"><table id="buys"><thead><tr><th>Action</th><th>Stock</th><th class="n">Amount</th><th class="n">About</th><th class="n">Weight</th><th>Risk check</th><th>Note</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section class="panel"><h2>Planned sells</h2><div id="sells"></div></section>
+
+  <section class="panel"><h2>Holdings after the buys</h2>
     <div class="alloc" id="alloc" aria-hidden="true"></div>
-    <div class="tablewrap"><table id="holdings">
-      <thead><tr><th>Stock</th><th class="n">Shares</th><th class="n">Bought at</th><th class="n">Price now</th><th class="n">Value</th><th class="n">Gain / loss</th><th class="n">Weight</th></tr></thead>
-      <tbody></tbody>
-    </table></div>
+    <div class="tablewrap"><table id="holdings"><thead><tr><th>Stock</th><th class="n">Shares</th><th class="n">Bought at</th><th class="n">Price now</th><th class="n">Value</th><th class="n">Gain / loss</th><th class="n">Weight</th></tr></thead><tbody></tbody></table></div>
     <p class="fine" id="stamp"></p>
   </section>
 
+  <section class="panel"><h2>Rebalance check</h2>
+    <p class="fine top0" id="rebnote"></p>
+    <div class="tablewrap"><table id="reb"><thead><tr><th>Stock</th><th class="n">Now</th><th class="n">Target</th><th class="n">Drift</th><th>Action</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section class="panel"><h2>Tax lots</h2>
+    <div class="tablewrap"><table id="lots"><thead><tr><th>Lot</th><th>Bought</th><th class="n">Shares</th><th class="n">Cost</th><th class="n">Value</th><th class="n">Gain / loss</th><th>Term</th></tr></thead><tbody></tbody></table></div>
+    <p class="fine" id="taxnote"></p>
+  </section>
+
+  <section class="panel"><h2>Congress trade filings</h2>
+    <p class="fine top0">Latest stock-trade disclosures filed by Nancy Pelosi with the House Clerk. The tracker lists new filings; it does not copy them.</p>
+    <ul class="list" id="congress"></ul>
+  </section>
+
   <section class="panel two">
-    <div>
-      <h2>How the plan is made</h2>
-      <ol class="steps">
-        <li><b>Copy.</b> Read Berkshire's quarterly 13F from SEC EDGAR and keep the top five stocks.</li>
-        <li><b>Size.</b> Keep a 10% cash buffer and cap any one stock at 25% of the budget.</li>
-        <li><b>Check.</b> A risk gate blocks orders that break the limits.</li>
-        <li><b>Ask.</b> A real account would need a yes from a person for every order. Here nothing is placed.</li>
-      </ol>
-    </div>
-    <div>
-      <h2>Good to know</h2>
+    <div><h2>What each skill did</h2><ul class="skills" id="skills"></ul></div>
+    <div><h2>Safety rules</h2>
       <ul class="notes">
+        <li>No order goes anywhere. The pipeline ends at a proposal.</li>
+        <li>Paper trading only. A live account would need three separate yeses: the risk check, a typed yes for each order, and the broker's own approval card.</li>
+        <li>10% stays in cash, and no stock may exceed 25% of the budget.</li>
         <li id="srcnote"></li>
-        <li>A 13F shows only long US stock positions, as of the end of a quarter and filed up to 45 days later. It shows no prices paid, shorts, cash or bonds.</li>
-        <li>Berkshire files it as a firm. These are not Warren Buffett's personal trades.</li>
-        <li>Prices are delayed quotes. Gains and losses are simulated and ignore taxes and fees.</li>
-      </ul>
-    </div>
+        <li>A 13F shows only long US stocks, as of a quarter end, filed up to 45 days later. It is a firm's filing, not Warren Buffett's personal trades.</li>
+      </ul></div>
   </section>
 </main>
 
