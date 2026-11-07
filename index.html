@@ -31,7 +31,7 @@
   <section class="cards" id="cards"></section>
 
   <section class="panel" id="plan"><h2>Planned buys</h2>
-    <p class="fine top0">Orders the Budget Manager proposes, each checked by the Risk Manager. A real account would also need a person's yes for every one.</p>
+    <p class="fine top0">Orders the Budget Manager proposes, each checked by the Risk Manager. A real account would also need a person's yes for every one. <b id="buytime"></b></p>
     <div class="tablewrap"><table id="buys"><thead><tr><th>Action</th><th>Stock</th><th class="n">Amount</th><th class="n">About</th><th class="n">Weight</th><th>Risk check</th><th>Note</th></tr></thead><tbody></tbody></table></div>
   </section>
 
@@ -41,6 +41,9 @@
     <div class="warn"><b>These are not predictions.</b> Nobody can predict how much a stock will rise or fall, and the skills do not try. This section shows (1) the rules that would trigger a sell and (2) a range of outcomes based on how much these stocks moved over the past year.</div>
     <div class="cards" id="ocards"></div>
     <div class="tablewrap"><table id="exit"><thead><tr><th>Stock</th><th class="n">Bought at</th><th class="n">Sell for profit at</th><th class="n">Sell to cut loss at</th><th class="n">12-month range</th><th class="n">Past 12 months</th></tr></thead><tbody></tbody></table></div>
+    <h2 class="sub">Chance of reaching each price</h2>
+    <p class="fine top0">No one can say the exact moment a price will be hit. These odds come from each stock's past swings and a simple model, and they can be wrong. "Within" means at any point before then.</p>
+    <div class="tablewrap"><table id="odds"><thead><tr><th>Stock</th><th>Level</th><th class="n">Within 1 month</th><th class="n">Within 3 months</th><th class="n">Within 12 months</th></tr></thead><tbody></tbody></table></div>
     <h2 class="sub">When would it sell?</h2>
     <ol class="steps" id="when"></ol>
   </section>

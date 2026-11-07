@@ -34,7 +34,12 @@ def outlook(buys, entry, prices, rules, as_of_13f):
     for b in buys:
         h = hist[b["ticker"]]; lr = [math.log(h[i] / h[i - 1]) for i in range(1, len(h))]
         v = statistics.pstdev(lr) * math.sqrt(252); e = entry[b["ticker"]]
-        stocks.append({"ticker": b["ticker"], "vol_pct": round(v * 100, 1), "last_year_pct": round((h[-1] / h[0] - 1) * 100, 1), "entry": e,
+        sd = statistics.pstdev(lr)
+        # chance the price touches a level at any point within N trading days (random walk, no drift: reflection principle)
+        hit = lambda lvl, d: round(math.erfc(abs(math.log(lvl / e)) / (sd * math.sqrt(d) * math.sqrt(2))) * 100)
+        tp, sl = e * (1 + rules["take_profit_pct"] / 100), e * (1 - rules["stop_loss_pct"] / 100)
+        odds = {"profit": [hit(tp, d) for d in (21, 63, 252)], "stop": [hit(sl, d) for d in (21, 63, 252)]}
+        stocks.append({"odds": odds, "ticker": b["ticker"], "vol_pct": round(v * 100, 1), "last_year_pct": round((h[-1] / h[0] - 1) * 100, 1), "entry": e,
             "take_profit_price": round(e * (1 + rules["take_profit_pct"] / 100), 2), "stop_price": round(e * (1 - rules["stop_loss_pct"] / 100), 2),
             "low": round(e * math.exp(-z * v), 2), "high": round(e * math.exp(z * v), 2)})
     lo, hi = rng(tot)
@@ -66,6 +71,10 @@ with tempfile.TemporaryDirectory() as tmp:
     plan["prices"], plan["prices_as_of"] = q["prices"], q["as_of"]
     clock = run("trader-alerts", "alerts.py", ["clock"], tmp).strip().splitlines()
     plan["market"] = " ".join(clock)
+    import re
+    mo = re.search(r"Next open: (\d{4}-\d{2}-\d{2} \d{2}:\d{2}) (New York)", plan["market"])
+    plan["next_open"] = f"{mo.group(1)} {mo.group(2)}" if mo else None
+    plan["market_open_now"] = "closed" not in plan["market"].lower()
     # the entry prices stay fixed once chosen, so gains and losses are measured from the same starting point
     plan["entry"] = old.get("entry") or dict(q["prices"])
     plan["entry_note"] = old.get("entry_note") or "Simulated buys at the " + q["as_of"][:10] + " closing prices"

@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T18:08:02+00:00",
+ "generated": "2026-11-07T18:12:18+00:00",
  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-06-30, filed 2026-08-14 (accession 0001193125-26-352200)",
  "as_of_13f": "2026-06-30",
  "names": {
@@ -279,8 +279,10 @@
   "KO": 95.67,
   "BAC": 49.42
  },
- "prices_as_of": "2026-11-07T18:08:02Z",
- "market": "New York 2026-11-07 13:08 (Saturday): NYSE closed, weekend. Next open: 2026-11-09 09:30 New York.",
+ "prices_as_of": "2026-11-07T18:12:18Z",
+ "market": "New York 2026-11-07 13:12 (Saturday): NYSE closed, weekend. Next open: 2026-11-09 09:30 New York.",
+ "next_open": "2026-11-09 09:30 New York",
+ "market_open_now": false,
  "entry": {
   "AAPL": 342.37,
   "AXP": 320.99,
@@ -300,6 +302,18 @@
   },
   "stocks": [
    {
+    "odds": {
+     "profit": [
+      0,
+      7,
+      37
+     ],
+     "stop": [
+      2,
+      19,
+      51
+     ]
+    },
     "ticker": "AAPL",
     "vol_pct": 24.9,
     "last_year_pct": 27.5,
@@ -310,6 +324,18 @@
     "high": 471.1
    },
    {
+    "odds": {
+     "profit": [
+      0,
+      9,
+      40
+     ],
+     "stop": [
+      3,
+      22,
+      54
+     ]
+    },
     "ticker": "AXP",
     "vol_pct": 26.3,
     "last_year_pct": -12.9,
@@ -320,6 +346,18 @@
     "high": 449.62
    },
    {
+    "odds": {
+     "profit": [
+      2,
+      19,
+      51
+     ],
+     "stop": [
+      10,
+      34,
+      63
+     ]
+    },
     "ticker": "GOOGL",
     "vol_pct": 33.9,
     "last_year_pct": 2.1,
@@ -330,6 +368,18 @@
     "high": 439.88
    },
    {
+    "odds": {
+     "profit": [
+      0,
+      2,
+      24
+     ],
+     "stop": [
+      0,
+      9,
+      39
+     ]
+    },
     "ticker": "KO",
     "vol_pct": 18.9,
     "last_year_pct": 35.6,
@@ -340,6 +390,18 @@
     "high": 121.92
    },
    {
+    "odds": {
+     "profit": [
+      0,
+      5,
+      32
+     ],
+     "stop": [
+      1,
+      15,
+      47
+     ]
+    },
     "ticker": "BAC",
     "vol_pct": 22.5,
     "last_year_pct": -7.1,

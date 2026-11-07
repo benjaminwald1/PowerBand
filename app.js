@@ -33,12 +33,18 @@
       $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money.";
     })();
     (function(){
+      var when=D.next_open?D.next_open.replace(" ","  at ")+" (the next market open)":"";
+      $("buytime").textContent=D.next_open?(D.market_open_now?"The market is open now, so these would go in right away.":"The market is closed, so these market orders would go in at "+D.next_open.replace(/^(\S+) (\S+) (.*)$/,"$1 at $2 $3")+", the next market open."):"";
+    })();
+    (function(){
       var O=D.outlook,p=D.portfolios[0];if(!O)return;var c=p.cash;
       $("ocards").innerHTML=card("12-month range, whole account",usd(O.portfolio.low+c,0)+" to "+usd(O.portfolio.high+c,0),"","A simple model using last year's price swings puts about 8 in 10 outcomes here. A spread, not a forecast.")+card("Same mix, past 12 months",pct(O.portfolio.last_year_pct),cls(O.portfolio.last_year_pct),"what happened last year, not next")+card("Next review",O.next_13f.deadline,"","Berkshire's Q3 13F is due by this date");
       rows("exit",O.stocks.map(function(s){return "<tr><td><b>"+esc(s.ticker)+"</b></td><td class=n>"+usd(s.entry)+"</td><td class='n up'>"+usd(s.take_profit_price)+"<small>+"+O.rules.take_profit_pct+"%</small></td><td class='n down'>"+usd(s.stop_price)+"<small>-"+O.rules.stop_loss_pct+"%</small></td><td class=n>"+usd(s.low,0)+" to "+usd(s.high,0)+"<small>yearly swing ±"+s.vol_pct+"%</small></td><td class='n "+cls(s.last_year_pct)+"'>"+pct(s.last_year_pct)+"</td></tr>";}).join(""));
+      var pc=function(n){return n<1?"under 1%":n+"%";};
+      rows("odds",O.stocks.map(function(s){return "<tr><td rowspan=2><b>"+esc(s.ticker)+"</b></td><td class=up>Profit price "+usd(s.take_profit_price)+"</td>"+s.odds.profit.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr><tr><td class=down>Stop price "+usd(s.stop_price)+"</td>"+s.odds.stop.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr>";}).join(""));
       var lt=(p.tax.lots[0]||{}).long_term_on;
       $("when").innerHTML=[
-        "<b>Profit target.</b> If a stock reaches its profit price (+"+O.rules.take_profit_pct+"% from the buy), a price alert would ring once and a sell would be proposed for review.",
+        "<b>Profit target.</b> If a stock reaches its profit price (+"+O.rules.take_profit_pct+"% from the buy), a price alert would ring once and a sell would be proposed for review. The odds table above shows how likely that is; no one can name the exact time.",
         "<b>Stop.</b> If a stock falls to its stop price (-"+O.rules.stop_loss_pct+"%), an alert would ring and a sell would be proposed to limit the loss.",
         "<b>Drift.</b> If a stock grows more than "+p.rebalance.band+" percentage points past its target share of the account, the rebalancer would propose selling the excess. Sells are listed before buys.",
         "<b>New filing.</b> Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+". If it trims or exits a stock, the targets change and the rebalancer may propose sells.",
