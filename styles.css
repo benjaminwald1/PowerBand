@@ -4,13 +4,13 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:980px;margin:0 auto;padding:0 16px}
-.top{border-bottom:1px solid var(--line);background:var(--card)}
+.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--card) 72%,transparent);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;height:56px}
 .brand{font-weight:700;color:var(--ink);text-decoration:none}.brand span{color:var(--brand)}
 .pill{font-size:12px;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:var(--mute);white-space:nowrap}
 .hero{padding:40px 0 20px}
-h1{font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em}
-h2{font-size:18px;margin:0 0 12px}
+h1{font-size:clamp(1.75rem,5vw,2.6rem);line-height:1.08;margin:0 0 .75rem;letter-spacing:-.025em;font-weight:700}
+h2{font-size:1.125rem;margin:0 0 .75rem;letter-spacing:-.01em}
 .lead{color:var(--mute);max-width:62ch;margin:0}
 .tabs{display:flex;gap:8px;margin:20px 0}
 .tabs button{font:inherit;font-weight:600;padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
@@ -52,3 +52,37 @@ a{color:var(--brand)}
 .hero{padding-top:24px}
 .warn{background:color-mix(in srgb,var(--down) 8%,transparent);border:1px solid color-mix(in srgb,var(--down) 30%,transparent);border-radius:10px;padding:12px 14px;margin:0 0 16px;font-size:15px}
 h2.sub{margin-top:22px}td small.n,td.n small{display:block;color:var(--mute)}
+
+/* ---- Apple-style refinements ---- */
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+.nav{display:flex;gap:.25rem;margin-left:auto;margin-right:.5rem;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--mute);text-decoration:none;font-size:.875rem;font-weight:500;padding:.35rem .7rem;border-radius:99px;white-space:nowrap;transition:background-color .15s,color .15s}
+.nav a:hover{background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink)}
+@media(max-width:640px){.pill{display:none}.nav{margin-right:0}}
+/* press feedback is instant: it lives on :active, not on release */
+.tabs button,.nav a,summary{transition:transform .1s ease-out,background-color .15s}
+.tabs button:active,.nav a:active{transform:scale(.96)}
+.card,.panel{transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+.panel{box-shadow:0 1px 2px rgba(0,0,0,.04)}
+/* big number: heavy, tightly tracked, tabular so digits never jump while it counts */
+.big{letter-spacing:-.045em;font-feature-settings:"tnum"}
+.total small{letter-spacing:.07em}
+/* folded sections: the common path stays open, detail is one tap deeper */
+.fold{padding:0}
+.fold>summary{list-style:none;cursor:pointer;padding:1.1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;-webkit-user-select:none;user-select:none}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary h2{margin:0}
+.fold>summary::after{content:"";width:.55rem;height:.55rem;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg) translateY(-2px);transition:transform .25s cubic-bezier(.2,.8,.2,1);flex:none}
+.fold[open]>summary::after{transform:rotate(-135deg) translateY(-2px)}
+.fold>summary:active{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.fold>:not(summary){margin-left:1.25rem;margin-right:1.25rem}
+.fold>:last-child{margin-bottom:1.25rem}
+.fold[open]>summary{padding-bottom:.6rem}
+.foldhint{font-size:.8125rem;color:var(--mute);margin:.25rem 0 1rem}
+/* accessibility */
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation:none!important}}
+@media (prefers-reduced-transparency:reduce){.top{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (prefers-contrast:more){:root{--line:#7a8782;--mute:#2f3a37}.panel,.card{border-width:2px}.top{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (prefers-contrast:more) and (prefers-color-scheme:dark){:root:not([data-theme=light]){--line:#8aa09a;--mute:#cfe0da}}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}

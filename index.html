@@ -11,6 +11,7 @@
 <body>
 <header class="top"><div class="wrap bar">
   <a class="brand" href="/">PowerBand <span>Paper Trader</span></a>
+  <nav class="nav" aria-label="Sections"><a href="#plan">Plan</a><a href="#outlook">Exit plan</a><a href="#holdings-sec">Holdings</a><a href="#research">Research</a><a href="#safety">Safety</a></nav>
   <span class="pill">Simulation · no real money</span>
 </div></header>
 
@@ -29,7 +30,7 @@
   <div class="tabs" role="tablist" id="tabs"></div>
   <section class="cards" id="cards"></section>
 
-  <section class="panel"><h2>Planned buys</h2>
+  <section class="panel" id="plan"><h2>Planned buys</h2>
     <p class="fine top0">Orders the Budget Manager proposes, each checked by the Risk Manager. A real account would also need a person's yes for every one.</p>
     <div class="tablewrap"><table id="buys"><thead><tr><th>Action</th><th>Stock</th><th class="n">Amount</th><th class="n">About</th><th class="n">Weight</th><th>Risk check</th><th>Note</th></tr></thead><tbody></tbody></table></div>
   </section>
@@ -44,43 +45,43 @@
     <ol class="steps" id="when"></ol>
   </section>
 
-  <section class="panel"><h2>Holdings after the buys</h2>
+  <section class="panel" id="holdings-sec"><h2>Holdings after the buys</h2>
     <div class="alloc" id="alloc" aria-hidden="true"></div>
     <div class="tablewrap"><table id="holdings"><thead><tr><th>Stock</th><th class="n">Shares</th><th class="n">Bought at</th><th class="n">Price now</th><th class="n">Value</th><th class="n">Gain / loss</th><th class="n">Weight</th></tr></thead><tbody></tbody></table></div>
     <p class="fine" id="stamp"></p>
   </section>
 
-  <section class="panel"><h2>Rebalance check</h2>
+  <details class="panel fold" id="research"><summary><h2>Rebalance check</h2></summary>
     <p class="fine top0" id="rebnote"></p>
     <div class="tablewrap"><table id="reb"><thead><tr><th>Stock</th><th class="n">Now</th><th class="n">Target</th><th class="n">Drift</th><th>Action</th></tr></thead><tbody></tbody></table></div>
-  </section>
+  </details>
 
-  <section class="panel"><h2>Tax lots</h2>
+  <details class="panel fold"><summary><h2>Tax lots</h2></summary>
     <div class="tablewrap"><table id="lots"><thead><tr><th>Lot</th><th>Bought</th><th class="n">Shares</th><th class="n">Cost</th><th class="n">Value</th><th class="n">Gain / loss</th><th>Term</th></tr></thead><tbody></tbody></table></div>
     <p class="fine" id="taxnote"></p>
-  </section>
+  </details>
 
-  <section class="panel"><h2>Earnings check</h2>
+  <details class="panel fold"><summary><h2>Earnings check</h2></summary>
     <p class="fine top0">Read straight from each company's SEC filings (latest quarter against the same quarter a year earlier, plus trailing twelve months).</p>
     <div class="tablewrap"><table id="earn"><thead><tr><th>Stock</th><th>Quarter ended</th><th class="n">Revenue (12 mo)</th><th class="n">Revenue growth</th><th class="n">EPS (12 mo)</th><th class="n">Operating margin</th></tr></thead><tbody></tbody></table></div>
-  </section>
+  </details>
 
-  <section class="panel"><h2>Screener</h2>
+  <details class="panel fold"><summary><h2>Screener</h2></summary>
     <p class="fine top0" id="scrnote"></p>
     <div class="tablewrap"><table id="scr"><thead><tr><th>Stock</th><th>Result</th><th>Why</th></tr></thead><tbody></tbody></table></div>
-  </section>
+  </details>
 
-  <section class="panel"><h2>News on these stocks</h2>
+  <details class="panel fold"><summary><h2>News on these stocks</h2></summary>
     <p class="fine top0">Headlines from the last 72 hours. The monitor flags them; it does not trade on them.</p>
     <ul class="list news" id="news"></ul>
-  </section>
+  </details>
 
-  <section class="panel"><h2>Congress trade filings</h2>
+  <details class="panel fold"><summary><h2>Congress trade filings</h2></summary>
     <p class="fine top0">Latest stock-trade disclosures filed by Nancy Pelosi with the House Clerk. The tracker lists new filings; it does not copy them.</p>
     <ul class="list" id="congress"></ul>
-  </section>
+  </details>
 
-  <section class="panel two">
+  <section class="panel two" id="safety">
     <div><h2>What each skill did</h2><ul class="skills" id="skills"></ul></div>
     <div><h2>Safety rules</h2>
       <ul class="notes">

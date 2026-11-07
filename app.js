@@ -26,7 +26,10 @@
       var start=0,now=0;
       D.portfolios.forEach(function(p){start+=p.budget;var v=p.cash;p.buys.forEach(function(b){v+=b.dollars/D.entry[b.ticker]*D.prices[b.ticker];});now+=v;});
       var g=now-start;
-      $("bigtotal").textContent=usd(now);
+      var big=$("bigtotal"),calm=typeof window!=="undefined"&&window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if(calm||typeof requestAnimationFrame==="undefined"||now<=0){big.textContent=usd(now);}
+      else{var t0=null,from=now*0.9,dur=900;   // counts up from just below, easing out with no overshoot (critically damped feel)
+        (function step(ts){if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-k,4);big.textContent=usd(from+(now-from)*e);if(k<1)requestAnimationFrame(step);else big.textContent=usd(now);})(performance.now?performance.now():0);}
       $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money.";
     })();
     (function(){
