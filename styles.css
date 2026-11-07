@@ -15,7 +15,7 @@ h2{font-size:1.125rem;margin:0 0 .75rem;letter-spacing:-.01em}
 .tabs{display:flex;gap:8px;margin:20px 0}
 .tabs button{font:inherit;font-weight:600;padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--brand);border-color:var(--brand);color:#fff}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
 .card small{color:var(--mute);display:block}.card b{font-size:26px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
