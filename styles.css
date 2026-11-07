@@ -50,3 +50,5 @@ a{color:var(--brand)}
 .big{font-size:clamp(48px,12vw,104px);font-weight:800;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:8px 0 6px}
 .bigsub{color:var(--mute);font-size:16px}.bigsub .up,.bigsub .down{font-weight:700}
 .hero{padding-top:24px}
+.warn{background:color-mix(in srgb,var(--down) 8%,transparent);border:1px solid color-mix(in srgb,var(--down) 30%,transparent);border-radius:10px;padding:12px 14px;margin:0 0 16px;font-size:15px}
+h2.sub{margin-top:22px}td small.n,td.n small{display:block;color:var(--mute)}

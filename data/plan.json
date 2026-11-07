@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T17:56:34+00:00",
+ "generated": "2026-11-07T18:08:02+00:00",
  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-06-30, filed 2026-08-14 (accession 0001193125-26-352200)",
  "as_of_13f": "2026-06-30",
  "names": {
@@ -279,8 +279,8 @@
   "KO": 95.67,
   "BAC": 49.42
  },
- "prices_as_of": "2026-11-07T17:56:34Z",
- "market": "New York 2026-11-07 12:56 (Saturday): NYSE closed, weekend. Next open: 2026-11-09 09:30 New York.",
+ "prices_as_of": "2026-11-07T18:08:02Z",
+ "market": "New York 2026-11-07 13:08 (Saturday): NYSE closed, weekend. Next open: 2026-11-09 09:30 New York.",
  "entry": {
   "AAPL": 342.37,
   "AXP": 320.99,
@@ -289,6 +289,79 @@
   "BAC": 49.42
  },
  "entry_note": "Simulated buys at the 2026-11-06 closing prices",
+ "outlook": {
+  "horizon_days": 252,
+  "portfolio": {
+   "vol_pct": 15.4,
+   "low": 7384.12,
+   "high": 10969.48,
+   "invested": 9000.0,
+   "last_year_pct": 7.8
+  },
+  "stocks": [
+   {
+    "ticker": "AAPL",
+    "vol_pct": 24.9,
+    "last_year_pct": 27.5,
+    "entry": 342.37,
+    "take_profit_price": 427.96,
+    "stop_price": 291.01,
+    "low": 248.81,
+    "high": 471.1
+   },
+   {
+    "ticker": "AXP",
+    "vol_pct": 26.3,
+    "last_year_pct": -12.9,
+    "entry": 320.99,
+    "take_profit_price": 401.24,
+    "stop_price": 272.84,
+    "low": 229.16,
+    "high": 449.62
+   },
+   {
+    "ticker": "GOOGL",
+    "vol_pct": 33.9,
+    "last_year_pct": 2.1,
+    "entry": 284.78,
+    "take_profit_price": 355.97,
+    "stop_price": 242.06,
+    "low": 184.37,
+    "high": 439.88
+   },
+   {
+    "ticker": "KO",
+    "vol_pct": 18.9,
+    "last_year_pct": 35.6,
+    "entry": 95.67,
+    "take_profit_price": 119.59,
+    "stop_price": 81.32,
+    "low": 75.07,
+    "high": 121.92
+   },
+   {
+    "ticker": "BAC",
+    "vol_pct": 22.5,
+    "last_year_pct": -7.1,
+    "entry": 49.42,
+    "take_profit_price": 61.78,
+    "stop_price": 42.01,
+    "low": 37.05,
+    "high": 65.93
+   }
+  ],
+  "rules": {
+   "take_profit_pct": 25,
+   "stop_loss_pct": 15,
+   "rebalance_band_points": 5,
+   "horizon_days": 252,
+   "note": "Default rules for the simulation. Edit these numbers to change when the plan would sell."
+  },
+  "next_13f": {
+   "quarter_end": "2026-09-30",
+   "deadline": "2026-11-16"
+  }
+ },
  "analyst": [
   {
    "ticker": "AAPL",
@@ -427,6 +500,17 @@
   {
    "source": "Yahoo Finance",
    "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Micron and Sandisk Lead the Memory Market. 1 Stock Has Far Greater Upside.",
+   "link": "https://www.fool.com/investing/2026/11/07/micron-and-sandisk-lead-the-memory-market-1-stock/?.tsrc=rss",
+   "time": "2026-11-07T17:50:00+00:00",
+   "tags": [
+    "earnings"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
    "ticker": "AAPL",
    "title": "Apple Completes the Set: Every Magnificent Seven Stock Opts Out of OKX-ICE Venue",
    "link": "https://decrypt.co/382768/apple-meta-every-magnificent-seven-stock-opts-out-okx-ice-venue?.tsrc=rss",
@@ -552,15 +636,6 @@
    "title": "Google\u2019s Man on SpaceX\u2019s Board Just Quit After 11 Years",
    "link": "https://247wallst.com/investing/2026/11/07/googles-man-on-spacexs-board-just-quit-after-11-years/?.tsrc=rss",
    "time": "2026-11-07T14:42:49+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AAPL",
-   "title": "Booking vs. DoorDash: Does Going Out or Staying In Make One Stock a Better Buy for 2027?",
-   "link": "https://www.fool.com/coverage/better-buy/2026/11/07/booking-vs-doordash-does-going-out-or-staying-in-make-one-stock-a-better-buy-for-2027/?.tsrc=rss",
-   "time": "2026-11-07T14:27:01+00:00",
    "tags": []
   }
  ],

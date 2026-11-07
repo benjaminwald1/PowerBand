@@ -14,6 +14,40 @@ def run(skill, script, args, cwd, ok=(0, 1)):
         sys.exit(f"{skill} failed: {(r.stderr or r.stdout)[-400:]}")
     return r.stdout
 
+def history(t):
+    import urllib.request
+    req = urllib.request.Request(f"https://query1.finance.yahoo.com/v8/finance/chart/{t}?range=1y&interval=1d", headers={"User-Agent": "Mozilla/5.0"})
+    d = json.load(urllib.request.urlopen(req, timeout=20))["chart"]["result"][0]
+    return [c for c in d["indicators"]["quote"][0]["close"] if c]
+
+def outlook(buys, entry, prices, rules, as_of_13f):
+    import math, statistics
+    hist = {b["ticker"]: history(b["ticker"]) for b in buys}
+    n = min(len(v) for v in hist.values())
+    tot = sum(b["dollars"] for b in buys)
+    port = [sum(b["dollars"] / tot * math.log(hist[b["ticker"]][-n + i] / hist[b["ticker"]][-n + i - 1]) for b in buys) for i in range(1, n)]
+    sd_d = statistics.pstdev(port); T = rules["horizon_days"]; z = 1.2816
+    sig = sd_d * math.sqrt(T)
+    def rng(x):  # 10th and 90th percentile of a zero-drift lognormal spread
+        return round(x * math.exp(-z * sig) , 2), round(x * math.exp(z * sig), 2)
+    stocks = []
+    for b in buys:
+        h = hist[b["ticker"]]; lr = [math.log(h[i] / h[i - 1]) for i in range(1, len(h))]
+        v = statistics.pstdev(lr) * math.sqrt(252); e = entry[b["ticker"]]
+        stocks.append({"ticker": b["ticker"], "vol_pct": round(v * 100, 1), "last_year_pct": round((h[-1] / h[0] - 1) * 100, 1), "entry": e,
+            "take_profit_price": round(e * (1 + rules["take_profit_pct"] / 100), 2), "stop_price": round(e * (1 - rules["stop_loss_pct"] / 100), 2),
+            "low": round(e * math.exp(-z * v), 2), "high": round(e * math.exp(z * v), 2)})
+    lo, hi = rng(tot)
+    qe = datetime.date.fromisoformat(as_of_13f)
+    mm = qe.month + 3; yy = qe.year + (mm - 1) // 12; mm = (mm - 1) % 12 + 1   # three months on, then the last day of that month
+    nxt = datetime.date(yy + (mm == 12), mm % 12 + 1, 1)
+    nq = nxt - datetime.timedelta(days=1)
+    dl = nq + datetime.timedelta(days=45)
+    while dl.weekday() > 4: dl += datetime.timedelta(days=1)
+    return {"horizon_days": T, "portfolio": {"vol_pct": round(sig * 100, 1), "low": lo, "high": hi, "invested": tot,
+            "last_year_pct": round((math.exp(sum(port)) - 1) * 100, 1)}, "stocks": stocks, "rules": rules,
+            "next_13f": {"quarter_end": nq.isoformat(), "deadline": dl.isoformat()}}
+
 def jrun(*a, **k):
     return json.loads(run(*a, **k))
 
@@ -55,6 +89,9 @@ with tempfile.TemporaryDirectory() as tmp:
         reb = jrun("trader-rebalance", "rebalance.py", ["--json"], w)
         har = jrun("trader-tax", "lots.py", ["harvest", "--json", "--orders", "none.json"], w)
         rep = jrun("trader-tax", "lots.py", ["report", "--json"], w)
+        if b == BUDGETS[0]:
+            try: plan["outlook"] = outlook(buys, plan["entry"], q["prices"], seed("exit_rules.json"), targets["as_of"])
+            except Exception as ex: plan["outlook"] = old.get("outlook"); print("outlook skipped:", ex)
         plan["portfolios"].append({"id": f"{b // 1000}k", "budget": b, "cash": cash, "cash_buffer_pct": cfg["cash_buffer_pct"],
             "cap_pct": cfg["max_position_pct"], "buys": buys, "risk_summary": {"passed": sum(r["verdict"] == "PASS" for r in risk["results"]), "blocked": sum(r["verdict"] == "BLOCK" for r in risk["results"])},
             "rebalance": {"band": reb["band"], "rows": reb["rows"], "trades": reb.get("orders") or reb.get("trades") or []},

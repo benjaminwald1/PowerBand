@@ -1,0 +1,7 @@
+{
+  "take_profit_pct": 25,
+  "stop_loss_pct": 15,
+  "rebalance_band_points": 5,
+  "horizon_days": 252,
+  "note": "Default rules for the simulation. Edit these numbers to change when the plan would sell."
+}
