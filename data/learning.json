@@ -1,0 +1,222 @@
+{
+ "generated": "2026-11-07T18:19:48+00:00",
+ "data": {
+  "filings": 39,
+  "first": "2017-02-14",
+  "last": "2026-11-06",
+  "tickers": [
+   "AAPL",
+   "AXP",
+   "BAC",
+   "CB",
+   "CHTR",
+   "CVX",
+   "GOOGL",
+   "JPM",
+   "KHC",
+   "KO",
+   "MCO",
+   "OXY",
+   "PSX",
+   "USB",
+   "VZ",
+   "WFC"
+  ],
+  "combos_tested": 54
+ },
+ "strategy": "Copy the top 5 stocks of each Berkshire 13F the day after it was filed, 10% cash buffer, 25% cap per stock",
+ "walk_forward": {
+  "folds": [
+   {
+    "year": 2021,
+    "chosen": {
+     "take_profit": 25,
+     "stop_loss": 15,
+     "band": 5,
+     "max_pe": 40
+    },
+    "learned": 27.0,
+    "default": 27.1,
+    "none": 32.1,
+    "spy": 30.5,
+    "live": 32.1
+   },
+   {
+    "year": 2022,
+    "chosen": {
+     "take_profit": 25,
+     "stop_loss": 15,
+     "band": 10,
+     "max_pe": 40
+    },
+    "learned": -23.3,
+    "default": -23.9,
+    "none": -14.3,
+    "spy": -18.6,
+    "live": -14.3
+   },
+   {
+    "year": 2023,
+    "chosen": {
+     "take_profit": 25,
+     "stop_loss": 25,
+     "band": null,
+     "max_pe": 40
+    },
+    "learned": 21.5,
+    "default": 14.3,
+    "none": 18.4,
+    "spy": 26.7,
+    "live": 18.4
+   },
+   {
+    "year": 2024,
+    "chosen": {
+     "take_profit": 25,
+     "stop_loss": 25,
+     "band": null,
+     "max_pe": 40
+    },
+    "learned": 30.1,
+    "default": 25.7,
+    "none": 27.2,
+    "spy": 25.6,
+    "live": 27.2
+   },
+   {
+    "year": 2025,
+    "chosen": {
+     "take_profit": 25,
+     "stop_loss": 25,
+     "band": null,
+     "max_pe": 40
+    },
+    "learned": 20.8,
+    "default": 6.3,
+    "none": 14.9,
+    "spy": 18.0,
+    "live": 14.9
+   },
+   {
+    "year": 2026,
+    "chosen": {
+     "take_profit": 25,
+     "stop_loss": 25,
+     "band": null,
+     "max_pe": 40
+    },
+    "learned": 6.8,
+    "default": 7.8,
+    "none": 6.2,
+    "spy": 8.5,
+    "live": 6.2
+   }
+  ],
+  "out_of_sample": {
+   "learned": {
+    "cagr": 12.5,
+    "total": 98.7
+   },
+   "default": {
+    "cagr": 8.3,
+    "total": 59.3
+   },
+   "none": {
+    "cagr": 13.4,
+    "total": 108.2
+   },
+   "spy": {
+    "cagr": 14.1,
+    "total": 116.3
+   },
+   "live": {
+    "cagr": 13.4,
+    "total": 108.2
+   }
+  },
+  "wins_vs_current": {
+   "no_rules": 0,
+   "learned": 4,
+   "current": 0
+  },
+  "years": 6
+ },
+ "full_period": {
+  "current_rules": {
+   "ret": 113.7,
+   "cagr": 8.1,
+   "dd": -31.0,
+   "sharpe": 0.64
+  },
+  "no_rules": {
+   "ret": 178.6,
+   "cagr": 11.1,
+   "dd": -37.3,
+   "sharpe": 0.65
+  },
+  "learned_now_in_sample": {
+   "ret": 211.3,
+   "cagr": 12.4,
+   "dd": -28.2,
+   "sharpe": 0.87
+  },
+  "spy": {
+   "ret": 266.3,
+   "cagr": 14.3,
+   "dd": -33.7
+  }
+ },
+ "learned_now": {
+  "take_profit": 25,
+  "stop_loss": 25,
+  "band": null,
+  "max_pe": 40
+ },
+ "live_rules_before": {
+  "take_profit_pct": 25,
+  "stop_loss_pct": 15,
+  "rebalance_band_points": 5,
+  "max_pe": null,
+  "auto_exit": false
+ },
+ "decision": {
+  "adopted": false,
+  "best": "current",
+  "reason": "The current rules held up. On years it had not seen they earned 13.4% a year, and the best alternative it tried earned 12.5%, which is not clearly better, so nothing changed. For comparison the S&P 500 returned 14.1% a year over the same unseen years."
+ },
+ "calibration": {
+  "entries": 5,
+  "matured": {}
+ },
+ "caveats": [
+  "Past results do not predict future ones, and ten years is a short sample with only one market cycle of note.",
+  "No fees, taxes, spreads or slippage are modelled. Real trading would earn less.",
+  "Prices are dividend-adjusted closes. Trades happen at the close after a filing is public.",
+  "Berkshire's 13F shows long US stocks only. Some older tickers had no price history and were skipped.",
+  "Trying 54 rule sets on the same history invites luck. That is why only unseen years count.",
+  "The final choice among three options is made on the same six unseen years, so even that result is a little flattering."
+ ],
+ "history": [
+  {
+   "date": "2026-11-07",
+   "adopted": false,
+   "best": "current",
+   "oos": {
+    "current": 13.4,
+    "no_rules": 13.4,
+    "learned": 12.5
+   },
+   "picked_now": {
+    "take_profit": 25,
+    "stop_loss": 25,
+    "band": null,
+    "max_pe": 40
+   }
+  }
+ ],
+ "last_change": {
+  "date": "2026-11-07",
+  "to": "no_rules",
+  "reason": "On years it had not seen, no sell rules (hold until Berkshire's next filing) earned 13.4% a year against 8.3% for the earlier rules (take profit at +25%, stop at -15%, rebalance at 5 points) and won 5 of 6 years, so the plan stopped selling on price rules. For comparison the S&P 500 returned 14.1% a year over the same unseen years."
+ }
+}

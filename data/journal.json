@@ -1,0 +1,97 @@
+[
+ {
+  "date": "2026-11-07",
+  "ticker": "AAPL",
+  "price": 342.37,
+  "profit_level": 427.96,
+  "stop_level": 291.01,
+  "odds": {
+   "profit": [
+    0,
+    7,
+    37
+   ],
+   "stop": [
+    2,
+    19,
+    51
+   ]
+  }
+ },
+ {
+  "date": "2026-11-07",
+  "ticker": "AXP",
+  "price": 320.99,
+  "profit_level": 401.24,
+  "stop_level": 272.84,
+  "odds": {
+   "profit": [
+    0,
+    9,
+    40
+   ],
+   "stop": [
+    3,
+    22,
+    54
+   ]
+  }
+ },
+ {
+  "date": "2026-11-07",
+  "ticker": "GOOGL",
+  "price": 284.78,
+  "profit_level": 355.97,
+  "stop_level": 242.06,
+  "odds": {
+   "profit": [
+    2,
+    19,
+    51
+   ],
+   "stop": [
+    10,
+    34,
+    63
+   ]
+  }
+ },
+ {
+  "date": "2026-11-07",
+  "ticker": "KO",
+  "price": 95.67,
+  "profit_level": 119.59,
+  "stop_level": 81.32,
+  "odds": {
+   "profit": [
+    0,
+    2,
+    24
+   ],
+   "stop": [
+    0,
+    9,
+    39
+   ]
+  }
+ },
+ {
+  "date": "2026-11-07",
+  "ticker": "BAC",
+  "price": 49.42,
+  "profit_level": 61.78,
+  "stop_level": 42.01,
+  "odds": {
+   "profit": [
+    0,
+    5,
+    32
+   ],
+   "stop": [
+    1,
+    15,
+    47
+   ]
+  }
+ }
+]

@@ -43,13 +43,17 @@
       var pc=function(n){return n<1?"under 1%":n+"%";};
       rows("odds",O.stocks.map(function(s){return "<tr><td rowspan=2><b>"+esc(s.ticker)+"</b></td><td class=up>Profit price "+usd(s.take_profit_price)+"</td>"+s.odds.profit.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr><tr><td class=down>Stop price "+usd(s.stop_price)+"</td>"+s.odds.stop.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr>";}).join(""));
       var lt=(p.tax.lots[0]||{}).long_term_on;
-      $("when").innerHTML=[
-        "<b>Profit target.</b> If a stock reaches its profit price (+"+O.rules.take_profit_pct+"% from the buy), a price alert would ring once and a sell would be proposed for review. The odds table above shows how likely that is; no one can name the exact time.",
-        "<b>Stop.</b> If a stock falls to its stop price (-"+O.rules.stop_loss_pct+"%), an alert would ring and a sell would be proposed to limit the loss.",
-        "<b>Drift.</b> If a stock grows more than "+p.rebalance.band+" percentage points past its target share of the account, the rebalancer would propose selling the excess. Sells are listed before buys.",
-        "<b>New filing.</b> Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+". If it trims or exits a stock, the targets change and the rebalancer may propose sells.",
-        "<b>Taxes.</b> Gains sold before "+esc(lt||"a year")+" are short term. Losses can be harvested only if the wash sale rule allows it.",
-        "<b>Always a proposal.</b> A real account would need a person's yes for every sell. Here nothing is placed."].map(function(x){return "<li>"+x+"</li>";}).join("");
+      var auto=O.auto_exit!==false,w=[];
+      if(!auto)w.push("<b>Following Berkshire.</b> This is the plan's real sell trigger. When a new 13F drops a stock or cuts its share, the plan rebalances to match. Ten years of testing found this beat selling on price rules.");
+      w.push("<b>Profit "+(auto?"target":"alert")+".</b> If a stock reaches its profit price (+"+O.rules.take_profit_pct+"% from the buy), "+(auto?"a price alert would ring once and a sell would be proposed for review.":"an alert would ring once for you to review. The plan itself would not sell."));
+      w.push("<b>"+(auto?"Stop":"Stop alert")+".</b> If a stock falls to its stop price (-"+O.rules.stop_loss_pct+"%), "+(auto?"an alert would ring and a sell would be proposed to limit the loss.":"an alert would ring for you to review. The plan itself would not sell.")+" The odds table above shows how likely each is; no one can name the exact time.");
+      if(auto)w.push("<b>Drift.</b> If a stock grows more than "+p.rebalance.band+" percentage points past its target share of the account, the rebalancer would propose selling the excess. Sells are listed before buys.");
+      if(auto)w.push("<b>New filing.</b> Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+". If it trims or exits a stock, the targets change and the rebalancer may propose sells.");
+      else w.push("<b>Next filing.</b> Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+". That is the date the plan could change.");
+      w.push("<b>Taxes.</b> Gains sold before "+esc(lt||"a year")+" are short term. Losses can be harvested only if the wash sale rule allows it.");
+      w.push("<b>Always a proposal.</b> A real account would need a person's yes for every sell. Here nothing is placed.");
+      $("when").innerHTML=w.map(function(x){return "<li>"+x+"</li>";}).join("");
+      var th=document.querySelectorAll?document.querySelectorAll("#exit th"):[];if(!auto&&th.length>3){th[2].textContent="Profit alert at";th[3].textContent="Stop alert at";}
     })();
     function draw(){
       var p=D.portfolios[cur];
@@ -61,7 +65,8 @@
       rows("buys",p.buys.map(function(b){return '<tr><td class="act">BUY</td><td><b>'+b.ticker+"</b><small>"+esc(b.name)+"</small></td><td class=n>"+usd(b.dollars,0)+"</td><td class=n>"+(b.dollars/b.price).toFixed(2)+" sh @ "+usd(b.price)+"</td><td class=n>"+b.weight.toFixed(1)+'%</td><td><span class="v '+b.verdict+'">'+b.verdict+"</span>"+(b.reasons.length?"<small>"+esc(b.reasons.join("; "))+"</small>":"")+"</td><td>"+(b.capped?"Capped at "+p.cap_pct+"% of budget":"")+"</td></tr>";}).join(""));
       var sells=[];
       p.rebalance.trades.forEach(function(t){sells.push("<li>"+esc(JSON.stringify(t))+"</li>");});
-      $("sells").innerHTML=nsell?"<ul class=list>"+sells.join("")+"</ul>":'<div class="empty"><b>No sells planned.</b> The rebalancer found every stock within '+p.rebalance.band+' points of its target, and the tax skill found no losses worth harvesting. The first step is buying, so there is nothing to sell yet.</div>';
+      var auto=D.auto_exit!==false;
+      $("sells").innerHTML=nsell?"<ul class=list>"+sells.join("")+"</ul>":!auto?'<div class="empty"><b>No sells planned.</b> This plan only sells when Berkshire\'s next filing drops a stock or cuts its share. Testing on ten years of history showed that selling on price rules lowered returns, so the profit and stop prices below are alerts to review, not automatic sells.</div>':'<div class="empty"><b>No sells planned.</b> The rebalancer found every stock within '+p.rebalance.band+' points of its target, and the tax skill found no losses worth harvesting. The first step is buying, so there is nothing to sell yet.</div>';
       var cols=["var(--bar1)","var(--bar2)","var(--bar3)","var(--bar4)","var(--bar5)"];
       $("alloc").innerHTML=pos.map(function(r,i){return '<span style="width:'+(r.v/total*100)+'%;background:'+cols[i%5]+'" title="'+r.t+'"></span>';}).join("");
       rows("holdings",pos.map(function(r){return "<tr><td><b>"+r.t+"</b><small>"+esc(r.n)+"</small></td><td class=n>"+r.s.toFixed(4)+"</td><td class=n>"+usd(r.e)+"</td><td class=n>"+usd(r.px)+"</td><td class=n>"+usd(r.v)+"</td><td class='n "+cls(r.g)+"'>"+usd(r.g)+"<small>"+pct(r.gp)+"</small></td><td class=n>"+(r.v/total*100).toFixed(1)+"%</td></tr>";}).join(""));
@@ -72,5 +77,15 @@
       $("taxnote").textContent="Realized gains this year: "+usd(p.tax.realized_ytd.short)+" short term, "+usd(p.tax.realized_ytd.long)+" long term. Not tax advice: arithmetic on the lots only.";
     }
     draw();
+    fetch("data/learning.json?"+Date.now()).then(function(r){return r.json();}).then(function(L){
+      var o=L.walk_forward.out_of_sample,f=function(n){return (n>0?"+":"")+n.toFixed(1)+"%";};
+      $("ldecision").innerHTML=L.decision.adopted?"<b>The plan changed.</b> "+esc(L.decision.reason):"<b>The plan stayed the same this time.</b> "+esc(L.decision.reason)+(L.last_change?"<br><br><b>Last change ("+esc(L.last_change.date)+").</b> "+esc(L.last_change.reason):"");
+      $("lcards").innerHTML=card("History used",L.data.filings+" filings","",L.data.first.slice(0,4)+" to "+L.data.last.slice(0,4)+", "+L.data.tickers.length+" stocks")+card("Rule sets tried",String(L.data.combos_tested),"","profit, stop, rebalance and P/E limits")+card("Unseen years, per year",f(o.none.cagr),cls(o.none.cagr),"hold only; earlier rules "+f(o.default.cagr))+card("S&P 500, same years",f(o.spy.cagr),cls(o.spy.cagr),"a plain index fund");
+      document.querySelector("#lfolds tbody").innerHTML=L.walk_forward.folds.map(function(r){var c=function(n){return "<td class='n "+cls(n)+"'>"+f(n)+"</td>";};return "<tr><td><b>"+r.year+(r.year==new Date(L.generated).getUTCFullYear()?" (so far)":"")+"</b></td>"+c(r.learned)+c(r.default)+c(r.none)+c(r.spy)+"</tr>";}).join("")+"<tr><td><b>Per year, all</b></td>"+[o.learned,o.default,o.none,o.spy].map(function(x){return "<td class='n "+cls(x.cagr)+"'><b>"+f(x.cagr)+"</b></td>";}).join("")+"</tr>";
+      $("ltake").textContent=o.spy.cagr>Math.max(o.learned.cagr,o.default.cagr,o.none.cagr)?"Honest takeaway: in this test, a plain S&P 500 index fund did better than every version of copying Berkshire, and copying with no selling rules beat the rules that sell on price.":"Honest takeaway: the learned approach did well here, but ten years is a short test and the result may not repeat.";
+      var m=L.calibration.matured,ks=Object.keys(m);
+      $("lcal").innerHTML=ks.length?"<b>Scoring its own odds so far.</b> "+ks.map(function(k){var x=m[k];return "Within "+k.replace("m"," months")+": it said "+x.predicted_pct+"% on average and "+x.happened_pct+"% happened ("+x.n+" checks)";}).join(". ")+".":"<b>Scoring its own odds.</b> "+L.calibration.entries+" predictions are saved so far, and none are old enough to grade. The first grades appear after about a month of daily refreshes.";
+      $("lcav").innerHTML=L.caveats.map(function(c){return "<li>"+esc(c)+"</li>";}).join("");
+    }).catch(function(){});
   }).catch(function(){$("cards").textContent="Couldn't load the plan.";});
 })();

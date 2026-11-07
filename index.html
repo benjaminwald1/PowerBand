@@ -11,7 +11,7 @@
 <body>
 <header class="top"><div class="wrap bar">
   <a class="brand" href="/">PowerBand <span>Paper Trader</span></a>
-  <nav class="nav" aria-label="Sections"><a href="#plan">Plan</a><a href="#outlook">Exit plan</a><a href="#holdings-sec">Holdings</a><a href="#research">Research</a><a href="#safety">Safety</a></nav>
+  <nav class="nav" aria-label="Sections"><a href="#plan">Plan</a><a href="#outlook">Exit plan</a><a href="#learning">Learning</a><a href="#holdings-sec">Holdings</a><a href="#research">Research</a><a href="#safety">Safety</a></nav>
   <span class="pill">Simulation · no real money</span>
 </div></header>
 
@@ -46,6 +46,24 @@
     <div class="tablewrap"><table id="odds"><thead><tr><th>Stock</th><th>Level</th><th class="n">Within 1 month</th><th class="n">Within 3 months</th><th class="n">Within 12 months</th></tr></thead><tbody></tbody></table></div>
     <h2 class="sub">When would it sell?</h2>
     <ol class="steps" id="when"></ol>
+  </section>
+
+  <section class="panel" id="learning"><h2>What the model learned from ten years of history</h2>
+    <div class="note" id="ldecision"></div>
+    <div class="cards" id="lcards"></div>
+    <h2 class="sub">Year by year, on years it had not seen</h2>
+    <p class="fine top0">For each year, the rules were chosen using only the four years before it, then tried on that year. Returns are for the year.</p>
+    <div class="tablewrap"><table id="lfolds"><thead><tr><th>Year</th><th class="n">Rules it picked</th><th class="n">Earlier rules</th><th class="n">Hold only</th><th class="n">S&amp;P 500</th></tr></thead><tbody></tbody></table></div>
+    <p class="fine" id="ltake"></p>
+    <h2 class="sub">How it keeps learning</h2>
+    <ol class="steps">
+      <li><b>It writes down its odds.</b> Every time the plan refreshes, the chance it gave each stock of hitting its profit or stop price is saved to a journal.</li>
+      <li><b>It grades itself.</b> Once a month, three months or a year has passed, it checks whether the price really got there and compares that with the odds it gave.</li>
+      <li><b>It retrains on new filings.</b> Each time Berkshire files, the history grows by a quarter, and every rule set is tested again.</li>
+      <li><b>It only changes when it is clearly better.</b> A new rule must beat the current one by at least a point a year on unseen years, and win most of them. Otherwise nothing changes.</li>
+    </ol>
+    <div class="empty" id="lcal"></div>
+    <details class="inner"><summary>Limits of this test</summary><ul class="notes" id="lcav"></ul></details>
   </section>
 
   <section class="panel" id="holdings-sec"><h2>Holdings after the buys</h2>

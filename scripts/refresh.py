@@ -99,7 +99,17 @@ with tempfile.TemporaryDirectory() as tmp:
         har = jrun("trader-tax", "lots.py", ["harvest", "--json", "--orders", "none.json"], w)
         rep = jrun("trader-tax", "lots.py", ["report", "--json"], w)
         if b == BUDGETS[0]:
-            try: plan["outlook"] = outlook(buys, plan["entry"], q["prices"], seed("exit_rules.json"), targets["as_of"])
+            try:
+                rl = seed("exit_rules.json")
+                plan["outlook"] = outlook(buys, plan["entry"], q["prices"], rl, targets["as_of"]); plan["outlook"]["auto_exit"] = rl.get("auto_exit", True)
+                plan["auto_exit"] = plan["outlook"]["auto_exit"]
+                # the journal: what the model said today, so the learner can score it once the time has passed
+                jp = os.path.join(ROOT, "data", "journal.json"); J = json.load(open(jp)) if os.path.exists(jp) else []
+                today = q["as_of"][:10]
+                for st in plan["outlook"]["stocks"]:
+                    if not any(e["date"] == today and e["ticker"] == st["ticker"] for e in J):
+                        J.append({"date": today, "ticker": st["ticker"], "price": q["prices"][st["ticker"]], "profit_level": st["take_profit_price"], "stop_level": st["stop_price"], "odds": st["odds"]})
+                json.dump(J, open(jp, "w"), indent=1)
             except Exception as ex: plan["outlook"] = old.get("outlook"); print("outlook skipped:", ex)
         plan["portfolios"].append({"id": f"{b // 1000}k", "budget": b, "cash": cash, "cash_buffer_pct": cfg["cash_buffer_pct"],
             "cap_pct": cfg["max_position_pct"], "buys": buys, "risk_summary": {"passed": sum(r["verdict"] == "PASS" for r in risk["results"]), "blocked": sum(r["verdict"] == "BLOCK" for r in risk["results"])},

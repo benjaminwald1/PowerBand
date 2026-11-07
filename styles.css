@@ -86,3 +86,5 @@ html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
 @media (prefers-contrast:more){:root{--line:#7a8782;--mute:#2f3a37}.panel,.card{border-width:2px}.top{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media (prefers-contrast:more) and (prefers-color-scheme:dark){:root:not([data-theme=light]){--line:#8aa09a;--mute:#cfe0da}}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+.note{background:color-mix(in srgb,var(--brand) 8%,transparent);border:1px solid color-mix(in srgb,var(--brand) 28%,transparent);border-radius:10px;padding:12px 14px;margin:0 0 16px;font-size:15px}
+details.inner{margin-top:14px}details.inner summary{cursor:pointer;color:var(--brand);font-size:.9rem;font-weight:600;padding:.25rem 0}

@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T18:12:18+00:00",
+ "generated": "2026-11-07T18:18:04+00:00",
  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-06-30, filed 2026-08-14 (accession 0001193125-26-352200)",
  "as_of_13f": "2026-06-30",
  "names": {
@@ -279,8 +279,8 @@
   "KO": 95.67,
   "BAC": 49.42
  },
- "prices_as_of": "2026-11-07T18:12:18Z",
- "market": "New York 2026-11-07 13:12 (Saturday): NYSE closed, weekend. Next open: 2026-11-09 09:30 New York.",
+ "prices_as_of": "2026-11-07T18:18:04Z",
+ "market": "New York 2026-11-07 13:18 (Saturday): NYSE closed, weekend. Next open: 2026-11-09 09:30 New York.",
  "next_open": "2026-11-09 09:30 New York",
  "market_open_now": false,
  "entry": {
@@ -417,13 +417,16 @@
    "stop_loss_pct": 15,
    "rebalance_band_points": 5,
    "horizon_days": 252,
-   "note": "Default rules for the simulation. Edit these numbers to change when the plan would sell."
+   "note": "Default rules for the simulation. Edit these numbers to change when the plan would sell.",
+   "auto_exit": false
   },
   "next_13f": {
    "quarter_end": "2026-09-30",
    "deadline": "2026-11-16"
-  }
+  },
+  "auto_exit": false
  },
+ "auto_exit": false,
  "analyst": [
   {
    "ticker": "AAPL",
