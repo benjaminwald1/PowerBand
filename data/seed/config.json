@@ -1,5 +1,5 @@
 {
- "budget": 20000,
+ "budget": 10000,
  "cash_buffer_pct": 10,
  "max_position_pct": 25,
  "max_order_usd": 6000,

@@ -45,3 +45,8 @@ a{color:var(--brand)}
 .skills{list-style:none;margin:0;padding:0}.skills li{padding:7px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--mute)}.skills li:last-child{border:0}
 .skills b{color:var(--ink);display:block}.tag{font-size:11px;font-weight:700;border-radius:99px;padding:1px 8px;margin-left:6px;background:var(--line);color:var(--mute)}.tag.ran{background:color-mix(in srgb,var(--up) 16%,transparent);color:var(--up)}
 .news li{display:block}.news small{display:block;color:var(--mute);font-size:12px}
+.total{padding:36px 0 4px;text-align:left}
+.total small{color:var(--mute);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.big{font-size:clamp(48px,12vw,104px);font-weight:800;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:8px 0 6px}
+.bigsub{color:var(--mute);font-size:16px}.bigsub .up,.bigsub .down{font-weight:700}
+.hero{padding-top:24px}

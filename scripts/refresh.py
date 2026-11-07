@@ -5,7 +5,7 @@ Usage: python3 scripts/refresh.py      (needs ~/clones/trader-skill)"""
 import json, os, subprocess, sys, tempfile, datetime
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SK = os.path.expanduser("~/clones/trader-skill")
-BUDGETS = [10000, 20000]
+BUDGETS = [10000]
 seed = lambda n: json.load(open(os.path.join(ROOT, "data", "seed", n)))
 
 def run(skill, script, args, cwd, ok=(0, 1)):

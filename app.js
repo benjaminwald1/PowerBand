@@ -7,7 +7,7 @@
   var rows=function(el,html){document.querySelector("#"+el+" tbody").innerHTML=html;};
   function card(l,v,c,s){return '<div class="card"><small>'+l+'</small><b class="'+c+'">'+v+'</b>'+(s?'<small>'+s+'</small>':'')+'</div>';}
   fetch("data/plan.json?"+Date.now()).then(function(r){return r.json();}).then(function(D){
-    var cur=0,tabs=$("tabs");
+    var cur=0,tabs=$("tabs");if(D.portfolios.length<2)tabs.style.display="none";
     D.portfolios.forEach(function(p,i){var b=document.createElement("button");b.textContent=usd(p.budget,0)+" portfolio";b.setAttribute("role","tab");b.onclick=function(){cur=i;draw();};tabs.appendChild(b);});
     $("srcnote").textContent="Copying: "+D.source+".";
     $("status").textContent=D.market+" Plan generated "+new Date(D.generated).toUTCString().replace(" GMT"," UTC")+".";
@@ -22,6 +22,13 @@
       rows("scr",D.screen.passed.map(function(x){return "<tr><td><b>"+esc(x.ticker)+'</b></td><td><span class="v PASS">PASS</span></td><td>'+esc(x.why.join("; "))+"</td></tr>";}).concat(D.screen.failed.map(function(x){return "<tr><td><b>"+esc(x.ticker)+'</b></td><td><span class="v BLOCK">FAIL</span></td><td>'+esc(x.why.join("; "))+"</td></tr>";})).join(""));
     }
     $("news").innerHTML=(D.news||[]).map(function(n){return "<li><span><b>"+esc(n.ticker||"")+"</b> "+(n.link?"<a href=\""+esc(n.link)+"\" rel=\"noopener\">"+esc(n.title)+"</a>":esc(n.title))+"<small>"+esc(n.source)+" · "+esc((n.time||"").slice(0,16).replace("T"," "))+" UTC</small></span></li>";}).join("")||"<li>No recent news.</li>";
+    (function(){
+      var start=0,now=0;
+      D.portfolios.forEach(function(p){start+=p.budget;var v=p.cash;p.buys.forEach(function(b){v+=b.dollars/D.entry[b.ticker]*D.prices[b.ticker];});now+=v;});
+      var g=now-start;
+      $("bigtotal").textContent=usd(now);
+      $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money.";
+    })();
     function draw(){
       var p=D.portfolios[cur];
       [].forEach.call(tabs.children,function(b,i){b.setAttribute("aria-selected",i===cur);});
