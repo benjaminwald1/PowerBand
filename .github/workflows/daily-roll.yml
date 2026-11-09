@@ -1,0 +1,18 @@
+name: daily-roll
+on:
+  schedule:
+    - cron: "30 21 * * 1-5"   # 4:30pm EST / 5:30pm EDT, after the close
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: daily-roll
+jobs:
+  roll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/roll.py || echo "nothing to roll"
+      - name: Commit the ledger if it changed
+        run: |
+          git config user.name live-bot && git config user.email live-bot@users.noreply.github.com
+          git add data/ledger.json && (git diff --cached --quiet || (git commit -qm "Daily roll: mark account to the close, queue reinvestment" && git pull -q --rebase && git push))
