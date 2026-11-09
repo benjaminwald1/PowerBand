@@ -295,8 +295,8 @@
   "horizon_days": 252,
   "portfolio": {
    "vol_pct": 15.4,
-   "low": 7384.12,
-   "high": 10969.48,
+   "low": 7999.12,
+   "high": 11883.1,
    "invested": 9000.0,
    "last_year_pct": 7.8
   },
@@ -320,8 +320,8 @@
     "entry": 342.37,
     "take_profit_price": 427.96,
     "stop_price": 291.01,
-    "low": 248.81,
-    "high": 471.1
+    "low": 269.53,
+    "high": 510.34
    },
    {
     "odds": {
@@ -342,8 +342,8 @@
     "entry": 320.99,
     "take_profit_price": 401.24,
     "stop_price": 272.84,
-    "low": 229.16,
-    "high": 449.62
+    "low": 248.25,
+    "high": 487.07
    },
    {
     "odds": {
@@ -364,8 +364,8 @@
     "entry": 284.78,
     "take_profit_price": 355.97,
     "stop_price": 242.06,
-    "low": 184.37,
-    "high": 439.88
+    "low": 199.73,
+    "high": 476.52
    },
    {
     "odds": {
@@ -386,8 +386,8 @@
     "entry": 95.67,
     "take_profit_price": 119.59,
     "stop_price": 81.32,
-    "low": 75.07,
-    "high": 121.92
+    "low": 81.32,
+    "high": 132.07
    },
    {
     "odds": {
@@ -408,8 +408,8 @@
     "entry": 49.42,
     "take_profit_price": 61.78,
     "stop_price": 42.01,
-    "low": 37.05,
-    "high": 65.93
+    "low": 40.14,
+    "high": 71.42
    }
   ],
   "rules": {
@@ -424,7 +424,8 @@
    "quarter_end": "2026-09-30",
    "deadline": "2026-11-16"
   },
-  "auto_exit": false
+  "auto_exit": false,
+  "assumed_growth_pct": 8
  },
  "auto_exit": false,
  "analyst": [

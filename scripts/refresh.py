@@ -26,10 +26,10 @@ def outlook(buys, entry, prices, rules, as_of_13f):
     n = min(len(v) for v in hist.values())
     tot = sum(b["dollars"] for b in buys)
     port = [sum(b["dollars"] / tot * math.log(hist[b["ticker"]][-n + i] / hist[b["ticker"]][-n + i - 1]) for b in buys) for i in range(1, n)]
-    sd_d = statistics.pstdev(port); T = rules["horizon_days"]; z = 1.2816
+    sd_d = statistics.pstdev(port); T = rules["horizon_days"]; z = 1.2816; DRIFT = 0.08; g = DRIFT * T / 252   # assumed long-run stock return, 8%/yr (about the US market average)
     sig = sd_d * math.sqrt(T)
-    def rng(x):  # 10th and 90th percentile of a zero-drift lognormal spread
-        return round(x * math.exp(-z * sig) , 2), round(x * math.exp(z * sig), 2)
+    def rng(x):  # 10th and 90th percentile of a lognormal spread with a long-run growth assumption (DRIFT per year)
+        return round(x * math.exp(g - z * sig) , 2), round(x * math.exp(g + z * sig), 2)
     stocks = []
     for b in buys:
         h = hist[b["ticker"]]; lr = [math.log(h[i] / h[i - 1]) for i in range(1, len(h))]
@@ -41,7 +41,7 @@ def outlook(buys, entry, prices, rules, as_of_13f):
         odds = {"profit": [hit(tp, d) for d in (21, 63, 252)], "stop": [hit(sl, d) for d in (21, 63, 252)]}
         stocks.append({"odds": odds, "ticker": b["ticker"], "vol_pct": round(v * 100, 1), "last_year_pct": round((h[-1] / h[0] - 1) * 100, 1), "entry": e,
             "take_profit_price": round(e * (1 + rules["take_profit_pct"] / 100), 2), "stop_price": round(e * (1 - rules["stop_loss_pct"] / 100), 2),
-            "low": round(e * math.exp(-z * v), 2), "high": round(e * math.exp(z * v), 2)})
+            "low": round(e * math.exp(g - z * v), 2), "high": round(e * math.exp(g + z * v), 2)})
     lo, hi = rng(tot)
     qe = datetime.date.fromisoformat(as_of_13f)
     mm = qe.month + 3; yy = qe.year + (mm - 1) // 12; mm = (mm - 1) % 12 + 1   # three months on, then the last day of that month
