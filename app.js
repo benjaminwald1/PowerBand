@@ -40,7 +40,7 @@
     (function(){
       var O=D.outlook,p=D.portfolios[0];if(!O)return;var c=p.cash;
       $("ocards").innerHTML=card("12-month range, whole account",usd(O.portfolio.low+c,0)+" to "+usd(O.portfolio.high+c,0),"","A simple model using last year's price swings puts about 8 in 10 outcomes here. A spread, not a forecast.")+card("Same mix, past 12 months",pct(O.portfolio.last_year_pct),cls(O.portfolio.last_year_pct),"what happened last year, not next")+card("Next review",O.next_13f.deadline,"","Berkshire's Q3 13F is due by this date");
-      rows("exit",O.stocks.map(function(s){return "<tr><td><b>"+esc(s.ticker)+"</b></td><td class=n>"+usd(s.entry)+"</td><td class='n up'>"+usd(s.take_profit_price)+"<small>+"+O.rules.take_profit_pct+"%</small></td><td class='n down'>"+usd(s.stop_price)+"<small>-"+O.rules.stop_loss_pct+"%</small></td><td class=n>"+usd(s.low,0)+" to "+usd(s.high,0)+"<small>yearly swing ±"+s.vol_pct+"%</small></td><td class='n "+cls(s.last_year_pct)+"'>"+pct(s.last_year_pct)+"</td></tr>";}).join(""));
+      rows("exit",O.stocks.map(function(s){return "<tr><td><b>"+esc(s.ticker)+"</b></td><td class=n>"+usd(s.entry)+"</td><td class=n data-now=\""+esc(s.ticker)+"\"></td><td class='n up'>"+usd(s.take_profit_price)+"<small>+"+O.rules.take_profit_pct+"%</small></td><td class='n down'>"+usd(s.stop_price)+"<small>-"+O.rules.stop_loss_pct+"%</small></td><td class=n>"+usd(s.low,0)+" to "+usd(s.high,0)+"<small>yearly swing ±"+s.vol_pct+"%</small></td><td class='n "+cls(s.last_year_pct)+"'>"+pct(s.last_year_pct)+"</td></tr>";}).join(""));
       var pc=function(n){return n<1?"under 1%":n+"%";};
       rows("odds",O.stocks.map(function(s){return "<tr><td rowspan=2><b>"+esc(s.ticker)+"</b></td><td class=up>Profit price "+usd(s.take_profit_price)+"</td>"+s.odds.profit.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr><tr><td class=down>Stop price "+usd(s.stop_price)+"</td>"+s.odds.stop.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr>";}).join(""));
       var lt=(p.tax.lots[0]||{}).long_term_on;
@@ -54,7 +54,7 @@
       w.push("<b>Taxes.</b> Gains sold before "+esc(lt||"a year")+" are short term. Losses can be harvested only if the wash sale rule allows it.");
       w.push("<b>Always a proposal.</b> A real account would need a person's yes for every sell. Here nothing is placed.");
       $("when").innerHTML=w.map(function(x){return "<li>"+x+"</li>";}).join("");
-      var th=document.querySelectorAll?document.querySelectorAll("#exit th"):[];if(!auto&&th.length>3){th[2].textContent="Profit alert at";th[3].textContent="Stop alert at";}
+      var th=document.querySelectorAll?document.querySelectorAll("#exit th"):[];if(!auto&&th.length>4){th[3].textContent="Profit alert at";th[4].textContent="Stop alert at";}
     })();
     function draw(){
       var p=D.portfolios[cur];
@@ -73,8 +73,9 @@
       rows("holdings",pos.map(function(r){return "<tr><td><b>"+r.t+"</b><small>"+esc(r.n)+"</small></td><td class=n>"+r.s.toFixed(4)+"</td><td class=n>"+usd(r.e)+"</td><td class=n>"+usd(r.px)+"</td><td class=n>"+usd(r.v)+"</td><td class='n "+cls(r.g)+"'>"+usd(r.g)+"<small>"+pct(r.gp)+"</small></td><td class=n>"+(r.v/total*100).toFixed(1)+"%</td></tr>";}).join(""));
       $("stamp").textContent=D.entry_note+". Prices as of "+new Date(D.prices_as_of).toUTCString().replace(" GMT"," UTC")+" (delayed). Simulated money only.";
       $("rebnote").textContent="Trades only if a stock drifts more than "+p.rebalance.band+" percentage points from its target. Sells are listed before buys.";
-      rows("reb",p.rebalance.rows.map(function(r){return "<tr><td><b>"+r.ticker+"</b></td><td class=n>"+r.current_pct.toFixed(2)+"%</td><td class=n>"+r.target_pct.toFixed(2)+"%</td><td class='n "+cls(r.drift)+"'>"+(r.drift>0?"+":"")+r.drift.toFixed(2)+"</td><td>"+esc(r.action)+"</td></tr>";}).join(""));
-      rows("lots",p.tax.lots.map(function(l){return "<tr><td>"+esc(l.id)+"</td><td>"+esc(l.date)+"</td><td class=n>"+l.shares.toFixed(4)+"</td><td class=n>"+usd(l.cost)+"</td><td class=n>"+usd(l.value)+"</td><td class='n "+cls(l.gain)+"'>"+usd(l.gain)+"</td><td>"+esc(l.term)+" (long term on "+esc(l.long_term_on)+")</td></tr>";}).join(""));
+      rows("reb",p.rebalance.rows.map(function(r){var q=pos.filter(function(x){return x.t===r.ticker;})[0];if(q){r=Object.assign({},r);r.current_pct=q.v/total*100;r.drift=r.current_pct-r.target_pct;r.action=Math.abs(r.drift)>p.rebalance.band?(r.drift>0?"over the band: would trim":"under the band: would add"):"hold";}return "<tr><td><b>"+r.ticker+"</b></td><td class=n>"+r.current_pct.toFixed(2)+"%</td><td class=n>"+r.target_pct.toFixed(2)+"%</td><td class='n "+cls(r.drift)+"'>"+(r.drift>0?"+":"")+r.drift.toFixed(2)+"</td><td>"+esc(r.action)+"</td></tr>";}).join(""));
+      rows("lots",p.tax.lots.map(function(l){var px=D.prices[l.ticker];if(px!=null){l=Object.assign({},l);l.value=l.shares*px;l.gain=l.value-l.cost;}return "<tr><td>"+esc(l.id)+"</td><td>"+esc(l.date)+"</td><td class=n>"+l.shares.toFixed(4)+"</td><td class=n>"+usd(l.cost)+"</td><td class=n>"+usd(l.value)+"</td><td class='n "+cls(l.gain)+"'>"+usd(l.gain)+"</td><td>"+esc(l.term)+" (long term on "+esc(l.long_term_on)+")</td></tr>";}).join(""));
+      [].forEach.call(document.querySelectorAll("#exit [data-now]"),function(c){var t=c.getAttribute("data-now"),px=D.prices[t],e=D.entry[t];if(px!=null&&e)c.innerHTML=usd(px)+"<small class=\""+cls(px-e)+"\">"+pct((px/e-1)*100)+"</small>";});
       $("taxnote").textContent="Realized gains this year: "+usd(p.tax.realized_ytd.short)+" short term, "+usd(p.tax.realized_ytd.long)+" long term. Not tax advice: arithmetic on the lots only.";
     }
     draw();
