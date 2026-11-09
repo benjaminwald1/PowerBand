@@ -22,16 +22,17 @@
       rows("scr",D.screen.passed.map(function(x){return "<tr><td><b>"+esc(x.ticker)+'</b></td><td><span class="v PASS">PASS</span></td><td>'+esc(x.why.join("; "))+"</td></tr>";}).concat(D.screen.failed.map(function(x){return "<tr><td><b>"+esc(x.ticker)+'</b></td><td><span class="v BLOCK">FAIL</span></td><td>'+esc(x.why.join("; "))+"</td></tr>";})).join(""));
     }
     $("news").innerHTML=(D.news||[]).map(function(n){return "<li><span><b>"+esc(n.ticker||"")+"</b> "+(n.link?"<a href=\""+esc(n.link)+"\" rel=\"noopener\">"+esc(n.title)+"</a>":esc(n.title))+"<small>"+esc(n.source)+" · "+esc((n.time||"").slice(0,16).replace("T"," "))+" UTC</small></span></li>";}).join("")||"<li>No recent news.</li>";
-    (function(){
+    function showTotal(first){
       var start=0,now=0;
       D.portfolios.forEach(function(p){start+=p.budget;var v=p.cash;p.buys.forEach(function(b){v+=b.dollars/D.entry[b.ticker]*D.prices[b.ticker];});now+=v;});
       var g=now-start;
       var big=$("bigtotal"),calm=typeof window!=="undefined"&&window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if(calm||typeof requestAnimationFrame==="undefined"||now<=0){big.textContent=usd(now);}
+      if(!first||calm||typeof requestAnimationFrame==="undefined"||now<=0){big.textContent=usd(now);}
       else{var t0=null,from=now*0.9,dur=900;   // counts up from just below, easing out with no overshoot (critically damped feel)
         (function step(ts){if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-k,4);big.textContent=usd(from+(now-from)*e);if(k<1)requestAnimationFrame(step);else big.textContent=usd(now);})(performance.now?performance.now():0);}
-      $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money.";
-    })();
+      $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money."+(D.live_at?' <span class="livedot">Live</span> prices as of '+new Date(D.live_at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})+".":"");
+    }
+    showTotal(true);
     (function(){
       var when=D.next_open?D.next_open.replace(" ","  at ")+" (the next market open)":"";
       $("buytime").textContent=D.next_open?(D.market_open_now?"The market is open now, so these would go in right away.":"The market is closed, so these market orders would go in at "+D.next_open.replace(/^(\S+) (\S+) (.*)$/,"$1 at $2 $3")+", the next market open."):"";
@@ -77,6 +78,14 @@
       $("taxnote").textContent="Realized gains this year: "+usd(p.tax.realized_ytd.short)+" short term, "+usd(p.tax.realized_ytd.long)+" long term. Not tax advice: arithmetic on the lots only.";
     }
     draw();
+    (function(){   // live prices: the total (and the tables) refresh whenever a price changes
+      var LIVE="https://raw.githubusercontent.com/benjaminwald1/PowerBand/live/live.json";
+      function poll(){fetch(LIVE+"?"+Date.now()).then(function(r){return r.json();}).then(function(L){
+        var ch=false;Object.keys(L.prices||{}).forEach(function(k){if(D.entry[k]!=null&&D.prices[k]!==L.prices[k]){D.prices[k]=L.prices[k];ch=true;}});
+        if(ch||!D.live_at){D.live_at=L.updated;D.prices_as_of=L.updated;draw();showTotal(false);}
+      }).catch(function(){});}
+      poll();setInterval(poll,60000);
+    })();
     fetch("data/learning.json?"+Date.now()).then(function(r){return r.json();}).then(function(L){
       var o=L.walk_forward.out_of_sample,f=function(n){return (n>0?"+":"")+n.toFixed(1)+"%";};
       $("ldecision").innerHTML=L.decision.adopted?"<b>The plan changed.</b> "+esc(L.decision.reason):"<b>The plan stayed the same this time.</b> "+esc(L.decision.reason)+(L.last_change?"<br><br><b>Last change ("+esc(L.last_change.date)+").</b> "+esc(L.last_change.reason):"");

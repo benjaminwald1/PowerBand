@@ -1,0 +1,20 @@
+name: live-prices
+on:
+  schedule:
+    - cron: "*/5 13-21 * * 1-5"   # every 5 min across US market hours (UTC), Mon-Fri
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: live-prices
+jobs:
+  quotes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/live.py
+      - name: Publish live.json to the live branch (one commit, replaced each time)
+        run: |
+          mkdir /tmp/out && cp live.json /tmp/out/ && cd /tmp/out
+          git init -q -b live && git config user.name live-bot && git config user.email live-bot@users.noreply.github.com
+          git add live.json && git commit -qm "live prices"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" live
