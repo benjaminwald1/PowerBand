@@ -93,6 +93,7 @@
       var SLOW="https://raw.githubusercontent.com/benjaminwald1/PowerBand/live/live.json";
       var busy=false,fails=0;
       function apply(L){
+        var tq=Date.parse(L.quote_time||L.updated)||0;if(D.live_at&&tq<Date.parse(D.live_at))return;   // never step back to an older quote
         var ch=false;Object.keys(L.prices||{}).forEach(function(k){if(D.entry[k]!=null&&D.prices[k]!==L.prices[k]){D.prices[k]=L.prices[k];ch=true;}});
         var t=L.quote_time||L.updated;
         if(ch||!D.live_at||D.live_at!==t){D.live_at=t;D.prices_as_of=t;if(ch)draw();showTotal(false);}
