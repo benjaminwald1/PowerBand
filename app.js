@@ -11,7 +11,7 @@
     p.buys.forEach(function(b){var h=LG.positions[b.ticker];if(h&&h.shares>0){b.cost=h.cost;D.entry[b.ticker]=h.cost/h.shares;}});
     (LG.buys||[]).forEach(function(x,i){var px=D.prices[x.ticker]||x.price,y=new Date(x.date+"T12:00:00Z");y.setUTCFullYear(y.getUTCFullYear()+1);
       p.tax.lots.push({ticker:x.ticker,id:x.ticker+"-top"+(i+1),date:x.date,shares:x.shares,cost:x.dollars,price:x.price,value:x.shares*px,gain:x.shares*px-x.dollars,term:"short",long_term_on:y.toISOString().slice(0,10)});});
-    D.pending=LG.pending||[];
+    D.pending=LG.pending||[];D.bench=LG.bench||null;
   }
   Promise.all([fetch("data/plan.json?"+Date.now()).then(function(r){return r.json();}),fetch("data/ledger.json?"+Date.now()).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})]).then(function(R){var D=R[0],LG=R[1];if(LG)useLedger(D,LG);
     var cur=0,tabs=$("tabs");if(D.portfolios.length<2)tabs.style.display="none";
@@ -39,6 +39,14 @@
       else{var t0=null,from=now*0.9,dur=900;   // counts up from just below, easing out with no overshoot (critically damped feel)
         (function step(ts){if(id!==anim)return;if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-k,4);big.textContent=usd(from+(now-from)*e);if(k<1)requestAnimationFrame(step);else big.textContent=usd(now);})(performance.now?performance.now():0);}
       $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money."+(D.live_at?' <span class="livedot">Live</span> prices as of '+new Date(D.live_at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit",second:"2-digit"})+".":"");
+      (function(){   // today and since the start, next to the S&P 500
+        var el=$("compare"),B=D.bench,P=D.prevs;if(!el||!B||D.spx==null||!P)return;
+        var pv=0,nv=0,ok=true;D.portfolios.forEach(function(p){pv+=p.cash;nv+=p.cash;p.buys.forEach(function(b){var sh=(b.cost!=null?b.cost:b.dollars)/D.entry[b.ticker],pr=P[b.ticker];if(pr==null){ok=false;return;}pv+=sh*pr;nv+=sh*D.prices[b.ticker];});});
+        if(!ok||!(pv>0)||!P["^GSPC"])return;
+        var dg=nv-pv,dp=dg/pv*100,sd=(D.spx/P["^GSPC"]-1)*100,tp=g/start*100,st=(D.spx/B.start-1)*100;
+        function row(label,me,mine,idx){var diff=me-idx;return '<div class="cmprow"><span class="cmplabel">'+label+'</span><span class="'+cls(me)+'">You '+(mine||pct(me))+'</span><span class="'+cls(idx)+'">S&amp;P 500 '+pct(idx)+'</span><span class="cmpdiff '+cls(diff)+'">'+(diff>=0?"ahead by ":"behind by ")+Math.abs(diff).toFixed(2)+" pts</span></div>";}
+        el.innerHTML=row("Today",dp,(dg>=0?"+":"")+usd(dg)+" ("+pct(dp)+")",sd)+row("Since "+new Date(B.start_date+"T12:00:00Z").toLocaleDateString([],{month:"short",day:"numeric"}),tp,pct(tp),st);
+      })();
     }
     showTotal(true);
     (function(){
@@ -89,12 +97,13 @@
     }
     draw();
     (function(){   // live prices: a Cloudflare Worker serves Yahoo quotes; the total refreshes every second
-      var API="https://powerband-quotes.benjaminwald11.workers.dev/?s="+Object.keys(D.entry).sort().join(",");
+      var API="https://powerband-quotes.benjaminwald11.workers.dev/?s="+encodeURIComponent(Object.keys(D.entry).sort().concat("^GSPC").join(","));
       var SLOW="https://raw.githubusercontent.com/benjaminwald1/PowerBand/live/live.json";
       var busy=false,fails=0;
       function apply(L){
         var tq=Date.parse(L.quote_time||L.updated)||0;if(D.live_at&&tq<Date.parse(D.live_at))return;   // never step back to an older quote
         var ch=false;Object.keys(L.prices||{}).forEach(function(k){if(D.entry[k]!=null&&D.prices[k]!==L.prices[k]){D.prices[k]=L.prices[k];ch=true;}});
+        if(L.prevs)D.prevs=L.prevs;if(L.prices&&L.prices["^GSPC"]!=null&&D.spx!==L.prices["^GSPC"]){D.spx=L.prices["^GSPC"];ch=true;}
         var t=L.quote_time||L.updated;
         if(ch||!D.live_at||D.live_at!==t){D.live_at=t;D.prices_as_of=t;if(ch)draw();showTotal(false);}
       }

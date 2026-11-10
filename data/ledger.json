@@ -38,5 +38,11 @@
   }
  ],
  "last_roll": "2026-11-09",
- "note": "Paper money. Rolled daily by scripts/roll.py."
+ "note": "Paper money. Rolled daily by scripts/roll.py.",
+ "bench": {
+  "symbol": "^GSPC",
+  "name": "S&P 500",
+  "start": 7376.8599,
+  "start_date": "2026-11-06"
+ }
 }

@@ -89,3 +89,9 @@ html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
 .note{background:color-mix(in srgb,var(--brand) 8%,transparent);border:1px solid color-mix(in srgb,var(--brand) 28%,transparent);border-radius:10px;padding:12px 14px;margin:0 0 16px;font-size:15px}
 details.inner{margin-top:14px}details.inner summary{cursor:pointer;color:var(--brand);font-size:.9rem;font-weight:600;padding:.25rem 0}
 .livedot{display:inline-block;font-size:.72em;font-weight:600;padding:.05em .45em;border-radius:99px;background:color-mix(in srgb,var(--up,#1a7f37) 16%,transparent);color:var(--up,#1a7f37);vertical-align:.08em}
+
+.compare{margin-top:14px;display:grid;gap:8px;max-width:760px}
+.cmprow{display:grid;grid-template-columns:90px 1fr 1fr auto;gap:6px 16px;align-items:baseline;font-size:16px;font-variant-numeric:tabular-nums;padding:10px 14px;border:1px solid var(--line,#e3e5e8);border-radius:12px;background:var(--card,#fff)}
+.cmplabel{color:var(--mute);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.cmprow .up,.cmprow .down{font-weight:700}.cmpdiff{font-size:14px;color:var(--mute)}.cmpdiff.up,.cmpdiff.down{font-weight:600}
+@media (max-width:640px){.cmprow{grid-template-columns:1fr 1fr}.cmplabel,.cmpdiff{grid-column:1/-1}}

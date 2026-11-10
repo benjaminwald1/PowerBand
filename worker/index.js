@@ -3,7 +3,7 @@
 // Quotes come from Yahoo's public chart endpoint (no key). Answers are cached for
 // one second at the edge, so any number of open tabs cost Yahoo one fetch a second.
 const ORIGINS = ["https://powerband.fit", "https://www.powerband.fit"];
-const SYMBOL = /^[A-Z]{1,5}([.-][A-Z])?$/;
+const SYMBOL = /^(\^GSPC|[A-Z]{1,5}([.-][A-Z])?)$/;   // stocks, plus the S&P 500 index
 
 function cors(req) {
   const o = req.headers.get("origin");
@@ -15,13 +15,14 @@ function cors(req) {
 }
 
 async function quote(sym) {
+  const q = encodeURIComponent(sym);
   for (const host of ["query1", "query2"]) {
     try {
-      const r = await fetch(`https://${host}.finance.yahoo.com/v8/finance/chart/${sym}?range=1d&interval=1m`,
+      const r = await fetch(`https://${host}.finance.yahoo.com/v8/finance/chart/${q}?range=1d&interval=1m`,
         { headers: { "user-agent": "Mozilla/5.0" }, cf: { cacheTtl: 1, cacheEverything: true } });
       if (!r.ok) continue;
       const m = (await r.json()).chart.result[0].meta;
-      return { price: Number(m.regularMarketPrice), time: Number(m.regularMarketTime) || 0 };
+      return { price: Number(m.regularMarketPrice), prev: Number(m.chartPreviousClose) || null, time: Number(m.regularMarketTime) || 0 };
     } catch (e) { /* try the other host */ }
   }
   return null;
@@ -39,9 +40,9 @@ export default {
     if (hit) return new Response(hit.body, { headers: { ...h, "cache-control": "no-store", "x-cache": "hit" } });
     const got = await Promise.all(syms.map(quote));
     if (got.some((g) => !g)) return new Response(JSON.stringify({ error: "quote source unavailable" }), { status: 502, headers: h });
-    const prices = {}; let stamp = 0;
-    syms.forEach((s, i) => { prices[s] = Math.round(got[i].price * 10000) / 10000; stamp = Math.max(stamp, got[i].time); });
-    const body = JSON.stringify({ updated: new Date().toISOString(), quote_time: new Date(stamp * 1000).toISOString(), prices });
+    const prices = {}, prevs = {}; let stamp = 0;
+    syms.forEach((s, i) => { prices[s] = Math.round(got[i].price * 10000) / 10000; if (got[i].prev) prevs[s] = Math.round(got[i].prev * 10000) / 10000; stamp = Math.max(stamp, got[i].time); });
+    const body = JSON.stringify({ updated: new Date().toISOString(), quote_time: new Date(stamp * 1000).toISOString(), prices, prevs });
     ctx.waitUntil(caches.default.put(key, new Response(body, { headers: { "cache-control": "public, max-age=1" } })));
     return new Response(body, { headers: { ...h, "cache-control": "no-store", "x-cache": "miss" } });
   },
