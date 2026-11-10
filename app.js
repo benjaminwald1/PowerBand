@@ -38,7 +38,7 @@
       if(!first||calm||typeof requestAnimationFrame==="undefined"||now<=0){big.textContent=usd(now);}
       else{var t0=null,from=now*0.9,dur=900;   // counts up from just below, easing out with no overshoot (critically damped feel)
         (function step(ts){if(id!==anim)return;if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-k,4);big.textContent=usd(from+(now-from)*e);if(k<1)requestAnimationFrame(step);else big.textContent=usd(now);})(performance.now?performance.now():0);}
-      $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money."+(D.live_at?' <span class="livedot">Live</span> prices as of '+new Date(D.live_at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})+".":"");
+      $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money."+(D.live_at?' <span class="livedot">Live</span> prices as of '+new Date(D.live_at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit",second:"2-digit"})+".":"");
     }
     showTotal(true);
     (function(){
@@ -88,13 +88,25 @@
       $("taxnote").textContent="Realized gains this year: "+usd(p.tax.realized_ytd.short)+" short term, "+usd(p.tax.realized_ytd.long)+" long term. Not tax advice: arithmetic on the lots only.";
     }
     draw();
-    (function(){   // live prices: the total (and the tables) refresh whenever a price changes
-      var LIVE="https://raw.githubusercontent.com/benjaminwald1/PowerBand/live/live.json";
-      function poll(){fetch(LIVE+"?"+Date.now()).then(function(r){return r.json();}).then(function(L){
+    (function(){   // live prices: a Cloudflare Worker serves Yahoo quotes; the total refreshes every second
+      var API="https://powerband-quotes.benjaminwald11.workers.dev/?s="+Object.keys(D.entry).sort().join(",");
+      var SLOW="https://raw.githubusercontent.com/benjaminwald1/PowerBand/live/live.json";
+      var busy=false,fails=0;
+      function apply(L){
         var ch=false;Object.keys(L.prices||{}).forEach(function(k){if(D.entry[k]!=null&&D.prices[k]!==L.prices[k]){D.prices[k]=L.prices[k];ch=true;}});
-        if(ch||!D.live_at){D.live_at=L.updated;D.prices_as_of=L.updated;draw();showTotal(false);}
-      }).catch(function(){});}
-      poll();setInterval(poll,60000);
+        var t=L.quote_time||L.updated;
+        if(ch||!D.live_at||D.live_at!==t){D.live_at=t;D.prices_as_of=t;if(ch)draw();showTotal(false);}
+      }
+      function get(url){return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();});}
+      function poll(){
+        if(busy||document.hidden)return;busy=true;
+        get(API).then(function(L){fails=0;apply(L);}).catch(function(){
+          fails++;   // the quote server is down: fall back to the slower published file, once a minute
+          if(fails%60===1)return get(SLOW+"?"+Date.now()).then(apply).catch(function(){});
+        }).then(function(){busy=false;});
+      }
+      poll();setInterval(poll,1000);
+      document.addEventListener("visibilitychange",function(){if(!document.hidden)poll();});
     })();
     fetch("data/learning.json?"+Date.now()).then(function(r){return r.json();}).then(function(L){
       var o=L.walk_forward.out_of_sample,f=function(n){return (n>0?"+":"")+n.toFixed(1)+"%";};
