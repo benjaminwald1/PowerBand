@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-16T18:00:18+00:00",
+ "generated": "2026-11-16T18:08:20+00:00",
  "data": {
   "filings": 39,
   "first": "2017-02-14",
@@ -24,7 +24,7 @@
   ],
   "combos_tested": 54
  },
- "strategy": "Copy the top 5 stocks of each Berkshire 13F the day after it was filed, 10% cash buffer, 25% cap per stock",
+ "strategy": "Copy the top 5 stocks of each Berkshire 13F the day after it was filed, 0% cash buffer, at Berkshire's own weights (no cap)",
  "walk_forward": {
   "folds": [
    {
@@ -32,42 +32,42 @@
     "chosen": {
      "take_profit": 25,
      "stop_loss": 15,
-     "band": 5,
-     "max_pe": 40
+     "band": null,
+     "max_pe": null
     },
-    "learned": 27.0,
-    "default": 27.1,
-    "none": 32.1,
+    "learned": 31.1,
+    "default": 31.1,
+    "none": 36.0,
     "spy": 30.5,
-    "live": 32.1
+    "live": 36.0
    },
    {
     "year": 2022,
     "chosen": {
      "take_profit": 25,
      "stop_loss": 15,
-     "band": 10,
-     "max_pe": 40
+     "band": null,
+     "max_pe": null
     },
-    "learned": -23.3,
-    "default": -23.9,
-    "none": -14.3,
+    "learned": -28.5,
+    "default": -28.5,
+    "none": -21.4,
     "spy": -18.6,
-    "live": -14.3
+    "live": -21.4
    },
    {
     "year": 2023,
     "chosen": {
-     "take_profit": 25,
-     "stop_loss": 25,
+     "take_profit": null,
+     "stop_loss": 15,
      "band": null,
-     "max_pe": 40
+     "max_pe": null
     },
-    "learned": 21.5,
-    "default": 14.3,
-    "none": 18.4,
+    "learned": 33.6,
+    "default": 24.6,
+    "none": 33.8,
     "spy": 26.7,
-    "live": 18.4
+    "live": 33.8
    },
    {
     "year": 2024,
@@ -75,90 +75,90 @@
      "take_profit": 25,
      "stop_loss": 25,
      "band": null,
-     "max_pe": 40
+     "max_pe": null
     },
-    "learned": 30.1,
-    "default": 25.7,
-    "none": 27.2,
+    "learned": 26.7,
+    "default": 29.1,
+    "none": 30.2,
     "spy": 25.6,
-    "live": 27.2
+    "live": 30.2
    },
    {
     "year": 2025,
     "chosen": {
-     "take_profit": 25,
-     "stop_loss": 25,
+     "take_profit": 50,
+     "stop_loss": null,
      "band": null,
      "max_pe": 40
     },
-    "learned": 20.8,
-    "default": 6.3,
-    "none": 14.9,
+    "learned": 22.8,
+    "default": 5.4,
+    "none": 15.7,
     "spy": 18.0,
-    "live": 14.9
+    "live": 15.7
    },
    {
     "year": 2026,
     "chosen": {
-     "take_profit": 25,
-     "stop_loss": 25,
+     "take_profit": 50,
+     "stop_loss": null,
      "band": null,
      "max_pe": 40
     },
-    "learned": 6.8,
-    "default": 7.8,
-    "none": 6.2,
+    "learned": 7.6,
+    "default": 8.6,
+    "none": 7.0,
     "spy": 8.5,
-    "live": 6.2
+    "live": 7.0
    }
   ],
   "out_of_sample": {
    "learned": {
-    "cagr": 12.5,
-    "total": 98.7
+    "cagr": 13.5,
+    "total": 109.5
    },
    "default": {
-    "cagr": 8.3,
-    "total": 59.3
+    "cagr": 9.8,
+    "total": 72.5
    },
    "none": {
-    "cagr": 13.4,
-    "total": 108.2
+    "cagr": 15.4,
+    "total": 130.7
    },
    "spy": {
     "cagr": 14.1,
     "total": 116.3
    },
    "live": {
-    "cagr": 13.4,
-    "total": 108.2
+    "cagr": 15.4,
+    "total": 130.7
    }
   },
   "wins_vs_current": {
    "no_rules": 0,
-   "learned": 4,
+   "learned": 2,
    "current": 0
   },
   "years": 6
  },
  "full_period": {
   "current_rules": {
-   "ret": 113.7,
-   "cagr": 8.1,
-   "dd": -31.0,
-   "sharpe": 0.64
+   "ret": 162.1,
+   "cagr": 10.4,
+   "dd": -32.7,
+   "sharpe": 0.66
   },
   "no_rules": {
-   "ret": 178.6,
-   "cagr": 11.1,
-   "dd": -37.3,
-   "sharpe": 0.65
+   "ret": 262.4,
+   "cagr": 14.2,
+   "dd": -39.0,
+   "sharpe": 0.71
   },
   "learned_now_in_sample": {
-   "ret": 211.3,
-   "cagr": 12.4,
-   "dd": -28.2,
-   "sharpe": 0.87
+   "ret": 249.0,
+   "cagr": 13.7,
+   "dd": -39.0,
+   "sharpe": 0.73
   },
   "spy": {
    "ret": 266.3,
@@ -168,7 +168,7 @@
  },
  "learned_now": {
   "take_profit": 25,
-  "stop_loss": 25,
+  "stop_loss": null,
   "band": null,
   "max_pe": 40
  },
@@ -182,10 +182,10 @@
  "decision": {
   "adopted": false,
   "best": "current",
-  "reason": "The current rules held up. On years it had not seen they earned 13.4% a year, and the best alternative it tried earned 12.5%, which is not clearly better, so nothing changed. For comparison the S&P 500 returned 14.1% a year over the same unseen years."
+  "reason": "The current rules held up. On years it had not seen they earned 15.4% a year, and the best alternative it tried earned 13.5%, which is not clearly better, so nothing changed. For comparison the S&P 500 returned 14.1% a year over the same unseen years."
  },
  "calibration": {
-  "entries": 5,
+  "entries": 10,
   "matured": {},
   "history": {
    "levels": {
@@ -262,6 +262,7 @@
   "Prices are dividend-adjusted closes. Trades happen at the close after a filing is public.",
   "Berkshire's 13F shows long US stocks only. Some older tickers had no price history and were skipped.",
   "Trying 54 rule sets on the same history invites luck. That is why only unseen years count.",
+  "No cash buffer and no per-stock cap were picked on 2026-11-16 after looking at this same history, so the gain from that switch is partly hindsight.",
   "The final choice among three options is made on the same six unseen years, so even that result is a little flattering."
  ],
  "history": [
@@ -286,13 +287,13 @@
    "adopted": false,
    "best": "current",
    "oos": {
-    "current": 13.4,
-    "no_rules": 13.4,
-    "learned": 12.5
+    "current": 15.4,
+    "no_rules": 15.4,
+    "learned": 13.5
    },
    "picked_now": {
     "take_profit": 25,
-    "stop_loss": 25,
+    "stop_loss": null,
     "band": null,
     "max_pe": 40
    }

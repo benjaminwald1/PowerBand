@@ -92,7 +92,7 @@ with tempfile.TemporaryDirectory() as tmp:
 
     for b in BUDGETS:
         w = os.path.join(tmp, f"w{b}"); os.makedirs(os.path.join(w, "trader", "state"))
-        cfg = dict(cfg0, budget=b, max_order_usd=round(b * 0.3))
+        cfg = dict(cfg0, budget=b, max_order_usd=b)
         for n, o in (("config.json", cfg), ("targets.json", targets), ("prices.json", q)):
             json.dump(o, open(os.path.join(w, "trader", n), "w"))
         size = jrun("trader-budget", "size.py", ["--write", "--json", "--prices", "trader/prices.json"], w, ok=(0,))["result"]

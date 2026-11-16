@@ -3,7 +3,7 @@
  1. execute yesterday's queued reinvestment buys at today's OPEN price,
  2. mark the account to today's CLOSE (cash + shares * close) and record it,
  3. queue tomorrow's buys: top each stock up toward its target share of the NEW balance,
-    using only cash above the 10% buffer. No sells (the plan only sells on Berkshire's next 13F).
+    using only cash above the cash buffer. No sells (the plan only sells on Berkshire's next 13F).
 State lives in data/ledger.json. Safe to re-run: a day already rolled is skipped."""
 import json, sys, time, datetime, urllib.request
 LG = json.load(open("data/ledger.json")); plan = json.load(open("data/plan.json"))

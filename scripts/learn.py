@@ -8,7 +8,8 @@ import itertools, json, math, os, statistics, sys, datetime
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 C = os.path.join(ROOT, ".local", "learn"); D = os.path.join(ROOT, "data")
 FEE = 0.0   # no trading costs are modelled; real costs and taxes would lower every number
-BUF, CAP, TOPN = 0.10, 0.25, 5
+_cfg = json.load(open(os.path.join(D, "seed", "config.json")))
+BUF, CAP, TOPN = _cfg["cash_buffer_pct"] / 100, _cfg["max_position_pct"] / 100, 5   # the live sizing rules, so the backtest matches the plan
 
 f13 = json.load(open(os.path.join(C, "13f_all.json")))
 PX, EPS = {}, {}
@@ -39,7 +40,7 @@ def weights(f):
     pos = [p for p in f["positions"] if p["ticker"] in ADJ][:TOPN]
     tot = sum(p["pct"] for p in pos) or 1
     w = {p["ticker"]: p["pct"] / tot * (1 - BUF) for p in pos}
-    for _ in range(10):   # cap one stock at 25% and share the excess over the others
+    for _ in range(10):   # cap one stock at CAP and share the excess over the others
         over = {t for t, x in w.items() if x > CAP + 1e-9}
         if not over: break
         extra = sum(w[t] - CAP for t in over); free = {t for t in w if t not in over}
@@ -223,12 +224,12 @@ def odds_history():
 rules0 = json.load(open(rules_path))
 
 res = {"generated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"), "data": {"filings": len(f13), "first": dates[0], "last": dates[-1], "tickers": sorted(ADJ), "combos_tested": len(GRID)},
-       "strategy": "Copy the top 5 stocks of each Berkshire 13F the day after it was filed, 10% cash buffer, 25% cap per stock",
+       "strategy": f"Copy the top 5 stocks of each Berkshire 13F the day after it was filed, {BUF:.0%} cash buffer" + (f", {CAP:.0%} cap per stock" if CAP < 1 else ", at Berkshire's own weights (no cap)"),
        "walk_forward": {"folds": folds, "out_of_sample": oos, "wins_vs_current": wins_of, "years": len(folds)},
        "full_period": {"current_rules": full(DEFAULT), "no_rules": full((None, None, None, None)), "learned_now_in_sample": full(cur), "spy": {k: round(v * 100, 1) for k, v in stats(spy_eq, 0, len(dates)).items() if k != "sharpe"}},
        "learned_now": {"take_profit": cur[0], "stop_loss": cur[1], "band": cur[2], "max_pe": cur[3]}, "live_rules_before": live_before,
        "decision": {"adopted": adopt, "best": best_name, "reason": reason}, "calibration": calibration() | {"history": odds_history()},
-       "caveats": ["Past results do not predict future ones, and ten years is a short sample with only one market cycle of note.", "No fees, taxes, spreads or slippage are modelled. Real trading would earn less.", "Prices are dividend-adjusted closes. Trades happen at the close after a filing is public.", "Berkshire's 13F shows long US stocks only. Some older tickers had no price history and were skipped.", "Trying 54 rule sets on the same history invites luck. That is why only unseen years count.", "The final choice among three options is made on the same six unseen years, so even that result is a little flattering."]}
+       "caveats": ["Past results do not predict future ones, and ten years is a short sample with only one market cycle of note.", "No fees, taxes, spreads or slippage are modelled. Real trading would earn less.", "Prices are dividend-adjusted closes. Trades happen at the close after a filing is public.", "Berkshire's 13F shows long US stocks only. Some older tickers had no price history and were skipped.", "Trying 54 rule sets on the same history invites luck. That is why only unseen years count.", "No cash buffer and no per-stock cap were picked on 2026-11-16 after looking at this same history, so the gain from that switch is partly hindsight.", "The final choice among three options is made on the same six unseen years, so even that result is a little flattering."]}
 old = json.load(open(os.path.join(D, "learning.json"))) if os.path.exists(os.path.join(D, "learning.json")) else {}
 hist = old.get("history", []) + [{"date": res["generated"][:10], "adopted": adopt, "best": best_name, "oos": cands, "picked_now": res["learned_now"]}]
 res["history"] = [h for k, h in enumerate(hist) if k == len(hist) - 1 or hist[k + 1]["date"] != h["date"]][-60:]   # one entry per day
