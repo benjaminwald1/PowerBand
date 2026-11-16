@@ -43,7 +43,7 @@
     <div class="cards" id="ocards"></div>
     <div class="tablewrap"><table id="exit"><thead><tr><th>Stock</th><th class="n">Bought at</th><th class="n">Now</th><th class="n">Sell for profit at</th><th class="n">Sell to cut loss at</th><th class="n">12-month range</th><th class="n">Past 12 months</th></tr></thead><tbody></tbody></table></div>
     <h2 class="sub">Chance of reaching each price</h2>
-    <p class="fine top0">No one can say the exact moment a price will be hit. These odds come from each stock's past swings and a simple model, and they can be wrong. "Within" means at any point before then.</p>
+    <p class="fine top0">No one can say the exact moment a price will be hit. These odds come from each stock's past swings and a simple model, corrected where ten years of history showed it was off, and they can still be wrong. "Within" means at any point before then.</p>
     <div class="tablewrap"><table id="odds"><thead><tr><th>Stock</th><th>Level</th><th class="n">Within 1 month</th><th class="n">Within 3 months</th><th class="n">Within 12 months</th></tr></thead><tbody></tbody></table></div>
     <h2 class="sub">When would it sell?</h2>
     <ol class="steps" id="when"></ol>
@@ -59,7 +59,7 @@
     <h2 class="sub">How it keeps learning</h2>
     <ol class="steps">
       <li><b>It writes down its odds.</b> Every time the plan refreshes, the chance it gave each stock of hitting its profit or stop price is saved to a journal.</li>
-      <li><b>It grades itself.</b> Once a month, three months or a year has passed, it checks whether the price really got there and compares that with the odds it gave.</li>
+      <li><b>It grades itself.</b> Once a month, three months or a year has passed, it checks whether the price really got there and compares that with the odds it gave. It also replays the same odds over ten years of past prices, and where they were too high or too low on years it had not seen, it corrects them.</li>
       <li><b>It retrains on new filings.</b> Each time Berkshire files, the history grows by a quarter, and every rule set is tested again.</li>
       <li><b>It only changes when it is clearly better.</b> A new rule must beat the current one by at least a point a year on unseen years, and win most of them. Otherwise nothing changes.</li>
     </ol>

@@ -126,6 +126,9 @@
       $("ltake").textContent=o.spy.cagr>Math.max(o.learned.cagr,o.default.cagr,o.none.cagr)?"Honest takeaway: in this test, a plain S&P 500 index fund did better than every version of copying Berkshire, and copying with no selling rules beat the rules that sell on price.":"Honest takeaway: the learned approach did well here, but ten years is a short test and the result may not repeat.";
       var m=L.calibration.matured,ks=Object.keys(m);
       $("lcal").innerHTML=ks.length?"<b>Scoring its own odds so far.</b> "+ks.map(function(k){var x=m[k];return "Within "+k.replace("m"," months")+": it said "+x.predicted_pct+"% on average and "+x.happened_pct+"% happened ("+x.n+" checks)";}).join(". ")+".":"<b>Scoring its own odds.</b> "+L.calibration.entries+" predictions are saved so far, and none are old enough to grade. The first grades appear after about a month of daily refreshes.";
+      var hh=L.calibration.history;
+      if(hh){var hz=["1 month","3 months","12 months"],lv={profit:"+"+hh.levels.take_profit_pct+"%",stop:"-"+hh.levels.stop_loss_pct+"%"};
+        $("lcal").innerHTML+="<br><br><b>Graded on ten years of history.</b> The same odds formula was checked from every week since 2017 on "+L.data.tickers.length+" stocks: did the price touch "+lv.profit+" or "+lv.stop+" in time? "+["profit","stop"].map(function(k){return [0,1,2].map(function(i){var c=hh.checks[k+"_"+i];return c?(k=="profit"?"Profit":"Stop")+" within "+hz[i]+": said "+c.predicted_pct+"%, happened "+c.happened_pct+"%"+(c.use?" (now corrected)":""):"";}).filter(Boolean).join(". ");}).join(". ")+". A correction is used only where it scored better on years it was not fitted on; the rest are shown as the formula gives them.";}
       $("lcav").innerHTML=L.caveats.map(function(c){return "<li>"+esc(c)+"</li>";}).join("");
     }).catch(function(){});
   }).catch(function(){$("cards").textContent="Couldn't load the plan.";});

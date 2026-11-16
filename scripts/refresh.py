@@ -30,6 +30,16 @@ def outlook(buys, entry, prices, rules, as_of_13f):
     sig = sd_d * math.sqrt(T)
     def rng(x):  # 10th and 90th percentile of a lognormal spread with a long-run growth assumption (DRIFT per year)
         return round(x * math.exp(g - z * sig) , 2), round(x * math.exp(g + z * sig), 2)
+    # corrections the learner fitted by grading this same formula on ten years of prices; only ones that held up on unseen years are used
+    lp = os.path.join(ROOT, "data", "learning.json")
+    hc = json.load(open(lp)).get("calibration", {}).get("history", {}) if os.path.exists(lp) else {}
+    same = hc.get("levels") == {"take_profit_pct": rules["take_profit_pct"], "stop_loss_pct": rules["stop_loss_pct"]}
+    fixes = {k: c for k, c in hc.get("checks", {}).items() if c.get("use")} if same else {}
+    def fix(kind, i, pct):
+        c = fixes.get(f"{kind}_{i}")
+        if not c: return pct
+        p = min(max(pct / 100, 1e-4), 1 - 1e-4)
+        return round(100 / (1 + math.exp(-(c["a"] + c["b"] * math.log(p / (1 - p))))))
     stocks = []
     for b in buys:
         h = hist[b["ticker"]]; lr = [math.log(h[i] / h[i - 1]) for i in range(1, len(h))]
@@ -38,8 +48,9 @@ def outlook(buys, entry, prices, rules, as_of_13f):
         # chance the price touches a level at any point within N trading days (random walk, no drift: reflection principle)
         hit = lambda lvl, d: round(math.erfc(abs(math.log(lvl / e)) / (sd * math.sqrt(d) * math.sqrt(2))) * 100)
         tp, sl = e * (1 + rules["take_profit_pct"] / 100), e * (1 - rules["stop_loss_pct"] / 100)
-        odds = {"profit": [hit(tp, d) for d in (21, 63, 252)], "stop": [hit(sl, d) for d in (21, 63, 252)]}
-        stocks.append({"odds": odds, "ticker": b["ticker"], "vol_pct": round(v * 100, 1), "last_year_pct": round((h[-1] / h[0] - 1) * 100, 1), "entry": e,
+        raw = {"profit": [hit(tp, d) for d in (21, 63, 252)], "stop": [hit(sl, d) for d in (21, 63, 252)]}
+        odds = {k: [fix(k, i, n) for i, n in enumerate(v)] for k, v in raw.items()}
+        stocks.append({"odds": odds, "odds_raw": raw, "ticker": b["ticker"], "vol_pct": round(v * 100, 1), "last_year_pct": round((h[-1] / h[0] - 1) * 100, 1), "entry": e,
             "take_profit_price": round(e * (1 + rules["take_profit_pct"] / 100), 2), "stop_price": round(e * (1 - rules["stop_loss_pct"] / 100), 2),
             "low": round(e * math.exp(g - z * v), 2), "high": round(e * math.exp(g + z * v), 2)})
     lo, hi = rng(tot)
@@ -50,7 +61,7 @@ def outlook(buys, entry, prices, rules, as_of_13f):
     dl = nq + datetime.timedelta(days=45)
     while dl.weekday() > 4: dl += datetime.timedelta(days=1)
     return {"horizon_days": T, "portfolio": {"vol_pct": round(sig * 100, 1), "low": lo, "high": hi, "invested": tot,
-            "last_year_pct": round((math.exp(sum(port)) - 1) * 100, 1)}, "stocks": stocks, "rules": rules,
+            "last_year_pct": round((math.exp(sum(port)) - 1) * 100, 1)}, "stocks": stocks, "rules": rules, "odds_corrected": sorted(fixes),
             "next_13f": {"quarter_end": nq.isoformat(), "deadline": dl.isoformat()}}
 
 def jrun(*a, **k):
@@ -125,8 +136,11 @@ with tempfile.TemporaryDirectory() as tmp:
         rules = seed("rules.json")
         sc = jrun("trader-screener", "screen.py", ["trader/metrics.json", "--rules", os.path.join(ROOT, "data", "seed", "rules.json"), "--prices", "trader/prices.json", "--json"], tmp)
         plan["screen"] = {"name": rules["name"], "rules": rules["rules"], "passed": sc["passed"], "failed": sc["failed"]}
-        nw = jrun("trader-news", "news.py", ["--user-agent", ua, "--json", "--dry-run", "--hours", "72", "--tickers", *tickers], tmp, ok=(0,))
-        plan["news"] = [{k: i.get(k) for k in ("source", "kind", "ticker", "title", "link", "time", "tags")} for i in nw["items"][:14]]
+        try:
+            nw = jrun("trader-news", "news.py", ["--user-agent", ua, "--json", "--dry-run", "--hours", "72", "--tickers", *tickers], tmp, ok=(0,))
+            plan["news"] = [{k: i.get(k) for k in ("source", "kind", "ticker", "title", "link", "time", "tags")} for i in nw["items"][:14]]
+        except SystemExit as e:   # a slow news feed should not stop the plan from rebuilding; keep the last headlines
+            plan["news"] = old.get("news", []); print("news skipped:", str(e)[-120:])
         plan["sec_skills"] = True
     else:
         for k in ("analyst", "screen", "news"):

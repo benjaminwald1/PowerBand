@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T18:19:48+00:00",
+ "generated": "2026-11-16T18:00:18+00:00",
  "data": {
   "filings": 39,
   "first": "2017-02-14",
@@ -186,7 +186,75 @@
  },
  "calibration": {
   "entries": 5,
-  "matured": {}
+  "matured": {},
+  "history": {
+   "levels": {
+    "take_profit_pct": 25,
+    "stop_loss_pct": 15
+   },
+   "checks": {
+    "profit_0": {
+     "n": 7984,
+     "predicted_pct": 2.4,
+     "happened_pct": 1.3,
+     "brier_raw": 0.0161,
+     "brier_fixed": 0.0153,
+     "a": -1.028,
+     "b": 0.8341,
+     "use": true
+    },
+    "profit_1": {
+     "n": 7840,
+     "predicted_pct": 11.6,
+     "happened_pct": 8.0,
+     "brier_raw": 0.0803,
+     "brier_fixed": 0.0795,
+     "a": -0.4452,
+     "b": 1.0214,
+     "use": false
+    },
+    "profit_2": {
+     "n": 7248,
+     "predicted_pct": 37.9,
+     "happened_pct": 42.9,
+     "brier_raw": 0.2084,
+     "brier_fixed": 0.2203,
+     "a": 0.376,
+     "b": 1.3006,
+     "use": false
+    },
+    "stop_0": {
+     "n": 7984,
+     "predicted_pct": 6.3,
+     "happened_pct": 4.9,
+     "brier_raw": 0.0584,
+     "brier_fixed": 0.0533,
+     "a": -2.1046,
+     "b": 0.2387,
+     "use": true
+    },
+    "stop_1": {
+     "n": 7840,
+     "predicted_pct": 22.3,
+     "happened_pct": 16.5,
+     "brier_raw": 0.1704,
+     "brier_fixed": 0.1532,
+     "a": -1.2618,
+     "b": 0.2531,
+     "use": true
+    },
+    "stop_2": {
+     "n": 7248,
+     "predicted_pct": 51.2,
+     "happened_pct": 41.9,
+     "brier_raw": 0.2967,
+     "brier_fixed": 0.301,
+     "a": -0.3192,
+     "b": -0.1118,
+     "use": false
+    }
+   }
+  }
  },
  "caveats": [
   "Past results do not predict future ones, and ten years is a short sample with only one market cycle of note.",
@@ -199,6 +267,22 @@
  "history": [
   {
    "date": "2026-11-07",
+   "adopted": false,
+   "best": "current",
+   "oos": {
+    "current": 13.4,
+    "no_rules": 13.4,
+    "learned": 12.5
+   },
+   "picked_now": {
+    "take_profit": 25,
+    "stop_loss": 25,
+    "band": null,
+    "max_pe": 40
+   }
+  },
+  {
+   "date": "2026-11-16",
    "adopted": false,
    "best": "current",
    "oos": {

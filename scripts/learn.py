@@ -174,16 +174,64 @@ def calibration():
         if v: out[f"{mo}m"] = {"n": len(v), "predicted_pct": round(sum(a for a, _ in v) / len(v) * 100, 1), "happened_pct": round(sum(b for _, b in v) / len(v) * 100, 1), "brier": round(sum((a - b) ** 2 for a, b in v) / len(v), 3)}
     return {"entries": len(J), "matured": out}
 
+# --- grade the odds formula on ten years of history instead of waiting for the journal, and learn a correction ---
+LOGIT = lambda p: math.log(min(max(p, 1e-4), 1 - 1e-4) / (1 - min(max(p, 1e-4), 1 - 1e-4)))
+SIG = lambda x: 1 / (1 + math.exp(-min(max(x, -30), 30)))
+def fit_logistic(rows):   # Newton steps on log loss for happened ~ a + b*logit(predicted)
+    a, b = 0.0, 1.0
+    for _ in range(25):
+        ga, gb, haa, hab, hbb = a, b - 1, 1.0, 0.0, 1.0   # a light pull toward "no correction" keeps rare-event fits stable
+        for x, h in rows:
+            q = SIG(a + b * x); w = q * (1 - q) + 1e-9
+            ga += q - h; gb += (q - h) * x; haa += w; hab += w * x; hbb += w * x * x
+        det = haa * hbb - hab * hab
+        if abs(det) < 1e-12: break
+        a -= (hbb * ga - hab * gb) / det; b -= (haa * gb - hab * ga) / det
+    return a, b
+def odds_history():
+    """Same formula as refresh.py (random walk, past year's swings), checked from every 5th trading day since 2017:
+    did the price touch +take_profit% / -stop_loss% within 1, 3 and 12 months? Then, per level and horizon, fit a
+    correction on earlier years and keep it only if it scores better on the later years it never saw."""
+    tp, sl = rules0["take_profit_pct"], rules0["stop_loss_pct"]; R = {}
+    for t in PX:
+        if t == "SPY": continue
+        ds = sorted(PX[t]["raw"]); v = [PX[t]["raw"][d] for d in ds]
+        for s in range(252, len(v) - 21, 5):
+            lr = [math.log(v[i] / v[i - 1]) for i in range(s - 251, s + 1)]; sd = statistics.pstdev(lr); e = v[s]
+            if not sd: continue
+            for kind, lvl in (("profit", e * (1 + tp / 100)), ("stop", e * (1 - sl / 100))):
+                for k, d in enumerate((21, 63, 252)):
+                    if s + d >= len(v): continue
+                    path = v[s + 1:s + d + 1]
+                    hit = max(path) >= lvl if kind == "profit" else min(path) <= lvl
+                    p = math.erfc(abs(math.log(lvl / e)) / (sd * math.sqrt(d) * math.sqrt(2)))
+                    R.setdefault(f"{kind}_{k}", []).append((ds[s], ds[s + d], p, 1.0 if hit else 0.0))
+    out = {}
+    for key, rows in R.items():
+        raw = fix = n = 0
+        for Y in range(2019, int(dates[-1][:4]) + 1):
+            tr = [(LOGIT(p), h) for _, end, p, h in rows if end < f"{Y}-01-01"]   # only outcomes already known by then
+            te = [(p, h) for st, _, p, h in rows if st[:4] == str(Y)]
+            if len(tr) < 200 or not te: continue
+            a, b = fit_logistic(tr)
+            for p, h in te: raw += (p - h) ** 2; fix += (SIG(a + b * LOGIT(p)) - h) ** 2; n += 1
+        a, b = fit_logistic([(LOGIT(p), h) for _, _, p, h in rows])
+        use = n > 0 and fix < raw * 0.98 and b > 0   # needs a 2%+ better score on unseen years, and must keep the order of the odds
+        out[key] = {"n": len(rows), "predicted_pct": round(sum(r[2] for r in rows) / len(rows) * 100, 1), "happened_pct": round(sum(r[3] for r in rows) / len(rows) * 100, 1),
+                    "brier_raw": round(raw / n, 4) if n else None, "brier_fixed": round(fix / n, 4) if n else None, "a": round(a, 4), "b": round(b, 4), "use": use}
+    return {"levels": {"take_profit_pct": tp, "stop_loss_pct": sl}, "checks": out}
+rules0 = json.load(open(rules_path))
+
 res = {"generated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"), "data": {"filings": len(f13), "first": dates[0], "last": dates[-1], "tickers": sorted(ADJ), "combos_tested": len(GRID)},
        "strategy": "Copy the top 5 stocks of each Berkshire 13F the day after it was filed, 10% cash buffer, 25% cap per stock",
        "walk_forward": {"folds": folds, "out_of_sample": oos, "wins_vs_current": wins_of, "years": len(folds)},
        "full_period": {"current_rules": full(DEFAULT), "no_rules": full((None, None, None, None)), "learned_now_in_sample": full(cur), "spy": {k: round(v * 100, 1) for k, v in stats(spy_eq, 0, len(dates)).items() if k != "sharpe"}},
        "learned_now": {"take_profit": cur[0], "stop_loss": cur[1], "band": cur[2], "max_pe": cur[3]}, "live_rules_before": live_before,
-       "decision": {"adopted": adopt, "best": best_name, "reason": reason}, "calibration": calibration(),
+       "decision": {"adopted": adopt, "best": best_name, "reason": reason}, "calibration": calibration() | {"history": odds_history()},
        "caveats": ["Past results do not predict future ones, and ten years is a short sample with only one market cycle of note.", "No fees, taxes, spreads or slippage are modelled. Real trading would earn less.", "Prices are dividend-adjusted closes. Trades happen at the close after a filing is public.", "Berkshire's 13F shows long US stocks only. Some older tickers had no price history and were skipped.", "Trying 54 rule sets on the same history invites luck. That is why only unseen years count.", "The final choice among three options is made on the same six unseen years, so even that result is a little flattering."]}
 old = json.load(open(os.path.join(D, "learning.json"))) if os.path.exists(os.path.join(D, "learning.json")) else {}
 hist = old.get("history", []) + [{"date": res["generated"][:10], "adopted": adopt, "best": best_name, "oos": cands, "picked_now": res["learned_now"]}]
 res["history"] = [h for k, h in enumerate(hist) if k == len(hist) - 1 or hist[k + 1]["date"] != h["date"]][-60:]   # one entry per day
 res["last_change"] = {"date": res["generated"][:10], "to": best_name, "reason": reason} if adopt else old.get("last_change")
 json.dump(res, open(os.path.join(D, "learning.json"), "w"), indent=1)
-print(json.dumps({"oos": oos, "wins": wins_of, "adopt": adopt, "picked_now": res["learned_now"], "full": res["full_period"], "calibration": res["calibration"]}, indent=1))
+print(json.dumps({"oos": oos, "wins": wins_of, "adopt": adopt, "picked_now": res["learned_now"], "full": res["full_period"], "calibration": res["calibration"]["history"]}, indent=1))
