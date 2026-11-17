@@ -24,7 +24,33 @@
   }
  },
  "buys": [],
- "pending": [],
+ "pending": [
+  {
+   "ticker": "AAPL",
+   "dollars": 530.5,
+   "queued": "2026-11-16"
+  },
+  {
+   "ticker": "AXP",
+   "dollars": 193.24,
+   "queued": "2026-11-16"
+  },
+  {
+   "ticker": "GOOGL",
+   "dollars": 137.75,
+   "queued": "2026-11-16"
+  },
+  {
+   "ticker": "KO",
+   "dollars": 57.03,
+   "queued": "2026-11-16"
+  },
+  {
+   "ticker": "BAC",
+   "dollars": 80.46,
+   "queued": "2026-11-16"
+  }
+ ],
  "history": [
   {
    "date": "2026-11-06",
@@ -55,9 +81,14 @@
    "date": "2026-11-13",
    "equity": 10254.22,
    "cash": 1000.0
+  },
+  {
+   "date": "2026-11-16",
+   "equity": 10128.83,
+   "cash": 1000.0
   }
  ],
- "last_roll": "2026-11-13",
+ "last_roll": "2026-11-16",
  "note": "Paper money. Rolled daily by scripts/roll.py.",
  "bench": {
   "symbol": "^GSPC",
