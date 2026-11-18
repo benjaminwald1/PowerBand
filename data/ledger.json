@@ -1,56 +1,66 @@
 {
  "start": 10000,
- "cash": 1000.0,
+ "cash": 1.02,
  "positions": {
   "AAPL": {
-   "shares": 7.302042,
-   "cost": 2500.0
+   "shares": 8.805599010994996,
+   "cost": 3030.5
   },
   "AXP": {
-   "shares": 6.965949,
-   "cost": 2236.0
+   "shares": 7.574080904774711,
+   "cost": 2429.24
   },
   "GOOGL": {
-   "shares": 5.783412,
-   "cost": 1647.0
+   "shares": 6.269474113502779,
+   "cost": 1784.75
   },
   "KO": {
-   "shares": 14.811331,
-   "cost": 1417.0
+   "shares": 15.38861614496892,
+   "cost": 1474.03
   },
   "BAC": {
-   "shares": 24.281667,
-   "cost": 1200.0
+   "shares": 25.897329675354474,
+   "cost": 1280.46
   }
  },
- "buys": [],
- "pending": [
+ "buys": [
   {
+   "date": "2026-11-17",
    "ticker": "AAPL",
-   "dollars": 530.5,
-   "queued": "2026-11-16"
+   "shares": 1.503557,
+   "price": 352.83,
+   "dollars": 530.5
   },
   {
+   "date": "2026-11-17",
    "ticker": "AXP",
-   "dollars": 193.24,
-   "queued": "2026-11-16"
+   "shares": 0.608132,
+   "price": 317.76,
+   "dollars": 193.24
   },
   {
+   "date": "2026-11-17",
    "ticker": "GOOGL",
-   "dollars": 137.75,
-   "queued": "2026-11-16"
+   "shares": 0.486062,
+   "price": 283.4,
+   "dollars": 137.75
   },
   {
+   "date": "2026-11-17",
    "ticker": "KO",
-   "dollars": 57.03,
-   "queued": "2026-11-16"
+   "shares": 0.577285,
+   "price": 98.79,
+   "dollars": 57.03
   },
   {
+   "date": "2026-11-17",
    "ticker": "BAC",
-   "dollars": 80.46,
-   "queued": "2026-11-16"
+   "shares": 1.615663,
+   "price": 49.8,
+   "dollars": 80.46
   }
  ],
+ "pending": [],
  "history": [
   {
    "date": "2026-11-06",
@@ -86,9 +96,14 @@
    "date": "2026-11-16",
    "equity": 10128.83,
    "cash": 1000.0
+  },
+  {
+   "date": "2026-11-17",
+   "equity": 10048.85,
+   "cash": 1.02
   }
  ],
- "last_roll": "2026-11-16",
+ "last_roll": "2026-11-17",
  "note": "Paper money. Rolled daily by scripts/roll.py.",
  "bench": {
   "symbol": "^GSPC",
