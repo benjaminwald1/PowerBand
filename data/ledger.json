@@ -111,9 +111,14 @@
    "date": "2026-11-19",
    "equity": 9878.36,
    "cash": 1.02
+  },
+  {
+   "date": "2026-11-20",
+   "equity": 9676.55,
+   "cash": 1.02
   }
  ],
- "last_roll": "2026-11-19",
+ "last_roll": "2026-11-20",
  "note": "Paper money. Rolled daily by scripts/roll.py.",
  "bench": {
   "symbol": "^GSPC",
