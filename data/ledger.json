@@ -60,7 +60,73 @@
    "dollars": 80.46
   }
  ],
- "pending": [],
+ "pending": [
+  {
+   "ticker": "AAPL",
+   "dollars": -1349.01,
+   "all": false,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "AXP",
+   "dollars": -1276.44,
+   "all": false,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "BAC",
+   "dollars": -683.06,
+   "all": false,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "GOOGL",
+   "dollars": -941.58,
+   "all": false,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "KO",
+   "dollars": -696.05,
+   "all": false,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "AMD",
+   "dollars": 989.43,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "INTC",
+   "dollars": 989.43,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "MU",
+   "dollars": 989.43,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "PSX",
+   "dollars": 989.43,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  },
+  {
+   "ticker": "TRMD",
+   "dollars": 989.43,
+   "queued": "2026-11-23",
+   "why": "new targets"
+  }
+ ],
  "history": [
   {
    "date": "2026-11-06",
@@ -116,9 +182,14 @@
    "date": "2026-11-20",
    "equity": 9676.55,
    "cash": 1.02
+  },
+  {
+   "date": "2026-11-23",
+   "equity": 9894.34,
+   "cash": 1.02
   }
  ],
- "last_roll": "2026-11-20",
+ "last_roll": "2026-11-23",
  "note": "Paper money. Rolled daily by scripts/roll.py.",
  "bench": {
   "symbol": "^GSPC",
@@ -189,5 +260,5 @@
   }
  ],
  "sells": [],
- "targets_as_of": "2026-06-30"
+ "targets_as_of": "2026-11"
 }
