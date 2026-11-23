@@ -283,5 +283,100 @@
     47
    ]
   }
+ },
+ {
+  "date": "2026-11-23",
+  "ticker": "MU",
+  "price": 708.1,
+  "profit_level": 885.12,
+  "stop_level": 601.88,
+  "odds": {
+   "profit": [
+    19,
+    60,
+    79
+   ],
+   "stop": [
+    11,
+    26,
+    85
+   ]
+  }
+ },
+ {
+  "date": "2026-11-23",
+  "ticker": "INTC",
+  "price": 59.41,
+  "profit_level": 74.26,
+  "stop_level": 50.5,
+  "odds": {
+   "profit": [
+    19,
+    61,
+    80
+   ],
+   "stop": [
+    11,
+    26,
+    85
+   ]
+  }
+ },
+ {
+  "date": "2026-11-23",
+  "ticker": "AMD",
+  "price": 453.65,
+  "profit_level": 567.06,
+  "stop_level": 385.6,
+  "odds": {
+   "profit": [
+    15,
+    55,
+    77
+   ],
+   "stop": [
+    10,
+    25,
+    83
+   ]
+  }
+ },
+ {
+  "date": "2026-11-23",
+  "ticker": "PSX",
+  "price": 236.75,
+  "profit_level": 295.94,
+  "stop_level": 201.24,
+  "odds": {
+   "profit": [
+    1,
+    18,
+    50
+   ],
+   "stop": [
+    7,
+    19,
+    63
+   ]
+  }
+ },
+ {
+  "date": "2026-11-23",
+  "ticker": "TRMD",
+  "price": 32.83,
+  "profit_level": 41.04,
+  "stop_level": 27.91,
+  "odds": {
+   "profit": [
+    4,
+    29,
+    59
+   ],
+   "stop": [
+    8,
+    21,
+    70
+   ]
+  }
  }
 ]

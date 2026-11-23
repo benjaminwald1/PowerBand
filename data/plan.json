@@ -1,13 +1,196 @@
 {
- "generated": "2026-11-23T19:50:40+00:00",
- "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)",
+ "generated": "2026-11-23T20:49:37+00:00",
+ "source": "Half Berkshire's top 5 (BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)), half the 5 famous-investor picks with the best 12-1 month price move (45 candidates from 22 investors' newest 13Fs, built 2026-11-23)",
  "as_of_13f": "2026-09-30",
+ "targets_version": "2026-11",
+ "strategy": {
+  "method": "50% Berkshire top 5 at its own weights + 50% momentum picks at 10% each, rebuilt on the first trading day of each month",
+  "built": "2026-11-23",
+  "berkshire": [
+   {
+    "ticker": "AAPL",
+    "name": "Apple",
+    "weight": 34.87
+   },
+   {
+    "ticker": "AXP",
+    "name": "American Express",
+    "weight": 21.19
+   },
+   {
+    "ticker": "GOOGL",
+    "name": "Alphabet",
+    "weight": 16.72
+   },
+   {
+    "ticker": "KO",
+    "name": "Coca Cola",
+    "weight": 15.82
+   },
+   {
+    "ticker": "BAC",
+    "name": "Bank of America",
+    "weight": 11.4
+   }
+  ],
+  "momentum": [
+   {
+    "ticker": "MU",
+    "name": "Micron Technology",
+    "held_by": [
+     {
+      "investor": "David Tepper",
+      "firm": "Appaloosa LP",
+      "pct_of_13f": 17.61,
+      "quarter": "2026-09-30"
+     },
+     {
+      "investor": "founded by Jim Simons",
+      "firm": "Renaissance Technologies LLC",
+      "pct_of_13f": 2.21,
+      "quarter": "2026-09-30"
+     },
+     {
+      "investor": "Philippe Laffont",
+      "firm": "Coatue Management LLC",
+      "pct_of_13f": 6.4,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 336.3
+   },
+   {
+    "ticker": "INTC",
+    "name": "Intel",
+    "held_by": [
+     {
+      "investor": "George Soros (family office)",
+      "firm": "Soros Fund Management LLC",
+      "pct_of_13f": 4.0,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 158.7
+   },
+   {
+    "ticker": "AMD",
+    "name": "Advanced Micro Devices",
+    "held_by": [
+     {
+      "investor": "founded by Jim Simons",
+      "firm": "Renaissance Technologies LLC",
+      "pct_of_13f": 1.64,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 150.8
+   },
+   {
+    "ticker": "PSX",
+    "name": "Phillips 66",
+    "held_by": [
+     {
+      "investor": "founded by Paul Singer",
+      "firm": "Elliott Investment Management L.P.",
+      "pct_of_13f": 17.16,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 119.0
+   },
+   {
+    "ticker": "TRMD",
+    "name": "Torm",
+    "held_by": [
+     {
+      "investor": "Howard Marks",
+      "firm": "Oaktree Capital Management LP",
+      "pct_of_13f": 7.28,
+      "quarter": "2026-06-30"
+     }
+    ],
+    "move_12_1": 104.5
+   }
+  ],
+  "runners_up": [
+   {
+    "ticker": "SU",
+    "name": "Suncor Energy",
+    "held_by": [
+     {
+      "investor": "founded by Paul Singer",
+      "firm": "Elliott Investment Management L.P.",
+      "pct_of_13f": 6.98,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 81.4
+   },
+   {
+    "ticker": "NTRA",
+    "name": "Natera",
+    "held_by": [
+     {
+      "investor": "Stanley Druckenmiller",
+      "firm": "Duquesne Family Office LLC",
+      "pct_of_13f": 29.22,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 79.1
+   },
+   {
+    "ticker": "CVI",
+    "name": "Cvr Energy",
+    "held_by": [
+     {
+      "investor": "Carl Icahn",
+      "firm": "Icahn Carl C",
+      "pct_of_13f": 38.51,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 70.4
+   },
+   {
+    "ticker": "RIG",
+    "name": "Transocean",
+    "held_by": [
+     {
+      "investor": "Mohnish Pabrai",
+      "firm": "Dalal Street, LLC",
+      "pct_of_13f": 41.21,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 66.9
+   },
+   {
+    "ticker": "LRCX",
+    "name": "Lam Research",
+    "held_by": [
+     {
+      "investor": "founded by Ray Dalio",
+      "firm": "Bridgewater Associates, LP",
+      "pct_of_13f": 1.51,
+      "quarter": "2026-09-30"
+     }
+    ],
+    "move_12_1": 65.6
+   }
+  ]
+ },
  "names": {
   "AAPL": "Apple",
   "AXP": "American Express",
   "GOOGL": "Alphabet",
   "KO": "Coca Cola",
-  "BAC": "Bank of America"
+  "BAC": "Bank of America",
+  "MU": "Micron Technology",
+  "INTC": "Intel",
+  "AMD": "Advanced Micro Devices",
+  "PSX": "Phillips 66",
+  "TRMD": "Torm"
  },
  "portfolios": [
   {
@@ -20,10 +203,10 @@
     {
      "ticker": "AAPL",
      "name": "Apple",
-     "dollars": 3487.0,
-     "price": 349.395,
-     "shares": 9.9801,
-     "weight": 34.87,
+     "dollars": 1743.0,
+     "price": 351.15,
+     "shares": 4.9637,
+     "weight": 17.43,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -31,10 +214,65 @@
     {
      "ticker": "AXP",
      "name": "American Express",
-     "dollars": 2119.0,
-     "price": 306.655,
-     "shares": 6.91,
-     "weight": 21.19,
+     "dollars": 1060.0,
+     "price": 307.32,
+     "shares": 3.4492,
+     "weight": 10.6,
+     "capped": false,
+     "verdict": "PASS",
+     "reasons": []
+    },
+    {
+     "ticker": "MU",
+     "name": "Micron Technology",
+     "dollars": 1000.0,
+     "price": 707.65,
+     "shares": 1.4131,
+     "weight": 10.0,
+     "capped": false,
+     "verdict": "PASS",
+     "reasons": []
+    },
+    {
+     "ticker": "INTC",
+     "name": "Intel",
+     "dollars": 1000.0,
+     "price": 59.39,
+     "shares": 16.8379,
+     "weight": 10.0,
+     "capped": false,
+     "verdict": "PASS",
+     "reasons": []
+    },
+    {
+     "ticker": "AMD",
+     "name": "Advanced Micro Devices",
+     "dollars": 1000.0,
+     "price": 453.01,
+     "shares": 2.2075,
+     "weight": 10.0,
+     "capped": false,
+     "verdict": "PASS",
+     "reasons": []
+    },
+    {
+     "ticker": "PSX",
+     "name": "Phillips 66",
+     "dollars": 1000.0,
+     "price": 236.905,
+     "shares": 4.2211,
+     "weight": 10.0,
+     "capped": false,
+     "verdict": "PASS",
+     "reasons": []
+    },
+    {
+     "ticker": "TRMD",
+     "name": "Torm",
+     "dollars": 1000.0,
+     "price": 32.82,
+     "shares": 30.4692,
+     "weight": 10.0,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -42,10 +280,10 @@
     {
      "ticker": "GOOGL",
      "name": "Alphabet",
-     "dollars": 1672.0,
-     "price": 282.42,
-     "shares": 5.9203,
-     "weight": 16.72,
+     "dollars": 836.0,
+     "price": 283.34,
+     "shares": 2.9505,
+     "weight": 8.36,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -53,10 +291,10 @@
     {
      "ticker": "KO",
      "name": "Coca Cola",
-     "dollars": 1582.0,
-     "price": 96.155,
-     "shares": 16.4526,
-     "weight": 15.82,
+     "dollars": 791.0,
+     "price": 96.06,
+     "shares": 8.2344,
+     "weight": 7.91,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -64,17 +302,17 @@
     {
      "ticker": "BAC",
      "name": "Bank of America",
-     "dollars": 1140.0,
-     "price": 48.195,
-     "shares": 23.6539,
-     "weight": 11.4,
+     "dollars": 570.0,
+     "price": 48.24,
+     "shares": 11.8159,
+     "weight": 5.7,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
     }
    ],
    "risk_summary": {
-    "passed": 5,
+    "passed": 10,
     "blocked": 0
    },
    "rebalance": {
@@ -82,61 +320,121 @@
     "rows": [
      {
       "ticker": "AAPL",
-      "shares": 10.1849,
-      "price": 349.395,
-      "value": 3558.55,
-      "current_pct": 35.79,
-      "target_pct": 34.87,
-      "drift": 0.92,
-      "target_usd": 3467.07,
+      "shares": 5.091,
+      "price": 351.15,
+      "value": 1787.7,
+      "current_pct": 17.9,
+      "target_pct": 17.43,
+      "drift": 0.47,
+      "target_usd": 1740.38,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "AXP",
-      "shares": 6.6015,
-      "price": 306.655,
-      "value": 2024.38,
-      "current_pct": 20.36,
-      "target_pct": 21.19,
-      "drift": -0.83,
-      "target_usd": 2106.89,
+      "shares": 3.3023,
+      "price": 307.32,
+      "value": 1014.86,
+      "current_pct": 10.16,
+      "target_pct": 10.6,
+      "drift": -0.44,
+      "target_usd": 1058.41,
+      "tracked": true,
+      "action": "hold"
+     },
+     {
+      "ticker": "AMD",
+      "shares": 2.2075,
+      "price": 453.01,
+      "value": 1000.02,
+      "current_pct": 10.02,
+      "target_pct": 10.0,
+      "drift": 0.02,
+      "target_usd": 998.5,
+      "tracked": true,
+      "action": "hold"
+     },
+     {
+      "ticker": "INTC",
+      "shares": 16.8379,
+      "price": 59.39,
+      "value": 1000.0,
+      "current_pct": 10.02,
+      "target_pct": 10.0,
+      "drift": 0.02,
+      "target_usd": 998.5,
+      "tracked": true,
+      "action": "hold"
+     },
+     {
+      "ticker": "MU",
+      "shares": 1.4131,
+      "price": 707.65,
+      "value": 999.98,
+      "current_pct": 10.01,
+      "target_pct": 10.0,
+      "drift": 0.01,
+      "target_usd": 998.5,
+      "tracked": true,
+      "action": "hold"
+     },
+     {
+      "ticker": "PSX",
+      "shares": 4.2211,
+      "price": 236.905,
+      "value": 1000.0,
+      "current_pct": 10.02,
+      "target_pct": 10.0,
+      "drift": 0.02,
+      "target_usd": 998.5,
+      "tracked": true,
+      "action": "hold"
+     },
+     {
+      "ticker": "TRMD",
+      "shares": 30.4692,
+      "price": 32.82,
+      "value": 1000.0,
+      "current_pct": 10.02,
+      "target_pct": 10.0,
+      "drift": 0.02,
+      "target_usd": 998.5,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "GOOGL",
-      "shares": 5.8712,
-      "price": 282.42,
-      "value": 1658.14,
-      "current_pct": 16.68,
-      "target_pct": 16.72,
-      "drift": -0.04,
-      "target_usd": 1662.44,
+      "shares": 2.9356,
+      "price": 283.34,
+      "value": 831.77,
+      "current_pct": 8.33,
+      "target_pct": 8.36,
+      "drift": -0.03,
+      "target_usd": 834.74,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "KO",
-      "shares": 16.536,
-      "price": 96.155,
-      "value": 1590.02,
-      "current_pct": 15.99,
-      "target_pct": 15.82,
-      "drift": 0.17,
-      "target_usd": 1572.96,
+      "shares": 8.268,
+      "price": 96.06,
+      "value": 794.22,
+      "current_pct": 7.95,
+      "target_pct": 7.91,
+      "drift": 0.04,
+      "target_usd": 789.81,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "BAC",
-      "shares": 23.0676,
-      "price": 48.195,
-      "value": 1111.74,
-      "current_pct": 11.18,
-      "target_pct": 11.4,
-      "drift": -0.22,
-      "target_usd": 1133.48,
+      "shares": 11.5338,
+      "price": 48.24,
+      "value": 556.39,
+      "current_pct": 5.57,
+      "target_pct": 5.7,
+      "drift": -0.13,
+      "target_usd": 569.14,
       "tracked": true,
       "action": "hold"
      }
@@ -153,11 +451,23 @@
       "ticker": "AAPL",
       "id": "AAPL-1",
       "date": "2026-11-23",
-      "shares": 10.1849,
-      "cost": 3487.0,
-      "price": 349.395,
-      "value": 3558.55,
-      "gain": 71.55,
+      "shares": 5.091,
+      "cost": 1743.0,
+      "price": 351.15,
+      "value": 1787.7,
+      "gain": 44.7,
+      "term": "short",
+      "long_term_on": "2027-11-24"
+     },
+     {
+      "ticker": "AMD",
+      "id": "AMD-1",
+      "date": "2026-11-23",
+      "shares": 2.2075,
+      "cost": 1000.0,
+      "price": 453.01,
+      "value": 1000.02,
+      "gain": 0.02,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -165,11 +475,11 @@
       "ticker": "AXP",
       "id": "AXP-1",
       "date": "2026-11-23",
-      "shares": 6.6015,
-      "cost": 2119.0,
-      "price": 306.655,
-      "value": 2024.38,
-      "gain": -94.62,
+      "shares": 3.3023,
+      "cost": 1060.0,
+      "price": 307.32,
+      "value": 1014.86,
+      "gain": -45.14,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -177,11 +487,11 @@
       "ticker": "BAC",
       "id": "BAC-1",
       "date": "2026-11-23",
-      "shares": 23.0676,
-      "cost": 1140.0,
-      "price": 48.195,
-      "value": 1111.74,
-      "gain": -28.26,
+      "shares": 11.5338,
+      "cost": 570.0,
+      "price": 48.24,
+      "value": 556.39,
+      "gain": -13.61,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -189,11 +499,23 @@
       "ticker": "GOOGL",
       "id": "GOOGL-1",
       "date": "2026-11-23",
-      "shares": 5.8712,
-      "cost": 1672.0,
-      "price": 282.42,
-      "value": 1658.14,
-      "gain": -13.86,
+      "shares": 2.9356,
+      "cost": 836.0,
+      "price": 283.34,
+      "value": 831.77,
+      "gain": -4.23,
+      "term": "short",
+      "long_term_on": "2027-11-24"
+     },
+     {
+      "ticker": "INTC",
+      "id": "INTC-1",
+      "date": "2026-11-23",
+      "shares": 16.8379,
+      "cost": 1000.0,
+      "price": 59.39,
+      "value": 1000.0,
+      "gain": 0.0,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -201,11 +523,47 @@
       "ticker": "KO",
       "id": "KO-1",
       "date": "2026-11-23",
-      "shares": 16.536,
-      "cost": 1582.0,
-      "price": 96.155,
-      "value": 1590.02,
-      "gain": 8.02,
+      "shares": 8.268,
+      "cost": 791.0,
+      "price": 96.06,
+      "value": 794.22,
+      "gain": 3.22,
+      "term": "short",
+      "long_term_on": "2027-11-24"
+     },
+     {
+      "ticker": "MU",
+      "id": "MU-1",
+      "date": "2026-11-23",
+      "shares": 1.4131,
+      "cost": 1000.0,
+      "price": 707.65,
+      "value": 999.98,
+      "gain": -0.02,
+      "term": "short",
+      "long_term_on": "2027-11-24"
+     },
+     {
+      "ticker": "PSX",
+      "id": "PSX-1",
+      "date": "2026-11-23",
+      "shares": 4.2211,
+      "cost": 1000.0,
+      "price": 236.905,
+      "value": 1000.0,
+      "gain": -0.0,
+      "term": "short",
+      "long_term_on": "2027-11-24"
+     },
+     {
+      "ticker": "TRMD",
+      "id": "TRMD-1",
+      "date": "2026-11-23",
+      "shares": 30.4692,
+      "cost": 1000.0,
+      "price": 32.82,
+      "value": 1000.0,
+      "gain": -0.0,
       "term": "short",
       "long_term_on": "2027-11-24"
      }
@@ -213,53 +571,103 @@
     "positions": [
      {
       "ticker": "AAPL",
-      "shares": 10.1849,
-      "cost": 3487.0,
-      "value": 3558.55,
-      "short": 71.55,
+      "shares": 5.091,
+      "cost": 1743.0,
+      "value": 1787.7,
+      "short": 44.7,
       "long": 0.0,
-      "gain": 71.55,
-      "pct": 2.05
+      "gain": 44.7,
+      "pct": 2.56
+     },
+     {
+      "ticker": "AMD",
+      "shares": 2.2075,
+      "cost": 1000.0,
+      "value": 1000.02,
+      "short": 0.02,
+      "long": 0.0,
+      "gain": 0.02,
+      "pct": 0.0
      },
      {
       "ticker": "AXP",
-      "shares": 6.6015,
-      "cost": 2119.0,
-      "value": 2024.38,
-      "short": -94.62,
+      "shares": 3.3023,
+      "cost": 1060.0,
+      "value": 1014.86,
+      "short": -45.14,
       "long": 0.0,
-      "gain": -94.62,
-      "pct": -4.47
+      "gain": -45.14,
+      "pct": -4.26
      },
      {
       "ticker": "BAC",
-      "shares": 23.0676,
-      "cost": 1140.0,
-      "value": 1111.74,
-      "short": -28.26,
+      "shares": 11.5338,
+      "cost": 570.0,
+      "value": 556.39,
+      "short": -13.61,
       "long": 0.0,
-      "gain": -28.26,
-      "pct": -2.48
+      "gain": -13.61,
+      "pct": -2.39
      },
      {
       "ticker": "GOOGL",
-      "shares": 5.8712,
-      "cost": 1672.0,
-      "value": 1658.14,
-      "short": -13.86,
+      "shares": 2.9356,
+      "cost": 836.0,
+      "value": 831.77,
+      "short": -4.23,
       "long": 0.0,
-      "gain": -13.86,
-      "pct": -0.83
+      "gain": -4.23,
+      "pct": -0.51
+     },
+     {
+      "ticker": "INTC",
+      "shares": 16.8379,
+      "cost": 1000.0,
+      "value": 1000.0,
+      "short": 0.0,
+      "long": 0.0,
+      "gain": 0.0,
+      "pct": 0.0
      },
      {
       "ticker": "KO",
-      "shares": 16.536,
-      "cost": 1582.0,
-      "value": 1590.02,
-      "short": 8.02,
+      "shares": 8.268,
+      "cost": 791.0,
+      "value": 794.22,
+      "short": 3.22,
       "long": 0.0,
-      "gain": 8.02,
-      "pct": 0.51
+      "gain": 3.22,
+      "pct": 0.41
+     },
+     {
+      "ticker": "MU",
+      "shares": 1.4131,
+      "cost": 1000.0,
+      "value": 999.98,
+      "short": -0.02,
+      "long": 0.0,
+      "gain": -0.02,
+      "pct": 0.0
+     },
+     {
+      "ticker": "PSX",
+      "shares": 4.2211,
+      "cost": 1000.0,
+      "value": 1000.0,
+      "short": -0.0,
+      "long": 0.0,
+      "gain": -0.0,
+      "pct": 0.0
+     },
+     {
+      "ticker": "TRMD",
+      "shares": 30.4692,
+      "cost": 1000.0,
+      "value": 1000.0,
+      "short": -0.0,
+      "long": 0.0,
+      "gain": -0.0,
+      "pct": 0.0
      }
     ],
     "missing_prices": [],
@@ -273,19 +681,29 @@
   }
  ],
  "prices": {
-  "AAPL": 349.395,
-  "AXP": 306.655,
-  "GOOGL": 282.42,
-  "KO": 96.155,
-  "BAC": 48.195
+  "AAPL": 351.15,
+  "AXP": 307.32,
+  "MU": 707.65,
+  "INTC": 59.39,
+  "AMD": 453.01,
+  "PSX": 236.905,
+  "TRMD": 32.82,
+  "GOOGL": 283.34,
+  "KO": 96.06,
+  "BAC": 48.24
  },
- "prices_as_of": "2026-11-23T19:50:40Z",
- "market": "New York 2026-11-23 14:50 (Monday): NYSE OPEN, regular session. Today's session: 09:30 to 16:00.",
+ "prices_as_of": "2026-11-23T20:49:37Z",
+ "market": "New York 2026-11-23 15:49 (Monday): NYSE OPEN, regular session. Today's session: 09:30 to 16:00.",
  "next_open": null,
  "market_open_now": true,
  "entry": {
   "AAPL": 342.37,
   "AXP": 320.99,
+  "MU": 707.65,
+  "INTC": 59.39,
+  "AMD": 453.01,
+  "PSX": 236.905,
+  "TRMD": 32.82,
   "GOOGL": 284.78,
   "KO": 95.67,
   "BAC": 49.42
@@ -294,11 +712,11 @@
  "outlook": {
   "horizon_days": 252,
   "portfolio": {
-   "vol_pct": 15.5,
-   "low": 8878.36,
-   "high": 13217.65,
+   "vol_pct": 25.5,
+   "low": 7811.89,
+   "high": 15022.12,
    "invested": 10000.0,
-   "last_year_pct": 6.9
+   "last_year_pct": 45.3
   },
   "stocks": [
    {
@@ -328,18 +746,18 @@
     },
     "ticker": "AAPL",
     "vol_pct": 25.0,
-    "last_year_pct": 26.6,
+    "last_year_pct": 27.3,
     "entry": 344.15603029572503,
     "take_profit_price": 430.2,
     "stop_price": 292.53,
-    "low": 270.65,
-    "high": 513.56
+    "low": 270.5,
+    "high": 513.84
    },
    {
     "odds": {
      "profit": [
       0,
-      8,
+      9,
       39
      ],
      "stop": [
@@ -351,7 +769,7 @@
     "odds_raw": {
      "profit": [
       0,
-      8,
+      9,
       39
      ],
      "stop": [
@@ -362,12 +780,182 @@
     },
     "ticker": "AXP",
     "vol_pct": 25.9,
-    "last_year_pct": -13.8,
+    "last_year_pct": -13.7,
     "entry": 320.73066429335387,
     "take_profit_price": 400.91,
     "stop_price": 272.62,
-    "low": 249.3,
-    "high": 484.22
+    "low": 249.25,
+    "high": 484.31
+   },
+   {
+    "odds": {
+     "profit": [
+      19,
+      60,
+      79
+     ],
+     "stop": [
+      11,
+      26,
+      85
+     ]
+    },
+    "odds_raw": {
+     "profit": [
+      37,
+      60,
+      79
+     ],
+     "stop": [
+      51,
+      70,
+      85
+     ]
+    },
+    "ticker": "MU",
+    "vol_pct": 85.7,
+    "last_year_pct": 216.0,
+    "entry": 707.65,
+    "take_profit_price": 884.56,
+    "stop_price": 601.5,
+    "low": 255.51,
+    "high": 2299.94
+   },
+   {
+    "odds": {
+     "profit": [
+      19,
+      61,
+      80
+     ],
+     "stop": [
+      11,
+      26,
+      85
+     ]
+    },
+    "odds_raw": {
+     "profit": [
+      38,
+      61,
+      80
+     ],
+     "stop": [
+      52,
+      71,
+      85
+     ]
+    },
+    "ticker": "INTC",
+    "vol_pct": 87.3,
+    "last_year_pct": 65.9,
+    "entry": 59.39,
+    "take_profit_price": 74.24,
+    "stop_price": 50.48,
+    "low": 21.03,
+    "high": 196.85
+   },
+   {
+    "odds": {
+     "profit": [
+      15,
+      55,
+      77
+     ],
+     "stop": [
+      10,
+      25,
+      83
+     ]
+    },
+    "odds_raw": {
+     "profit": [
+      30,
+      55,
+      77
+     ],
+     "stop": [
+      45,
+      66,
+      83
+     ]
+    },
+    "ticker": "AMD",
+    "vol_pct": 75.0,
+    "last_year_pct": 110.6,
+    "entry": 453.01,
+    "take_profit_price": 566.26,
+    "stop_price": 385.06,
+    "low": 187.66,
+    "high": 1283.33
+   },
+   {
+    "odds": {
+     "profit": [
+      1,
+      18,
+      50
+     ],
+     "stop": [
+      7,
+      19,
+      63
+     ]
+    },
+    "odds_raw": {
+     "profit": [
+      2,
+      18,
+      50
+     ],
+     "stop": [
+      9,
+      33,
+      63
+     ]
+    },
+    "ticker": "PSX",
+    "vol_pct": 33.4,
+    "last_year_pct": 77.9,
+    "entry": 236.905,
+    "take_profit_price": 296.13,
+    "stop_price": 201.37,
+    "low": 167.24,
+    "high": 393.83
+   },
+   {
+    "odds": {
+     "profit": [
+      4,
+      29,
+      59
+     ],
+     "stop": [
+      8,
+      21,
+      70
+     ]
+    },
+    "odds_raw": {
+     "profit": [
+      7,
+      29,
+      59
+     ],
+     "stop": [
+      18,
+      44,
+      70
+     ]
+    },
+    "ticker": "TRMD",
+    "vol_pct": 41.9,
+    "last_year_pct": 51.1,
+    "entry": 32.82,
+    "take_profit_price": 41.02,
+    "stop_price": 27.9,
+    "low": 20.78,
+    "high": 60.84
    },
    {
     "odds": {
@@ -395,13 +983,13 @@
      ]
     },
     "ticker": "GOOGL",
-    "vol_pct": 33.8,
-    "last_year_pct": -11.4,
+    "vol_pct": 33.9,
+    "last_year_pct": -11.1,
     "entry": 284.6729993120353,
     "take_profit_price": 355.84,
     "stop_price": 241.97,
-    "low": 199.97,
-    "high": 475.57
+    "low": 199.82,
+    "high": 475.93
    },
    {
     "odds": {
@@ -430,12 +1018,12 @@
     },
     "ticker": "KO",
     "vol_pct": 19.0,
-    "last_year_pct": 32.5,
+    "last_year_pct": 32.3,
     "entry": 95.78704063535383,
     "take_profit_price": 119.73,
     "stop_price": 81.42,
-    "low": 81.36,
-    "high": 132.34
+    "low": 81.35,
+    "high": 132.35
    },
    {
     "odds": {
@@ -447,7 +1035,7 @@
      "stop": [
       4,
       15,
-      47
+      48
      ]
     },
     "odds_raw": {
@@ -459,17 +1047,17 @@
      "stop": [
       1,
       15,
-      47
+      48
      ]
     },
     "ticker": "BAC",
-    "vol_pct": 22.7,
-    "last_year_pct": -7.2,
+    "vol_pct": 22.8,
+    "last_year_pct": -7.1,
     "entry": 49.443707751018295,
     "take_profit_price": 61.8,
     "stop_price": 42.03,
-    "low": 40.02,
-    "high": 71.69
+    "low": 40.01,
+    "high": 71.7
    }
   ],
   "rules": {
@@ -505,6 +1093,19 @@
    "gross_margin": 47.9,
    "operating_margin": 31.1,
    "net_margin": 26.8
+  },
+  {
+   "ticker": "AMD",
+   "name": "ADVANCED MICRO DEVICES INC",
+   "period_end": "2026-09-26",
+   "revenue_ttm": 45436000000,
+   "net_income_ttm": 7619000000,
+   "eps_ttm": 4.6,
+   "revenue_growth_yoy": 44.7,
+   "eps_growth_yoy": 94.7,
+   "gross_margin": 53.9,
+   "operating_margin": 21.2,
+   "net_margin": 18.2
   },
   {
    "ticker": "AXP",
@@ -546,6 +1147,19 @@
    "net_margin": 20.7
   },
   {
+   "ticker": "INTC",
+   "name": "INTEL CORP",
+   "period_end": "2026-09-26",
+   "revenue_ttm": 59892000000,
+   "net_income_ttm": -12032000000,
+   "eps_ttm": -2.39,
+   "revenue_growth_yoy": 20.9,
+   "eps_growth_yoy": -33.3,
+   "gross_margin": 43.0,
+   "operating_margin": 15.3,
+   "net_margin": 20.1
+  },
+  {
    "ticker": "KO",
    "name": "COCA COLA CO",
    "period_end": "2026-10-02",
@@ -557,6 +1171,32 @@
    "gross_margin": 63.2,
    "operating_margin": 33.4,
    "net_margin": 30.0
+  },
+  {
+   "ticker": "MU",
+   "name": "MICRON TECHNOLOGY INC",
+   "period_end": "2026-09-03",
+   "revenue_ttm": 133188000000,
+   "net_income_ttm": 84969000000,
+   "eps_ttm": 74.33,
+   "revenue_growth_yoy": 379.3,
+   "eps_growth_yoy": 1065.7,
+   "gross_margin": 86.8,
+   "operating_margin": 80.7,
+   "net_margin": 69.5
+  },
+  {
+   "ticker": "PSX",
+   "name": "Phillips 66",
+   "period_end": "2026-09-30",
+   "revenue_ttm": 168192000000,
+   "net_income_ttm": 12576000000,
+   "eps_ttm": 31.28,
+   "revenue_growth_yoy": 46.4,
+   "eps_growth_yoy": 4300.0,
+   "gross_margin": 19.2,
+   "operating_margin": null,
+   "net_margin": 11.1
   }
  ],
  "screen": {
@@ -585,9 +1225,21 @@
   ],
   "passed": [
    {
+    "ticker": "MU",
+    "name": "MICRON TECHNOLOGY INC",
+    "score": 1.0,
+    "why": [
+     "revenue_growth_yoy 379.3 >= 10",
+     "operating_margin 80.7 >= 25",
+     "eps_ttm 74.33 > 0",
+     "pe 9.5 <= 35"
+    ],
+    "skipped": []
+   },
+   {
     "ticker": "GOOGL",
     "name": "Alphabet Inc.",
-    "score": 0.75,
+    "score": 0.0,
     "why": [
      "revenue_growth_yoy 24.7 >= 10",
      "operating_margin 31.8 >= 25",
@@ -601,13 +1253,26 @@
    {
     "ticker": "AAPL",
     "why": [
-     "pe 38.9, needs <= 35"
+     "pe 39.1, needs <= 35"
     ]
    },
    {
     "ticker": "KO",
     "why": [
      "revenue_growth_yoy 7.4, needs >= 10"
+    ]
+   },
+   {
+    "ticker": "PSX",
+    "why": [
+     "operating_margin is missing"
+    ]
+   },
+   {
+    "ticker": "AMD",
+    "why": [
+     "operating_margin 21.2, needs >= 25",
+     "pe 98.5, needs <= 35"
     ]
    },
    {
@@ -623,10 +1288,100 @@
      "revenue_growth_yoy 3.2, needs >= 10",
      "operating_margin is missing"
     ]
+   },
+   {
+    "ticker": "INTC",
+    "why": [
+     "operating_margin 15.3, needs >= 25",
+     "eps_ttm -2.39, needs > 0",
+     "pe is missing"
+    ]
    }
   ]
  },
  "news": [
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AAPL",
+   "title": "Apple vs. Broadcom: Comparing Revenue Trends Amid the Artificial Intelligence Boom",
+   "link": "https://www.fool.com/coverage/charts/2026/11/23/apple-vs-broadcom-comparing-revenue-trends-amid-the-artificial-intelligence-boom/?.tsrc=rss",
+   "time": "2026-11-23T20:16:30+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AMD",
+   "title": "Jensen Huang\u2019s Return Just Added About $500 Billion to Micron, Dell, TSMC and the AI Stocks That Depend on Nvidia",
+   "link": "https://247wallst.com/investing/2026/11/23/jensen-huangs-return-just-added-about-500-billion-to-micron-dell-tsmc-and-the-ai-stocks-that-depend-on-nvidia/?.tsrc=rss",
+   "time": "2026-11-23T20:13:00+00:00",
+   "tags": [
+    "people"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Google Can Spend $48 Billion More On AI From Its Own Cash. Is That Enough For Nvidia?",
+   "link": "https://www.trefis.com/stock/googl/articles/627438/google-can-spend-48-billion-more-on-ai-from-its-own-cash-is-that-enough-for-nvidia/2026-11-23?.tsrc=rss",
+   "time": "2026-11-23T20:08:10+00:00",
+   "tags": [
+    "legal"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AXP",
+   "title": "Black Friday shopping: Check this credit card perk first",
+   "link": "https://finance.yahoo.com/personal-finance/credit-cards/article/black-friday-shopping-check-this-credit-card-perk-first-195924850.html?.tsrc=rss",
+   "time": "2026-11-23T19:59:24+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "MU",
+   "title": "Why Anthropic\u2019s Stock Is Sitting Out Nvidia\u2019s Big Rally",
+   "link": "https://finance.yahoo.com/m/4b0c6858-bbdf-3949-a696-c72d26b74377/why-anthropic%E2%80%99s-stock-is.html?.tsrc=rss",
+   "time": "2026-11-23T19:58:00+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AMD",
+   "title": "Why Alphabet Stock Popped Today",
+   "link": "https://www.fool.com/investing/2026/11/23/why-alphabet-stock-popped-today/?.tsrc=rss",
+   "time": "2026-11-23T19:56:41+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AAPL",
+   "title": "CrowdStrike Shares Fall 10% After a $44 Billion Zscaler Deal Despite an Earnings Beat and Raised Guidance",
+   "link": "https://247wallst.com/videos/crowdstrike-shares-fall-10-after-a-44-billion-zscaler-deal-despite-an-earnings-beat-and-raised-guidance/?.tsrc=rss",
+   "time": "2026-11-23T19:55:23+00:00",
+   "tags": [
+    "earnings",
+    "deal"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AMD",
+   "title": "Why Does AMD Trade at 30x When Nvidia Is at 10x Forward Earnings? AMD\u2019s China Exposure Is Bigger",
+   "link": "https://www.tikr.com/blog/why-does-amd-trade-at-30x-when-nvidia-is-at-10x-forward-earnings-amds-china-exposure-is-bigger?ref=yahoofinance&tlnk=yf-261123-7hvpgqh6&.tsrc=rss",
+   "time": "2026-11-23T19:51:41+00:00",
+   "tags": [
+    "earnings",
+    "people"
+   ]
+  },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
@@ -639,7 +1394,16 @@
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "GOOGL",
+   "ticker": "MU",
+   "title": "\u201cSmoke and Mirrors\u201d: Micron\u2019s President Slammed Rival DRAM Designs. We\u2019ll Know Soon if He\u2019s Right",
+   "link": "https://www.tikr.com/blog/smoke-and-mirrors-microns-president-slammed-rival-dram-designs-well-know-soon-if-hes-right?ref=yahoofinance&tlnk=yf-261123-78qhh9qx&.tsrc=rss",
+   "time": "2026-11-23T19:43:24+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AMD",
    "title": "Why Jensen Huang is the 'key man' behind the market rally",
    "link": "https://finance.yahoo.com/video/why-jensen-huang-is-the-key-man-behind-the-market-rally-193849634.html?.tsrc=rss",
    "time": "2026-11-23T19:38:49+00:00",
@@ -650,7 +1414,18 @@
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "GOOGL",
+   "ticker": "INTC",
+   "title": "History Says TSMC Stock Falls Before Its Sales",
+   "link": "https://www.trefis.com/stock/tsm/articles/627659/history-says-tsmc-stock-falls-before-its-sales/2026-11-23?.tsrc=rss",
+   "time": "2026-11-23T19:37:10+00:00",
+   "tags": [
+    "legal"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AMD",
    "title": "Stock Market Today: Dow, Nasdaq Leap On Jensen Huang's Nvidia Return; Cruise Play Eyes Entry (Live Coverage)",
    "link": "https://finance.yahoo.com/m/8751de70-467e-380a-82cb-f4ee42adc461/stock-market-today%3A-dow%2C.html?.tsrc=rss",
    "time": "2026-11-23T19:37:01+00:00",
@@ -661,112 +1436,11 @@
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "KO",
-   "title": "How Much You Really Need Invested to Generate $50,000 a Year in Retirement",
-   "link": "https://247wallst.com/investing/2026/11/23/how-much-you-really-need-invested-to-generate-50000-a-year-in-retirement/?.tsrc=rss",
-   "time": "2026-11-23T19:17:21+00:00",
+   "ticker": "INTC",
+   "title": "Tech stocks surge as Nvidia rally adds $2 trillion to Nasdaq 100",
+   "link": "https://www.proactiveinvestors.com/companies/news/1102286/tech-stocks-surge-as-nvidia-rally-adds-2-trillion-to-nasdaq-100-1102286.html?.tsrc=rss",
+   "time": "2026-11-23T19:20:00+00:00",
    "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AAPL",
-   "title": "Alphabet Soars 6% as Jensen Huang\u2019s Return to Nvidia Reignites AI Stocks",
-   "link": "https://www.tikr.com/blog/alphabet-soars-6-as-jensen-huangs-return-to-nvidia-reignites-ai-stocks?ref=yahoofinance&tlnk=yf-261123-hwv86p83&.tsrc=rss",
-   "time": "2026-11-23T19:00:31+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Jensen Huang's return to Nvidia: Long or short accountability?",
-   "link": "https://finance.yahoo.com/video/jensen-huangs-return-to-nvidia-long-or-short-accountability-185949254.html?.tsrc=rss",
-   "time": "2026-11-23T18:59:49+00:00",
-   "tags": [
-    "people"
-   ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Jim Cramer sees a Google bargain after $120 million exit",
-   "link": "https://www.thestreet.com/investing/jim-cramer-sees-a-google-bargain-after-120-million-exit?.tsrc=rss",
-   "time": "2026-11-23T18:33:00+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "KO",
-   "title": "If a Recession Hits in 2027, This Is the Dividend Stock I Want to Own",
-   "link": "https://www.fool.com/investing/2026/11/23/if-recession-hits-2027-this-dividend-stock-i-want-to-own/?.tsrc=rss",
-   "time": "2026-11-23T18:20:02+00:00",
-   "tags": [
-    "capital"
-   ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Billionaire Ray Dalio Is Going All-In on These 10 AI and Chip Stocks: Should You Buy?",
-   "link": "https://finance.yahoo.com/technology/ai/articles/billionaire-ray-dalio-going-10-181149569.html?.tsrc=rss",
-   "time": "2026-11-23T18:11:49+00:00",
-   "tags": [
-    "people"
-   ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AAPL",
-   "title": "Nvidia's Forecast Needs $1.4 Trillion Of AI Spending In 2027. Who Pays?",
-   "link": "https://www.trefis.com/stock/nvda/articles/627446/nvidia-s-forecast-needs-1-4-trillion-of-ai-spending-in-2027-who-pays/2026-11-23?.tsrc=rss",
-   "time": "2026-11-23T18:00:56+00:00",
-   "tags": [
-    "earnings",
-    "legal"
-   ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Alphabet Stocks Jump 6.97% as AI Rebound Spotlights Google Cloud's 103% Growth",
-   "link": "https://finance.yahoo.com/technology/ai/articles/alphabet-stocks-jump-6-97-175521840.html?.tsrc=rss",
-   "time": "2026-11-23T17:55:21+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "KO",
-   "title": "Coca-Cola vs. PepsiCo: Which Consumer Goods Stock Is a Better Buy for 2027?",
-   "link": "https://www.fool.com/coverage/better-buy/2026/11/23/coca-cola-vs-pepsico-which-consumer-goods-stock-is-a-better-buy-for-2027/?.tsrc=rss",
-   "time": "2026-11-23T17:50:02+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "All Broadcom Has to Do is Deliver Modestly to Prove Stanley Druckenmiller Wrong and Hit $500 in 2027",
-   "link": "https://247wallst.com/investing/2026/11/23/all-broadcom-has-to-do-is-deliver-modestly-to-prove-stanley-druckenmiller-wrong-and-hit-500-in-2027/?.tsrc=rss",
-   "time": "2026-11-23T17:45:48+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "What Explains The Fall In Meta Stock?",
-   "link": "https://www.trefis.com/stock/meta/articles/627808/what-explains-the-fall-in-meta-stock/2026-11-23?.tsrc=rss",
-   "time": "2026-11-23T17:31:04+00:00",
-   "tags": [
-    "legal"
-   ]
   }
  ],
  "sec_skills": true,

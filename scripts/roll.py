@@ -2,12 +2,12 @@
 """Daily paper-trading roll (stdlib only). After each market close:
  1. fill yesterday's queued orders at today's OPEN price: sells first, then buys with the cash there is,
  2. mark the account to today's CLOSE (cash + shares * close) and record it,
- 3. queue tomorrow's orders. When the plan has moved to a new Berkshire 13F, rebalance every stock to its new
-    target weight (sell what is over, buy what is under), as the ten-year backtest does on each filing.
+ 3. queue tomorrow's orders. When the targets change (scripts/targets.py rebuilds them each month), rebalance every
+    stock to its new target weight (sell what is over, buy what is under), as the backtest does.
     Otherwise only top each stock up toward its target with cash above the buffer. No sells on price.
 Shares are tracked in FIFO tax lots; each sell records its cost basis, gain and short or long term.
 State lives in data/ledger.json. Safe to re-run: a day already rolled is skipped."""
-import json, sys, time, datetime, urllib.request
+import json, math, sys, time, datetime, urllib.request
 LG = json.load(open("data/ledger.json")); plan = json.load(open("data/plan.json"))
 rows = {r["ticker"]: r["target_pct"] / 100 for r in plan["portfolios"][0]["rebalance"]["rows"]}
 buffer = plan["portfolios"][0]["cash_buffer_pct"] / 100
@@ -65,20 +65,21 @@ for d in todo:
         sell(o["ticker"], LG["positions"][o["ticker"]]["shares"] if o.get("all") else -o["dollars"] / px, px, d)
     need = sum(o["dollars"] for o in buys); k = min(1.0, max(0.0, LG["cash"]) / need) if need else 0   # the open can pay a little less than the close did
     for o in buys:
-        dollars = round(o["dollars"] * k, 2)
+        dollars = math.floor(o["dollars"] * k * 100) / 100   # round down so cash never dips below zero
         if dollars >= 1: buy(o["ticker"], dollars, bars[o["ticker"]][d][0], d)
     LG["pending"] = []
     val = {t: h["shares"] * bars[t][d][1] for t, h in LG["positions"].items()}   # 2) mark to the close
     equity = LG["cash"] + sum(val.values())
     LG["history"].append({"date": d, "equity": round(equity, 2), "cash": round(LG["cash"], 2)})
-    if plan["as_of_13f"] != LG.get("targets_as_of"):           # 3a) new filing: rebalance everything to the new weights
+    ver = plan.get("targets_version") or plan["as_of_13f"]
+    if ver != LG.get("targets_as_of"):                          # 3a) new targets: rebalance everything to the new weights
         want = {t: rows.get(t, 0.0) * equity for t in set(rows) | set(val)}
-        out = [{"ticker": t, "dollars": -round(val[t] - w, 2), "all": w == 0, "queued": d, "why": "new 13F"}
+        out = [{"ticker": t, "dollars": -round(val[t] - w, 2), "all": w == 0, "queued": d, "why": "new targets"}
                for t, w in want.items() if t in val and val[t] - w >= MIN]
-        inn = [{"ticker": t, "dollars": round(w - val.get(t, 0.0), 2), "queued": d, "why": "new 13F"}
+        inn = [{"ticker": t, "dollars": round(w - val.get(t, 0.0), 2), "queued": d, "why": "new targets"}
                for t, w in want.items() if w - val.get(t, 0.0) >= MIN]
         LG["pending"] = sorted(out, key=lambda o: o["ticker"]) + sorted(inn, key=lambda o: o["ticker"])
-        LG["targets_as_of"] = plan["as_of_13f"]
+        LG["targets_as_of"] = ver
     else:                                                       # 3b) top-ups with spare cash
         spend = max(0.0, LG["cash"] - buffer * equity)
         want = {t: max(0.0, rows[t] * equity - val.get(t, 0.0)) for t in rows}

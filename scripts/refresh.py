@@ -75,7 +75,8 @@ held = {t: h for t, h in (json.load(open(lp_))["positions"] if os.path.exists(lp
 quoted = tickers + sorted(set(held) - set(tickers))   # a stock a new filing dropped is still held until the roll sells it
 names = {**{t: old.get("names", {}).get(t, t) for t in held}, **{w["ticker"]: w["name"] for w in targets["weights"]}}
 now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
-plan = {"generated": now, "source": targets["source"], "as_of_13f": targets["as_of"], "names": names, "portfolios": []}
+plan = {"generated": now, "source": targets["source"], "as_of_13f": targets["as_of"], "targets_version": targets.get("version") or targets["as_of"],
+        "strategy": {k: targets.get(k) for k in ("method", "built", "berkshire", "momentum", "runners_up")}, "names": names, "portfolios": []}
 
 with tempfile.TemporaryDirectory() as tmp:
     os.makedirs(os.path.join(tmp, "trader"))
@@ -133,8 +134,11 @@ with tempfile.TemporaryDirectory() as tmp:
     # SEC skills need a name and email in the request header. It lives in a git-ignored local file and is never written to the site's data.
     ua = os.environ.get("SEC_USER_AGENT") or (open(os.path.join(ROOT, ".local", "sec_user_agent")).read().strip() if os.path.exists(os.path.join(ROOT, ".local", "sec_user_agent")) else "")
     if ua:
-        a = jrun("trader-analyst", "facts.py", [*tickers, "--user-agent", ua, "--metrics", "trader/metrics.json", "--json", "--no-filings"], tmp, ok=(0,))
-        m = json.load(open(os.path.join(tmp, "trader", "metrics.json")))
+        for t in tickers:   # one at a time: a foreign company with no quarterly US filings should not stop the rest
+            try: jrun("trader-analyst", "facts.py", [t, "--user-agent", ua, "--metrics", "trader/metrics.json", "--json", "--no-filings"], tmp, ok=(0,))
+            except SystemExit as e: print("analyst skipped", t, str(e)[-100:])
+        mp = os.path.join(tmp, "trader", "metrics.json")
+        m = json.load(open(mp)) if os.path.exists(mp) else {"companies": []}
         keep = ("ticker", "name", "period_end", "revenue_ttm", "net_income_ttm", "eps_ttm", "revenue_growth_yoy", "eps_growth_yoy", "gross_margin", "operating_margin", "net_margin")
         plan["analyst"] = [{k: c.get(k) for k in keep} for c in m["companies"]]
         rules = seed("rules.json")

@@ -1,187 +1,251 @@
 {
-  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)",
+  "version": "2026-11",
+  "built": "2026-11-23",
   "as_of": "2026-09-30",
   "filed": "2026-11-16",
   "cik": "0001067983",
-  "method": "top 5 stock positions by value, share classes combined, pct_of_13f scaled to 100",
+  "source": "Half Berkshire's top 5 (BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)), half the 5 famous-investor picks with the best 12-1 month price move (45 candidates from 22 investors' newest 13Fs, built 2026-11-23)",
+  "method": "50% Berkshire top 5 at its own weights + 50% momentum picks at 10% each, rebuilt on the first trading day of each month",
   "weights": [
     {
       "ticker": "AAPL",
       "name": "Apple",
-      "weight": 34.87,
-      "pct_of_13f": 24.95,
-      "value": 75901188420.0,
-      "shares": 227917808.0,
-      "cusips": [
-        "037833100"
-      ]
+      "weight": 17.43,
+      "part": "Berkshire"
     },
     {
       "ticker": "AXP",
       "name": "American Express",
-      "weight": 21.19,
-      "pct_of_13f": 15.16,
-      "value": 46104813870.0,
-      "shares": 151610700.0,
-      "cusips": [
-        "025816109"
-      ]
+      "weight": 10.6,
+      "part": "Berkshire"
+    },
+    {
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "weight": 10.0,
+      "part": "momentum"
+    },
+    {
+      "ticker": "INTC",
+      "name": "Intel",
+      "weight": 10.0,
+      "part": "momentum"
+    },
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices",
+      "weight": 10.0,
+      "part": "momentum"
+    },
+    {
+      "ticker": "PSX",
+      "name": "Phillips 66",
+      "weight": 10.0,
+      "part": "momentum"
+    },
+    {
+      "ticker": "TRMD",
+      "name": "Torm",
+      "weight": 10.0,
+      "part": "momentum"
     },
     {
       "ticker": "GOOGL",
       "name": "Alphabet",
-      "weight": 16.72,
-      "pct_of_13f": 11.96,
-      "value": 36374651401.0,
-      "shares": 105979600.0,
-      "cusips": [
-        "02079K305",
-        "02079K107"
-      ],
-      "classes": [
-        "GOOGL",
-        "GOOG"
-      ]
+      "weight": 8.36,
+      "part": "Berkshire"
     },
     {
       "ticker": "KO",
       "name": "Coca Cola",
-      "weight": 15.82,
-      "pct_of_13f": 11.32,
-      "value": 34432000000.0,
-      "shares": 400000000.0,
-      "cusips": [
-        "191216100"
-      ]
+      "weight": 7.91,
+      "part": "Berkshire"
     },
     {
       "ticker": "BAC",
       "name": "Bank of America",
-      "weight": 11.4,
-      "pct_of_13f": 8.16,
-      "value": 24812509222.0,
-      "shares": 455860908.0,
-      "cusips": [
-        "060505104"
-      ]
+      "weight": 5.7,
+      "part": "Berkshire"
     }
   ],
-  "skipped": [
+  "berkshire": [
     {
-      "issuer": "CHEVRON CORPORATION",
-      "ticker": "CVX",
-      "why": "outside the top 5"
+      "ticker": "AAPL",
+      "name": "Apple",
+      "weight": 34.87
     },
     {
-      "issuer": "OCCIDENTAL PETE CORP",
-      "ticker": "OXY",
-      "why": "outside the top 5"
+      "ticker": "AXP",
+      "name": "American Express",
+      "weight": 21.19
     },
     {
-      "issuer": "MOODYS CORP",
-      "ticker": "MCO",
-      "why": "outside the top 5"
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "weight": 16.72
     },
     {
-      "issuer": "CHUBB LIMITED",
-      "ticker": "CB",
-      "why": "outside the top 5"
+      "ticker": "KO",
+      "name": "Coca Cola",
+      "weight": 15.82
     },
     {
-      "issuer": "KRAFT HEINZ CO",
-      "ticker": "KHC",
-      "why": "outside the top 5"
+      "ticker": "BAC",
+      "name": "Bank of America",
+      "weight": 11.4
+    }
+  ],
+  "momentum": [
+    {
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "held_by": [
+        {
+          "investor": "David Tepper",
+          "firm": "Appaloosa LP",
+          "pct_of_13f": 17.61,
+          "quarter": "2026-09-30"
+        },
+        {
+          "investor": "founded by Jim Simons",
+          "firm": "Renaissance Technologies LLC",
+          "pct_of_13f": 2.21,
+          "quarter": "2026-09-30"
+        },
+        {
+          "investor": "Philippe Laffont",
+          "firm": "Coatue Management LLC",
+          "pct_of_13f": 6.4,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 336.3
     },
     {
-      "issuer": "DELTA AIR LINES INC",
-      "ticker": "DAL",
-      "why": "outside the top 5"
+      "ticker": "INTC",
+      "name": "Intel",
+      "held_by": [
+        {
+          "investor": "George Soros (family office)",
+          "firm": "Soros Fund Management LLC",
+          "pct_of_13f": 4.0,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 158.7
     },
     {
-      "issuer": "DAVITA INC",
-      "ticker": "DVA",
-      "why": "outside the top 5"
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices",
+      "held_by": [
+        {
+          "investor": "founded by Jim Simons",
+          "firm": "Renaissance Technologies LLC",
+          "pct_of_13f": 1.64,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 150.8
     },
     {
-      "issuer": "SIRIUSXM HOLDINGS INC",
-      "ticker": "SIRI",
-      "why": "outside the top 5"
+      "ticker": "PSX",
+      "name": "Phillips 66",
+      "held_by": [
+        {
+          "investor": "founded by Paul Singer",
+          "firm": "Elliott Investment Management L.P.",
+          "pct_of_13f": 17.16,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 119.0
     },
     {
-      "issuer": "LENNAR CORP",
-      "ticker": "LEN",
-      "why": "outside the top 5"
+      "ticker": "TRMD",
+      "name": "Torm",
+      "held_by": [
+        {
+          "investor": "Howard Marks",
+          "firm": "Oaktree Capital Management LP",
+          "pct_of_13f": 7.28,
+          "quarter": "2026-06-30"
+        }
+      ],
+      "move_12_1": 104.5
+    }
+  ],
+  "runners_up": [
+    {
+      "ticker": "SU",
+      "name": "Suncor Energy",
+      "held_by": [
+        {
+          "investor": "founded by Paul Singer",
+          "firm": "Elliott Investment Management L.P.",
+          "pct_of_13f": 6.98,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 81.4
     },
     {
-      "issuer": "KROGER CO",
-      "ticker": "KR",
-      "why": "outside the top 5"
+      "ticker": "NTRA",
+      "name": "Natera",
+      "held_by": [
+        {
+          "investor": "Stanley Druckenmiller",
+          "firm": "Duquesne Family Office LLC",
+          "pct_of_13f": 29.22,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 79.1
     },
     {
-      "issuer": "VERISIGN INC",
-      "ticker": "VRSN",
-      "why": "outside the top 5"
+      "ticker": "CVI",
+      "name": "Cvr Energy",
+      "held_by": [
+        {
+          "investor": "Carl Icahn",
+          "firm": "Icahn Carl C",
+          "pct_of_13f": 38.51,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 70.4
     },
     {
-      "issuer": "LIBERTY LIVE HOLDINGS INC",
-      "ticker": "LLYVK",
-      "why": "outside the top 5"
+      "ticker": "RIG",
+      "name": "Transocean",
+      "held_by": [
+        {
+          "investor": "Mohnish Pabrai",
+          "firm": "Dalal Street, LLC",
+          "pct_of_13f": 41.21,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 66.9
     },
     {
-      "issuer": "ALLY FINL INC",
-      "ticker": "ALLY",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "NEW YORK TIMES CO MTN BE",
-      "ticker": "NYT",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "BENDING SPOONS SPA",
-      "ticker": "BSP",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "NUCOR CORP",
-      "ticker": "NUE",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "LOUISIANA PAC CORP",
-      "ticker": "LPX",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "CAPITAL ONE FINL CORP",
-      "ticker": "COF",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "MACYS INC",
-      "ticker": "M",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "NVR INC",
-      "ticker": "NVR",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "JEFFERIES FINANCIAL GROUP IN",
-      "ticker": "JEF",
-      "why": "outside the top 5"
-    },
-    {
-      "issuer": "D R HORTON INC",
-      "ticker": "DHI",
-      "why": "outside the top 5"
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "held_by": [
+        {
+          "investor": "founded by Ray Dalio",
+          "firm": "Bridgewater Associates, LP",
+          "pct_of_13f": 1.51,
+          "quarter": "2026-09-30"
+        }
+      ],
+      "move_12_1": 65.6
     }
   ],
   "caveats": [
     "A 13F is a snapshot of the last day of the quarter, filed up to 45 days later. The investor may have sold or added since.",
     "It shows long positions in US-listed stocks only: no shorts, cash, bonds, foreign stocks, private companies or trades made inside the quarter.",
     "It is filed by the firm, not by the person it is known for.",
-    "Education and tooling, not financial advice. Nothing here places an order."
+    "Education and tooling, not financial advice. Nothing here places an order.",
+    "Momentum picks are chosen by past price moves. Past moves do not predict future ones, and these stocks can fall fast."
   ]
 }

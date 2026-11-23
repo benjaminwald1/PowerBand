@@ -11,7 +11,7 @@
 <body>
 <header class="top"><div class="wrap bar">
   <a class="brand" href="/">PowerBand <span>Paper Trader</span></a>
-  <nav class="nav" aria-label="Sections"><a href="#plan">Plan</a><a href="#outlook">Exit plan</a><a href="#learning">Learning</a><a href="#holdings-sec">Holdings</a><a href="#research">Research</a><a href="#safety">Safety</a></nav>
+  <nav class="nav" aria-label="Sections"><a href="#plan">Plan</a><a href="#outlook">Exit plan</a><a href="#strategy">Strategy</a><a href="#learning">Learning</a><a href="#holdings-sec">Holdings</a><a href="#research">Research</a><a href="#safety">Safety</a></nav>
   <span class="pill">Simulation · no real money</span>
 </div></header>
 
@@ -24,7 +24,7 @@
   </section>
   <section class="hero">
     <h1>Today's plan: what the skills would do</h1>
-    <p class="lead">Eleven open-source skills copy Berkshire Hathaway's public SEC filing, size every trade to a budget, check it against risk rules, and propose orders. On this page you can see all of it. <b>Nothing is ever placed.</b></p>
+    <p class="lead">Eleven open-source skills read public SEC filings and build a portfolio from them: half Berkshire Hathaway's top 5 stocks, half the 5 stocks famous investors are betting most on that have risen most over the past year. They size every trade to a budget, check it against risk rules, and propose orders. On this page you can see all of it. <b>Nothing is ever placed.</b></p>
     <p class="status" id="status"></p>
   </section>
 
@@ -49,7 +49,19 @@
     <ol class="steps" id="when"></ol>
   </section>
 
-  <section class="panel" id="learning"><h2>What the model learned from ten years of history</h2>
+  <section class="panel" id="strategy"><h2>The strategy</h2>
+    <ul class="notes" id="srules"></ul>
+    <h2 class="sub">This month's momentum picks</h2>
+    <p class="fine top0">Each comes from one or more famous investors' 3 biggest holdings. "Move" is the price change from 12 months ago to 1 month ago.</p>
+    <div class="tablewrap"><table id="spicks"><thead><tr><th>Stock</th><th>Held by</th><th class="n">Move</th><th class="n">Target</th></tr></thead><tbody></tbody></table></div>
+    <h2 class="sub">How it did on past years</h2>
+    <p class="fine top0">A backtest, not real results. Each investor's filing is used only after its public filing date.</p>
+    <div class="tablewrap"><table id="syears"><thead><tr><th>Year</th><th class="n">This strategy</th><th class="n">Berkshire top 5 only</th><th class="n">S&amp;P 500</th></tr></thead><tbody></tbody></table></div>
+    <p class="fine" id="stake"></p>
+    <details class="inner"><summary>Why this result is weaker than it looks</summary><ul class="notes" id="scav"></ul></details>
+  </section>
+
+  <section class="panel" id="learning"><h2>Sell rules and odds: what ten years of Berkshire history showed</h2>
     <div class="note" id="ldecision"></div>
     <div class="cards" id="lcards"></div>
     <h2 class="sub">Year by year, on years it had not seen</h2>
@@ -109,9 +121,9 @@
       <ul class="notes">
         <li>No order goes anywhere. The pipeline ends at a proposal.</li>
         <li>Paper trading only. A live account would need three separate yeses: the risk check, a typed yes for each order, and the broker's own approval card.</li>
-        <li>Fully invested at Berkshire's own weights among its top 5: no cash buffer and no cap per stock. Tested over ten years, this earned more than holding 10% cash with a 25% cap, with bigger swings.</li>
+        <li>Fully invested, no cash buffer and no cap per stock: half in Berkshire's top 5 at its own weights, half in 5 momentum picks at 10% each. Rebuilt monthly.</li>
         <li id="srcnote"></li>
-        <li>A 13F shows only long US stocks, as of a quarter end, filed up to 45 days later. It is a firm's filing, not Warren Buffett's personal trades.</li>
+        <li>A 13F shows only long US stocks, as of a quarter end, filed up to 45 days later. It is a firm's filing, not one person's trades, and the firm may have sold since.</li>
       </ul></div>
   </section>
 </main>

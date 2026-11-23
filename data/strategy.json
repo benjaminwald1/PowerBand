@@ -1,0 +1,28 @@
+{
+ "tested": "2026-11-23",
+ "name": "Half Berkshire, half famous investors' momentum picks",
+ "rules": [
+  "Half the money: Berkshire Hathaway's top 5 stocks at Berkshire's own weights, from its newest 13F.",
+  "Half the money: take the 3 biggest holdings of each of 23 well-known investors (their newest 13F, if filed in the last 200 days), and hold the 5 whose price rose most from 12 months ago to 1 month ago, 10% each.",
+  "Rebuilt on the first trading day of every month. The account then rebalances to the new targets at the next open."
+ ],
+ "years": [
+  {"year": 2021, "new": 14.5, "old": 35.2, "spy": 30.5},
+  {"year": 2022, "new": 7.9, "old": -21.4, "spy": -18.6},
+  {"year": 2023, "new": 28.3, "old": 34.6, "spy": 26.7},
+  {"year": 2024, "new": 65.8, "old": 32.9, "spy": 25.6},
+  {"year": 2025, "new": 22.2, "old": 18.9, "spy": 18.0},
+  {"year": 2026, "new": 0.7, "old": 7.7, "spy": 6.8, "partial": true}
+ ],
+ "per_year": {"new": 22.1, "old": 16.3, "spy": 13.7},
+ "worst_drop": {"new": -28.9, "old": -25.1, "spy": -24.9},
+ "beat_old_years": "3 of 6",
+ "caveats": [
+  "The settings (each investor's top 3, hold 5, 12-month move) were picked after looking at these same years, so the result is flattering. Picking them fresh each year from the 4 years before gave 21.7% a year for the momentum half alone, with a worst drop of 40%.",
+  "It is fragile: holding the top 8 momentum picks instead of 5 cut the result to about 17% a year, roughly the old strategy.",
+  "2024 (+66%) carries much of the gain. In 3 of 6 years it did worse than the old Berkshire-only plan.",
+  "About 11 to 17% of the investors' top holdings had no price history, often companies that were bought out or went bust. Leaving them out flatters a strategy that buys recent winners.",
+  "GameStop's January 2021 jump (+1,200%) is left out of these numbers; with it the test looks far better, which is luck, not skill.",
+  "Trading cost of 0.1% of every dollar traded is included. Taxes are not. Monthly rebalancing would create many short-term gains in a real taxable account."
+ ]
+}

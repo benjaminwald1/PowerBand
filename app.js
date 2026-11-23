@@ -5,6 +5,7 @@
   var cls=function(n){return n>0.004?"up":n<-0.004?"down":"";};
   var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
   var rows=function(el,html){document.querySelector("#"+el+" tbody").innerHTML=html;};
+  function nextMonth(){var d=new Date(),y=d.getUTCFullYear(),m=d.getUTCMonth()+1;if(m>11){m=0;y++;}var n=new Date(Date.UTC(y,m,1));while(n.getUTCDay()===0||n.getUTCDay()===6)n.setUTCDate(n.getUTCDate()+1);return n.toISOString().slice(0,10);}
   function card(l,v,c,s){return '<div class="card"><small>'+l+'</small><b class="'+c+'">'+v+'</b>'+(s?'<small>'+s+'</small>':'')+'</div>';}
   function useLedger(D,LG){   // real paper-trading ledger: shares held, cash, tax lots, sells and tomorrow's orders
     var p=D.portfolios[0];p.cash=LG.cash;
@@ -20,7 +21,7 @@
     D.portfolios.forEach(function(p,i){var b=document.createElement("button");b.textContent=usd(p.budget,0)+" portfolio";b.setAttribute("role","tab");b.onclick=function(){cur=i;draw();};tabs.appendChild(b);});
     $("srcnote").textContent="Copying: "+D.source+".";
     $("status").textContent=D.market+" Plan generated "+new Date(D.generated).toUTCString().replace(" GMT"," UTC")+".";
-    var ran=[["trader-copycat","Read Berkshire's 13F and made the target weights","ran"],["trader-budget","Sized each buy to the budget at Berkshire's own weights","ran"],["trader-risk","Checked every order against the limits","ran"],["trader-alerts","Fetched delayed prices and the NYSE clock","ran"],["trader-rebalance","Checked drift from the targets","ran"],["trader-tax","Tracked cost-basis lots and looked for loss-harvest sells","ran"],["trader-pelosi","Listed new Congress trade filings","ran"],["trader-broker","Shows each order as a ticket. Never connected, so no order can be sent","off"],["trader-analyst","Read revenue, margins and EPS from SEC filings",D.sec_skills?"ran":"off"],["trader-screener","Tested each stock against the rules below",D.sec_skills?"ran":"off"],["trader-news","Checked recent headlines on the holdings",D.sec_skills?"ran":"off"]];
+    var ran=[["trader-copycat","Read Berkshire's and 22 other famous investors' 13Fs and made the monthly target weights","ran"],["trader-budget","Sized each buy to the budget at the target weights","ran"],["trader-risk","Checked every order against the limits","ran"],["trader-alerts","Fetched delayed prices and the NYSE clock","ran"],["trader-rebalance","Checked drift from the targets","ran"],["trader-tax","Tracked cost-basis lots and looked for loss-harvest sells","ran"],["trader-pelosi","Listed new Congress trade filings","ran"],["trader-broker","Shows each order as a ticket. Never connected, so no order can be sent","off"],["trader-analyst","Read revenue, margins and EPS from SEC filings",D.sec_skills?"ran":"off"],["trader-screener","Tested each stock against the rules below",D.sec_skills?"ran":"off"],["trader-news","Checked recent headlines on the holdings",D.sec_skills?"ran":"off"]];
     $("skills").innerHTML=ran.map(function(s){return "<li><b>"+s[0]+'<span class="tag '+s[2]+'">'+(s[2]=="ran"?"ran":"not active")+"</span></b>"+s[1]+"</li>";}).join("");
     $("congress").innerHTML=(D.congress||[]).map(function(c){return "<li><span>"+esc(c.name)+" ("+esc(c.district)+")</span><span><a href=\""+esc(c.url)+"\" rel=\"noopener\">filed "+esc(c.filed)+"</a></span></li>";}).join("")||"<li>No filings found.</li>";
     var M=function(n){return n==null?"n/a":"$"+(n/1e9).toFixed(1)+"B";};
@@ -55,21 +56,21 @@
       var when=D.next_open?D.next_open.replace(" ","  at ")+" (the next market open)":"";
       $("buytime").textContent=D.next_open?(D.market_open_now?"The market is open now, so these would go in right away.":"The market is closed, so these market orders would go in at "+D.next_open.replace(/^(\S+) (\S+) (.*)$/,"$1 at $2 $3")+", the next market open."):"";
     })();
-    if(D.pending&&D.pending.length)$("buytime").textContent+=(D.pending.some(function(x){return x.why==="new 13F";})?" Berkshire filed a new 13F, so at the next open the account rebalances to the new weights: ":" Reinvesting spare cash: at the next open the account adds ")+D.pending.map(function(x){return (x.dollars<0?"sell ":"buy ")+usd(Math.abs(x.dollars),0)+" of "+x.ticker;}).join(", ")+".";
+    if(D.pending&&D.pending.length)$("buytime").textContent+=(D.pending.some(function(x){return x.why==="new targets"||x.why==="new 13F";})?" The targets changed, so at the next open the account rebalances to them: ":" Reinvesting spare cash: at the next open the account adds ")+D.pending.map(function(x){return (x.dollars<0?"sell ":"buy ")+usd(Math.abs(x.dollars),0)+" of "+x.ticker;}).join(", ")+".";
     (function(){
       var O=D.outlook,p=D.portfolios[0];if(!O)return;var c=p.cash;
-      $("ocards").innerHTML=card("12-month range, whole account",usd(O.portfolio.low+c,0)+" to "+usd(O.portfolio.high+c,0),"","A simple model using last year's price swings plus an assumed 8% a year of growth (about the long-run market average) puts about 8 in 10 outcomes here. A spread, not a forecast.")+card("Same mix, past 12 months",pct(O.portfolio.last_year_pct),cls(O.portfolio.last_year_pct),"what happened last year, not next")+card("Next review",O.next_13f.deadline,"","Berkshire's next 13F is due by this date");
+      $("ocards").innerHTML=card("12-month range, whole account",usd(O.portfolio.low+c,0)+" to "+usd(O.portfolio.high+c,0),"","A simple model using last year's price swings plus an assumed 8% a year of growth (about the long-run market average) puts about 8 in 10 outcomes here. A spread, not a forecast.")+card("Same mix, past 12 months",pct(O.portfolio.last_year_pct),cls(O.portfolio.last_year_pct),"what happened last year, not next")+card("Next rebuild",nextMonth(),"","first trading day of the month; Berkshire's next 13F is due by "+O.next_13f.deadline);
       rows("exit",O.stocks.map(function(s){return "<tr><td><b>"+esc(s.ticker)+"</b></td><td class=n>"+usd(s.entry)+"</td><td class=n data-now=\""+esc(s.ticker)+"\"></td><td class='n up'>"+usd(s.take_profit_price)+"<small>+"+O.rules.take_profit_pct+"%</small></td><td class='n down'>"+usd(s.stop_price)+"<small>-"+O.rules.stop_loss_pct+"%</small></td><td class=n>"+usd(s.low,0)+" to "+usd(s.high,0)+"<small>yearly swing ±"+s.vol_pct+"%</small></td><td class='n "+cls(s.last_year_pct)+"'>"+pct(s.last_year_pct)+"</td></tr>";}).join(""));
       var pc=function(n){return n<1?"under 1%":n+"%";};
       rows("odds",O.stocks.map(function(s){return "<tr><td rowspan=2><b>"+esc(s.ticker)+"</b></td><td class=up>Profit price "+usd(s.take_profit_price)+"</td>"+s.odds.profit.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr><tr><td class=down>Stop price "+usd(s.stop_price)+"</td>"+s.odds.stop.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr>";}).join(""));
       var lt=(p.tax.lots[0]||{}).long_term_on;
       var auto=O.auto_exit!==false,w=[];
-      if(!auto)w.push("<b>Following Berkshire.</b> This is the plan's real sell trigger. When a new 13F drops a stock or cuts its share, the plan rebalances to match. Ten years of testing found this beat selling on price rules.");
+      if(!auto)w.push("<b>Monthly rebuild.</b> This is the plan's real sell trigger. On the first trading day of each month the targets are rebuilt from the newest filings and the past year's price moves, and the account sells or buys at the next open to match. A momentum pick that stops being in the top 5 is sold.");
       w.push("<b>Profit "+(auto?"target":"alert")+".</b> If a stock reaches its profit price (+"+O.rules.take_profit_pct+"% from the buy), "+(auto?"a price alert would ring once and a sell would be proposed for review.":"an alert would ring once for you to review. The plan itself would not sell."));
       w.push("<b>"+(auto?"Stop":"Stop alert")+".</b> If a stock falls to its stop price (-"+O.rules.stop_loss_pct+"%), "+(auto?"an alert would ring and a sell would be proposed to limit the loss.":"an alert would ring for you to review. The plan itself would not sell.")+" The odds table above shows how likely each is; no one can name the exact time.");
       if(auto)w.push("<b>Drift.</b> If a stock grows more than "+p.rebalance.band+" percentage points past its target share of the account, the rebalancer would propose selling the excess. Sells are listed before buys.");
       if(auto)w.push("<b>New filing.</b> Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+". If it trims or exits a stock, the targets change and the rebalancer may propose sells.");
-      else w.push("<b>Next filing.</b> Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+". That is the date the plan could change.");
+      else w.push("<b>Next change.</b> The targets are rebuilt on the first trading day of next month. Berkshire's next 13F is due by "+esc(O.next_13f.deadline)+".");
       w.push("<b>Taxes.</b> Gains sold before "+esc(lt||"a year")+" are short term. Losses can be harvested only if the wash sale rule allows it.");
       w.push("<b>Always a proposal.</b> A real account would need a person's yes for every sell. Here nothing is placed.");
       $("when").innerHTML=w.map(function(x){return "<li>"+x+"</li>";}).join("");
@@ -86,7 +87,7 @@
       var sells=[];
       p.rebalance.trades.forEach(function(t){sells.push("<li>"+esc(JSON.stringify(t))+"</li>");});
       var auto=D.auto_exit!==false;
-      $("sells").innerHTML=nsell?"<ul class=list>"+sells.join("")+"</ul>":!auto?'<div class="empty"><b>No sells planned.</b> This plan only sells when Berkshire\'s next filing drops a stock or cuts its share. Testing on ten years of history showed that selling on price rules lowered returns, so the profit and stop prices below are alerts to review, not automatic sells.</div>':'<div class="empty"><b>No sells planned.</b> The rebalancer found every stock within '+p.rebalance.band+' points of its target, and the tax skill found no losses worth harvesting. The first step is buying, so there is nothing to sell yet.</div>';
+      $("sells").innerHTML=nsell?"<ul class=list>"+sells.join("")+"</ul>":!auto?'<div class="empty"><b>No sells planned.</b> This plan only sells when the monthly rebuild changes the targets. Testing on ten years of Berkshire history showed that selling on price rules lowered returns, so the profit and stop prices below are alerts to review, not automatic sells.</div>':'<div class="empty"><b>No sells planned.</b> The rebalancer found every stock within '+p.rebalance.band+' points of its target, and the tax skill found no losses worth harvesting. The first step is buying, so there is nothing to sell yet.</div>';
       var cols=["var(--bar1)","var(--bar2)","var(--bar3)","var(--bar4)","var(--bar5)"];
       $("alloc").innerHTML=pos.map(function(r,i){return '<span style="width:'+(r.v/total*100)+'%;background:'+cols[i%5]+'" title="'+r.t+'"></span>';}).join("");
       rows("holdings",pos.map(function(r){return "<tr><td><b>"+r.t+"</b><small>"+esc(r.n)+"</small></td><td class=n>"+r.s.toFixed(4)+"</td><td class=n>"+usd(r.e)+"</td><td class=n>"+usd(r.px)+"</td><td class=n>"+usd(r.v)+"</td><td class='n "+cls(r.g)+"'>"+usd(r.g)+"<small>"+pct(r.gp)+"</small></td><td class=n>"+(r.v/total*100).toFixed(1)+"%</td></tr>";}).join(""));
@@ -119,6 +120,14 @@
       }
       poll();setInterval(poll,1000);
       document.addEventListener("visibilitychange",function(){if(!document.hidden)poll();});
+    })();
+    (function(){var S=D.strategy||{},T={};(D.portfolios[0].rebalance.rows||[]).forEach(function(r){T[r.ticker]=r.target_pct;});
+      rows("spicks",(S.momentum||[]).map(function(c){return "<tr><td><b>"+esc(c.ticker)+"</b><small>"+esc(c.name||"")+"</small></td><td>"+esc(c.held_by.map(function(h){return h.investor.replace(/^founded by /,"")+" ("+h.pct_of_13f.toFixed(1)+"%)";}).join(", "))+"</td><td class='n "+cls(c.move_12_1)+"'>"+pct(c.move_12_1)+"</td><td class=n>"+(T[c.ticker]!=null?T[c.ticker].toFixed(1)+"%":"")+"</td></tr>";}).join(""));
+      fetch("data/strategy.json?"+Date.now()).then(function(r){return r.json();}).then(function(X){var f=function(n){return (n>0?"+":"")+n.toFixed(1)+"%";},c=function(n,b){return "<td class='n "+cls(n)+"'>"+(b?"<b>":"")+f(n)+(b?"</b>":"")+"</td>";};
+        $("srules").innerHTML=X.rules.map(function(r){return "<li>"+esc(r)+"</li>";}).join("");
+        rows("syears",X.years.map(function(y){return "<tr><td><b>"+y.year+(y.partial?" (so far)":"")+"</b></td>"+c(y.new)+c(y.old)+c(y.spy)+"</tr>";}).join("")+"<tr><td><b>Per year, all</b></td>"+c(X.per_year.new,1)+c(X.per_year.old,1)+c(X.per_year.spy,1)+"</tr><tr><td><b>Worst drop</b></td>"+c(X.worst_drop.new)+c(X.worst_drop.old)+c(X.worst_drop.spy)+"</tr>");
+        $("stake").textContent="Honest takeaway: in this test it earned more than the old plan and the S&P 500, but it beat the old plan in only "+X.beat_old_years+" years, fell further at its worst, and its settings were picked after seeing these years. It may not repeat.";
+        $("scav").innerHTML=X.caveats.map(function(x){return "<li>"+esc(x)+"</li>";}).join("");}).catch(function(){});
     })();
     fetch("data/learning.json?"+Date.now()).then(function(r){return r.json();}).then(function(L){
       var o=L.walk_forward.out_of_sample,f=function(n){return (n>0?"+":"")+n.toFixed(1)+"%";};
