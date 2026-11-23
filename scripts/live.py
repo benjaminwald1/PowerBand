@@ -3,7 +3,8 @@
 The workflow publishes it to the `live` branch; the site polls it. No keys needed."""
 import json, sys, time, urllib.request
 plan = json.load(open("data/plan.json"))
-tickers = sorted({b["ticker"] for p in plan["portfolios"] for b in p["buys"]})
+held = json.load(open("data/ledger.json"))["positions"]
+tickers = sorted({b["ticker"] for p in plan["portfolios"] for b in p["buys"]} | set(held))
 prices, stamp = {}, 0
 for t in tickers:
     for host in ("query1", "query2"):

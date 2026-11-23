@@ -1,16 +1,16 @@
 {
-  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-06-30, filed 2026-08-14 (accession 0001193125-26-352200)",
-  "as_of": "2026-06-30",
-  "filed": "2026-08-14",
+  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)",
+  "as_of": "2026-09-30",
+  "filed": "2026-11-16",
   "cik": "0001067983",
   "method": "top 5 stock positions by value, share classes combined, pct_of_13f scaled to 100",
   "weights": [
     {
       "ticker": "AAPL",
       "name": "Apple",
-      "weight": 30.67,
-      "pct_of_13f": 22.04,
-      "value": 65950296923.0,
+      "weight": 34.87,
+      "pct_of_13f": 24.95,
+      "value": 75901188420.0,
       "shares": 227917808.0,
       "cusips": [
         "037833100"
@@ -19,9 +19,9 @@
     {
       "ticker": "AXP",
       "name": "American Express",
-      "weight": 23.85,
-      "pct_of_13f": 17.14,
-      "value": 51282319275.0,
+      "weight": 21.19,
+      "pct_of_13f": 15.16,
+      "value": 46104813870.0,
       "shares": 151610700.0,
       "cusips": [
         "025816109"
@@ -30,9 +30,9 @@
     {
       "ticker": "GOOGL",
       "name": "Alphabet",
-      "weight": 17.56,
-      "pct_of_13f": 12.62,
-      "value": 37764088383.0,
+      "weight": 16.72,
+      "pct_of_13f": 11.96,
+      "value": 36374651401.0,
       "shares": 105979600.0,
       "cusips": [
         "02079K305",
@@ -46,9 +46,9 @@
     {
       "ticker": "KO",
       "name": "Coca Cola",
-      "weight": 15.11,
-      "pct_of_13f": 10.86,
-      "value": 32508000000.0,
+      "weight": 15.82,
+      "pct_of_13f": 11.32,
+      "value": 34432000000.0,
       "shares": 400000000.0,
       "cusips": [
         "191216100"
@@ -57,10 +57,10 @@
     {
       "ticker": "BAC",
       "name": "Bank of America",
-      "weight": 12.8,
-      "pct_of_13f": 9.2,
-      "value": 27543790975.0,
-      "shares": 483394015.0,
+      "weight": 11.4,
+      "pct_of_13f": 8.16,
+      "value": 24812509222.0,
+      "shares": 455860908.0,
       "cusips": [
         "060505104"
       ]
@@ -78,13 +78,13 @@
       "why": "outside the top 5"
     },
     {
-      "issuer": "CHUBB LIMITED",
-      "ticker": "CB",
+      "issuer": "MOODYS CORP",
+      "ticker": "MCO",
       "why": "outside the top 5"
     },
     {
-      "issuer": "MOODYS CORP",
-      "ticker": "MCO",
+      "issuer": "CHUBB LIMITED",
+      "ticker": "CB",
       "why": "outside the top 5"
     },
     {
@@ -93,13 +93,13 @@
       "why": "outside the top 5"
     },
     {
-      "issuer": "DAVITA INC",
-      "ticker": "DVA",
+      "issuer": "DELTA AIR LINES INC",
+      "ticker": "DAL",
       "why": "outside the top 5"
     },
     {
-      "issuer": "DELTA AIR LINES INC",
-      "ticker": "DAL",
+      "issuer": "DAVITA INC",
+      "ticker": "DVA",
       "why": "outside the top 5"
     },
     {
@@ -108,13 +108,18 @@
       "why": "outside the top 5"
     },
     {
-      "issuer": "VERISIGN INC",
-      "ticker": "VRSN",
+      "issuer": "LENNAR CORP",
+      "ticker": "LEN",
       "why": "outside the top 5"
     },
     {
       "issuer": "KROGER CO",
       "ticker": "KR",
+      "why": "outside the top 5"
+    },
+    {
+      "issuer": "VERISIGN INC",
+      "ticker": "VRSN",
       "why": "outside the top 5"
     },
     {
@@ -128,18 +133,18 @@
       "why": "outside the top 5"
     },
     {
-      "issuer": "LENNAR CORP",
-      "ticker": "LEN",
-      "why": "outside the top 5"
-    },
-    {
       "issuer": "NEW YORK TIMES CO MTN BE",
       "ticker": "NYT",
       "why": "outside the top 5"
     },
     {
-      "issuer": "CAPITAL ONE FINL CORP",
-      "ticker": "COF",
+      "issuer": "BENDING SPOONS SPA",
+      "ticker": "BSP",
+      "why": "outside the top 5"
+    },
+    {
+      "issuer": "NUCOR CORP",
+      "ticker": "NUE",
       "why": "outside the top 5"
     },
     {
@@ -148,8 +153,8 @@
       "why": "outside the top 5"
     },
     {
-      "issuer": "NUCOR CORP",
-      "ticker": "NUE",
+      "issuer": "CAPITAL ONE FINL CORP",
+      "ticker": "COF",
       "why": "outside the top 5"
     },
     {

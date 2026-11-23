@@ -6,14 +6,16 @@
   var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
   var rows=function(el,html){document.querySelector("#"+el+" tbody").innerHTML=html;};
   function card(l,v,c,s){return '<div class="card"><small>'+l+'</small><b class="'+c+'">'+v+'</b>'+(s?'<small>'+s+'</small>':'')+'</div>';}
-  function useLedger(D,LG){   // real paper-trading ledger: positions bought so far, cash, and tomorrow's reinvestment
+  function useLedger(D,LG){   // real paper-trading ledger: shares held, cash, tax lots, sells and tomorrow's orders
     var p=D.portfolios[0];p.cash=LG.cash;
-    p.buys.forEach(function(b){var h=LG.positions[b.ticker];if(h&&h.shares>0){b.cost=h.cost;D.entry[b.ticker]=h.cost/h.shares;}});
-    (LG.buys||[]).forEach(function(x,i){var px=D.prices[x.ticker]||x.price,y=new Date(x.date+"T12:00:00Z");y.setUTCFullYear(y.getUTCFullYear()+1);
-      p.tax.lots.push({ticker:x.ticker,id:x.ticker+"-top"+(i+1),date:x.date,shares:x.shares,cost:x.dollars,price:x.price,value:x.shares*px,gain:x.shares*px-x.dollars,term:"short",long_term_on:y.toISOString().slice(0,10)});});
+    p.held=Object.keys(LG.positions).filter(function(t){return LG.positions[t].shares>0;}).map(function(t){var h=LG.positions[t];D.entry[t]=h.cost/h.shares;return{ticker:t,name:(D.names||{})[t]||t,shares:h.shares,cost:h.cost};});
+    if(LG.lots){var n={},today=new Date().toISOString().slice(0,10);
+      p.tax.lots=LG.lots.map(function(l){var px=D.prices[l.ticker],y=new Date(l.date+"T12:00:00Z");y.setUTCFullYear(y.getUTCFullYear()+1);var lt=y.toISOString().slice(0,10);n[l.ticker]=(n[l.ticker]||0)+1;
+        return{ticker:l.ticker,id:l.ticker+"-"+n[l.ticker],date:l.date,shares:l.shares,cost:l.cost,value:l.shares*px,gain:l.shares*px-l.cost,term:today>lt?"long":"short",long_term_on:lt};});}
+    var yr=String(new Date().getUTCFullYear()),r={short:0,long:0};(LG.sells||[]).forEach(function(x){if(x.date.slice(0,4)===yr){r.short+=x.short_term_gain;r.long+=x.long_term_gain;}});p.tax.realized_ytd=r;
     D.pending=LG.pending||[];D.bench=LG.bench||null;
   }
-  Promise.all([fetch("data/plan.json?"+Date.now()).then(function(r){return r.json();}),fetch("data/ledger.json?"+Date.now()).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})]).then(function(R){var D=R[0],LG=R[1];if(LG)useLedger(D,LG);
+  Promise.all([fetch("data/plan.json?"+Date.now()).then(function(r){return r.json();}),fetch("data/ledger.json?"+Date.now()).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})]).then(function(R){var D=R[0],LG=R[1];if(LG)useLedger(D,LG);D.portfolios.forEach(function(p){if(!p.held)p.held=p.buys.map(function(b){return{ticker:b.ticker,name:b.name,shares:b.dollars/D.entry[b.ticker],cost:b.dollars};});});
     var cur=0,tabs=$("tabs");if(D.portfolios.length<2)tabs.style.display="none";
     D.portfolios.forEach(function(p,i){var b=document.createElement("button");b.textContent=usd(p.budget,0)+" portfolio";b.setAttribute("role","tab");b.onclick=function(){cur=i;draw();};tabs.appendChild(b);});
     $("srcnote").textContent="Copying: "+D.source+".";
@@ -32,7 +34,7 @@
     var anim=0;
     function showTotal(first){var id=++anim;
       var start=0,now=0;
-      D.portfolios.forEach(function(p){start+=p.budget;var v=p.cash;p.buys.forEach(function(b){v+=(b.cost!=null?b.cost:b.dollars)/D.entry[b.ticker]*D.prices[b.ticker];});now+=v;});
+      D.portfolios.forEach(function(p){start+=p.budget;var v=p.cash;p.held.forEach(function(h){v+=h.shares*D.prices[h.ticker];});now+=v;});
       var g=now-start;
       var big=$("bigtotal"),calm=typeof window!=="undefined"&&window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
       if(!first||calm||typeof requestAnimationFrame==="undefined"||now<=0){big.textContent=usd(now);}
@@ -41,7 +43,7 @@
       $("bigsub").innerHTML='<span class="'+cls(g)+'">'+(g>=0?"+":"")+usd(g)+" ("+pct(g/start*100)+")</span> since the simulation started with "+usd(start,0)+(D.portfolios.length>1?" across "+D.portfolios.length+" portfolios":"")+". Pretend money."+(D.live_at?' <span class="livedot">Live</span> prices as of '+new Date(D.live_at).toLocaleTimeString([],{hour:"numeric",minute:"2-digit",second:"2-digit"})+".":"");
       (function(){   // today and since the start, next to the S&P 500
         var el=$("compare"),B=D.bench,P=D.prevs;if(!el||!B||D.spx==null||!P)return;
-        var pv=0,nv=0,ok=true;D.portfolios.forEach(function(p){pv+=p.cash;nv+=p.cash;p.buys.forEach(function(b){var sh=(b.cost!=null?b.cost:b.dollars)/D.entry[b.ticker],pr=P[b.ticker];if(pr==null){ok=false;return;}pv+=sh*pr;nv+=sh*D.prices[b.ticker];});});
+        var pv=0,nv=0,ok=true;D.portfolios.forEach(function(p){pv+=p.cash;nv+=p.cash;p.held.forEach(function(h){var pr=P[h.ticker];if(pr==null){ok=false;return;}pv+=h.shares*pr;nv+=h.shares*D.prices[h.ticker];});});
         if(!ok||!(pv>0)||!P["^GSPC"])return;
         var dg=nv-pv,dp=dg/pv*100,sd=(D.spx/P["^GSPC"]-1)*100,tp=g/start*100,st=(D.spx/B.start-1)*100;
         function row(label,me,mine,idx){var diff=me-idx;return '<div class="cmprow"><span class="cmplabel">'+label+'</span><span class="'+cls(me)+'">You '+(mine||pct(me))+'</span><span class="'+cls(idx)+'">S&amp;P 500 '+pct(idx)+'</span><span class="cmpdiff '+cls(diff)+'">'+(diff>=0?"ahead by ":"behind by ")+Math.abs(diff).toFixed(2)+" pts</span></div>";}
@@ -53,10 +55,10 @@
       var when=D.next_open?D.next_open.replace(" ","  at ")+" (the next market open)":"";
       $("buytime").textContent=D.next_open?(D.market_open_now?"The market is open now, so these would go in right away.":"The market is closed, so these market orders would go in at "+D.next_open.replace(/^(\S+) (\S+) (.*)$/,"$1 at $2 $3")+", the next market open."):"";
     })();
-    if(D.pending&&D.pending.length)$("buytime").textContent+=" Reinvesting gains: at the next open the model would also add "+D.pending.map(function(x){return usd(x.dollars,0)+" of "+x.ticker;}).join(", ")+" (the account's new money, kept within the 10% cash buffer).";
+    if(D.pending&&D.pending.length)$("buytime").textContent+=(D.pending.some(function(x){return x.why==="new 13F";})?" Berkshire filed a new 13F, so at the next open the account rebalances to the new weights: ":" Reinvesting spare cash: at the next open the account adds ")+D.pending.map(function(x){return (x.dollars<0?"sell ":"buy ")+usd(Math.abs(x.dollars),0)+" of "+x.ticker;}).join(", ")+".";
     (function(){
       var O=D.outlook,p=D.portfolios[0];if(!O)return;var c=p.cash;
-      $("ocards").innerHTML=card("12-month range, whole account",usd(O.portfolio.low+c,0)+" to "+usd(O.portfolio.high+c,0),"","A simple model using last year's price swings plus an assumed 8% a year of growth (about the long-run market average) puts about 8 in 10 outcomes here. A spread, not a forecast.")+card("Same mix, past 12 months",pct(O.portfolio.last_year_pct),cls(O.portfolio.last_year_pct),"what happened last year, not next")+card("Next review",O.next_13f.deadline,"","Berkshire's Q3 13F is due by this date");
+      $("ocards").innerHTML=card("12-month range, whole account",usd(O.portfolio.low+c,0)+" to "+usd(O.portfolio.high+c,0),"","A simple model using last year's price swings plus an assumed 8% a year of growth (about the long-run market average) puts about 8 in 10 outcomes here. A spread, not a forecast.")+card("Same mix, past 12 months",pct(O.portfolio.last_year_pct),cls(O.portfolio.last_year_pct),"what happened last year, not next")+card("Next review",O.next_13f.deadline,"","Berkshire's next 13F is due by this date");
       rows("exit",O.stocks.map(function(s){return "<tr><td><b>"+esc(s.ticker)+"</b></td><td class=n>"+usd(s.entry)+"</td><td class=n data-now=\""+esc(s.ticker)+"\"></td><td class='n up'>"+usd(s.take_profit_price)+"<small>+"+O.rules.take_profit_pct+"%</small></td><td class='n down'>"+usd(s.stop_price)+"<small>-"+O.rules.stop_loss_pct+"%</small></td><td class=n>"+usd(s.low,0)+" to "+usd(s.high,0)+"<small>yearly swing ±"+s.vol_pct+"%</small></td><td class='n "+cls(s.last_year_pct)+"'>"+pct(s.last_year_pct)+"</td></tr>";}).join(""));
       var pc=function(n){return n<1?"under 1%":n+"%";};
       rows("odds",O.stocks.map(function(s){return "<tr><td rowspan=2><b>"+esc(s.ticker)+"</b></td><td class=up>Profit price "+usd(s.take_profit_price)+"</td>"+s.odds.profit.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr><tr><td class=down>Stop price "+usd(s.stop_price)+"</td>"+s.odds.stop.map(function(n){return "<td class=n>"+pc(n)+"</td>";}).join("")+"</tr>";}).join(""));
@@ -77,7 +79,7 @@
       var p=D.portfolios[cur];
       [].forEach.call(tabs.children,function(b,i){b.setAttribute("aria-selected",i===cur);});
       var inv=p.buys.reduce(function(a,b){return a+b.dollars;},0);
-      var pos=p.buys.map(function(b){var e=D.entry[b.ticker],px=D.prices[b.ticker],cb=b.cost!=null?b.cost:b.dollars,sh=cb/e,v=sh*px;return{t:b.ticker,n:b.name,s:sh,e:e,px:px,v:v,g:v-cb,gp:(v/cb-1)*100};});
+      var pos=p.held.map(function(h){var px=D.prices[h.ticker],v=h.shares*px;return{t:h.ticker,n:h.name,s:h.shares,e:h.cost/h.shares,px:px,v:v,g:v-h.cost,gp:(v/h.cost-1)*100};});
       var val=pos.reduce(function(a,r){return a+r.v;},0),total=val+p.cash,gain=val-inv,nsell=p.rebalance.trades.length+p.harvest.orders.length;
       $("cards").innerHTML=card("Budget",usd(p.budget,0),"")+card("Planned buys",p.buys.length+" orders","",usd(inv,0)+" invested")+card("Planned sells",nsell+" orders","",nsell?"":"nothing to sell")+card("Risk check",p.risk_summary.passed+" of "+(p.risk_summary.passed+p.risk_summary.blocked)+" pass","",p.risk_summary.blocked+" blocked")+card("Cash kept",usd(p.cash,0),"",p.cash_buffer_pct+"% buffer");
       rows("buys",p.buys.map(function(b){return '<tr><td class="act">BUY</td><td><b>'+b.ticker+"</b><small>"+esc(b.name)+"</small></td><td class=n>"+usd(b.dollars,0)+"</td><td class=n>"+(b.dollars/b.price).toFixed(2)+" sh @ "+usd(b.price)+"</td><td class=n>"+b.weight.toFixed(1)+'%</td><td><span class="v '+b.verdict+'">'+b.verdict+"</span>"+(b.reasons.length?"<small>"+esc(b.reasons.join("; "))+"</small>":"")+"</td><td>"+(b.capped?"Capped at "+p.cap_pct+"% of budget":"")+"</td></tr>";}).join(""));

@@ -11,8 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 scripts/roll.py || echo "nothing to roll"
-      - name: Commit the ledger if it changed
+      - name: Get the trader skills
+        run: git clone -q --depth 1 https://github.com/Jakeschincariol/trader-skill.git ~/clones/trader-skill
+      - name: New Berkshire 13F? Load its top 5 as the targets
+        env: { SEC_USER_AGENT: "${{ secrets.SEC_USER_AGENT }}" }
+        run: python3 scripts/filing.py || echo "filing check skipped"
+      - name: Rebuild the plan page
+        env: { SEC_USER_AGENT: "${{ secrets.SEC_USER_AGENT }}" }
+        run: python3 scripts/refresh.py
+      - if: ${{ !cancelled() }}   # still roll the account if the plan rebuild failed; the job shows red either way
+        run: python3 scripts/roll.py || echo "nothing to roll"
+      - name: Commit if anything changed
+        if: ${{ !cancelled() }}
         run: |
           git config user.name live-bot && git config user.email live-bot@users.noreply.github.com
-          git add data/ledger.json && (git diff --cached --quiet || (git commit -qm "Daily roll: mark account to the close, queue reinvestment" && git pull -q --rebase && git push))
+          git add data/ledger.json data/plan.json data/journal.json data/seed/targets.json
+          git diff --cached --quiet || (git commit -qm "Daily: check for a new 13F, rebuild the plan, mark the account to the close" && git pull -q --rebase && git push)

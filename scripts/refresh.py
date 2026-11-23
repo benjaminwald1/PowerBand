@@ -70,14 +70,17 @@ def jrun(*a, **k):
 targets, cfg0 = seed("targets.json"), seed("config.json")
 old = json.load(open(os.path.join(ROOT, "data", "plan.json"))) if os.path.exists(os.path.join(ROOT, "data", "plan.json")) else {}
 tickers = [w["ticker"] for w in targets["weights"]]
-names = {w["ticker"]: w["name"] for w in targets["weights"]}
+lp_ = os.path.join(ROOT, "data", "ledger.json")
+held = {t: h for t, h in (json.load(open(lp_))["positions"] if os.path.exists(lp_) else {}).items() if h["shares"] > 0}
+quoted = tickers + sorted(set(held) - set(tickers))   # a stock a new filing dropped is still held until the roll sells it
+names = {**{t: old.get("names", {}).get(t, t) for t in held}, **{w["ticker"]: w["name"] for w in targets["weights"]}}
 now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 plan = {"generated": now, "source": targets["source"], "as_of_13f": targets["as_of"], "names": names, "portfolios": []}
 
 with tempfile.TemporaryDirectory() as tmp:
     os.makedirs(os.path.join(tmp, "trader"))
     json.dump(targets, open(os.path.join(tmp, "trader", "targets.json"), "w"))
-    run("trader-alerts", "alerts.py", ["quote", *tickers, "--write"], tmp)
+    run("trader-alerts", "alerts.py", ["quote", *quoted, "--write"], tmp)
     q = json.load(open(os.path.join(tmp, "trader", "prices.json")))
     plan["prices"], plan["prices_as_of"] = q["prices"], q["as_of"]
     clock = run("trader-alerts", "alerts.py", ["clock"], tmp).strip().splitlines()
@@ -87,7 +90,7 @@ with tempfile.TemporaryDirectory() as tmp:
     plan["next_open"] = f"{mo.group(1)} {mo.group(2)}" if mo else None
     plan["market_open_now"] = "closed" not in plan["market"].lower()
     # the entry prices stay fixed once chosen, so gains and losses are measured from the same starting point
-    plan["entry"] = old.get("entry") or dict(q["prices"])
+    plan["entry"] = {**q["prices"], **(old.get("entry") or {})}   # a stock new to the plan starts at today's price
     plan["entry_note"] = old.get("entry_note") or "Simulated buys at the " + q["as_of"][:10] + " closing prices"
 
     for b in BUDGETS:
@@ -112,7 +115,8 @@ with tempfile.TemporaryDirectory() as tmp:
         if b == BUDGETS[0]:
             try:
                 rl = seed("exit_rules.json")
-                plan["outlook"] = outlook(buys, plan["entry"], q["prices"], rl, targets["as_of"]); plan["outlook"]["auto_exit"] = rl.get("auto_exit", True)
+                basis = {**plan["entry"], **{t: h["cost"] / h["shares"] for t, h in held.items()}}   # alerts are measured from what the account paid on average
+                plan["outlook"] = outlook(buys, basis, q["prices"], rl, targets["as_of"]); plan["outlook"]["auto_exit"] = rl.get("auto_exit", True)
                 plan["auto_exit"] = plan["outlook"]["auto_exit"]
                 # the journal: what the model said today, so the learner can score it once the time has passed
                 jp = os.path.join(ROOT, "data", "journal.json"); J = json.load(open(jp)) if os.path.exists(jp) else []

@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-16T18:08:29+00:00",
- "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-06-30, filed 2026-08-14 (accession 0001193125-26-352200)",
- "as_of_13f": "2026-06-30",
+ "generated": "2026-11-23T19:48:10+00:00",
+ "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)",
+ "as_of_13f": "2026-09-30",
  "names": {
   "AAPL": "Apple",
   "AXP": "American Express",
@@ -20,10 +20,10 @@
     {
      "ticker": "AAPL",
      "name": "Apple",
-     "dollars": 3068.0,
-     "price": 353.48,
-     "shares": 8.6794,
-     "weight": 30.67,
+     "dollars": 3487.0,
+     "price": 349.425,
+     "shares": 9.9793,
+     "weight": 34.87,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -31,10 +31,10 @@
     {
      "ticker": "AXP",
      "name": "American Express",
-     "dollars": 2385.0,
-     "price": 319.07,
-     "shares": 7.4748,
-     "weight": 23.85,
+     "dollars": 2119.0,
+     "price": 306.92,
+     "shares": 6.9041,
+     "weight": 21.19,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -42,10 +42,10 @@
     {
      "ticker": "GOOGL",
      "name": "Alphabet",
-     "dollars": 1756.0,
-     "price": 287.09,
-     "shares": 6.1165,
-     "weight": 17.56,
+     "dollars": 1672.0,
+     "price": 282.76,
+     "shares": 5.9131,
+     "weight": 16.72,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -53,10 +53,10 @@
     {
      "ticker": "KO",
      "name": "Coca Cola",
-     "dollars": 1511.0,
-     "price": 99.33,
-     "shares": 15.2119,
-     "weight": 15.11,
+     "dollars": 1582.0,
+     "price": 96.11,
+     "shares": 16.4603,
+     "weight": 15.82,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -64,10 +64,10 @@
     {
      "ticker": "BAC",
      "name": "Bank of America",
-     "dollars": 1280.0,
-     "price": 50.205,
-     "shares": 25.4955,
-     "weight": 12.8,
+     "dollars": 1140.0,
+     "price": 48.21,
+     "shares": 23.6465,
+     "weight": 11.4,
      "capped": false,
      "verdict": "PASS",
      "reasons": []
@@ -82,61 +82,61 @@
     "rows": [
      {
       "ticker": "AAPL",
-      "shares": 8.9611,
-      "price": 353.48,
-      "value": 3167.57,
-      "current_pct": 31.12,
-      "target_pct": 30.67,
-      "drift": 0.45,
-      "target_usd": 3121.81,
+      "shares": 10.1849,
+      "price": 349.425,
+      "value": 3558.86,
+      "current_pct": 35.78,
+      "target_pct": 34.87,
+      "drift": 0.91,
+      "target_usd": 3468.34,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "AXP",
-      "shares": 7.4301,
-      "price": 319.07,
-      "value": 2370.72,
-      "current_pct": 23.29,
-      "target_pct": 23.85,
-      "drift": -0.56,
-      "target_usd": 2427.62,
+      "shares": 6.6015,
+      "price": 306.92,
+      "value": 2026.13,
+      "current_pct": 20.37,
+      "target_pct": 21.19,
+      "drift": -0.82,
+      "target_usd": 2107.66,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "GOOGL",
-      "shares": 6.1662,
-      "price": 287.09,
-      "value": 1770.25,
-      "current_pct": 17.39,
-      "target_pct": 17.56,
-      "drift": -0.17,
-      "target_usd": 1787.38,
+      "shares": 5.8712,
+      "price": 282.76,
+      "value": 1660.14,
+      "current_pct": 16.69,
+      "target_pct": 16.72,
+      "drift": -0.03,
+      "target_usd": 1663.05,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "KO",
-      "shares": 15.7939,
-      "price": 99.33,
-      "value": 1568.81,
-      "current_pct": 15.41,
-      "target_pct": 15.11,
-      "drift": 0.3,
-      "target_usd": 1538.0,
+      "shares": 16.536,
+      "price": 96.11,
+      "value": 1589.27,
+      "current_pct": 15.98,
+      "target_pct": 15.82,
+      "drift": 0.16,
+      "target_usd": 1573.54,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "BAC",
-      "shares": 25.9004,
-      "price": 50.205,
-      "value": 1300.33,
-      "current_pct": 12.78,
-      "target_pct": 12.8,
-      "drift": -0.02,
-      "target_usd": 1302.87,
+      "shares": 23.0676,
+      "price": 48.21,
+      "value": 1112.09,
+      "current_pct": 11.18,
+      "target_pct": 11.4,
+      "drift": -0.22,
+      "target_usd": 1133.9,
       "tracked": true,
       "action": "hold"
      }
@@ -152,114 +152,114 @@
      {
       "ticker": "AAPL",
       "id": "AAPL-1",
-      "date": "2026-11-16",
-      "shares": 8.9611,
-      "cost": 3068.0,
-      "price": 353.48,
-      "value": 3167.57,
-      "gain": 99.57,
+      "date": "2026-11-23",
+      "shares": 10.1849,
+      "cost": 3487.0,
+      "price": 349.425,
+      "value": 3558.86,
+      "gain": 71.86,
       "term": "short",
-      "long_term_on": "2027-11-17"
+      "long_term_on": "2027-11-24"
      },
      {
       "ticker": "AXP",
       "id": "AXP-1",
-      "date": "2026-11-16",
-      "shares": 7.4301,
-      "cost": 2385.0,
-      "price": 319.07,
-      "value": 2370.72,
-      "gain": -14.28,
+      "date": "2026-11-23",
+      "shares": 6.6015,
+      "cost": 2119.0,
+      "price": 306.92,
+      "value": 2026.13,
+      "gain": -92.87,
       "term": "short",
-      "long_term_on": "2027-11-17"
+      "long_term_on": "2027-11-24"
      },
      {
       "ticker": "BAC",
       "id": "BAC-1",
-      "date": "2026-11-16",
-      "shares": 25.9004,
-      "cost": 1280.0,
-      "price": 50.205,
-      "value": 1300.33,
-      "gain": 20.33,
+      "date": "2026-11-23",
+      "shares": 23.0676,
+      "cost": 1140.0,
+      "price": 48.21,
+      "value": 1112.09,
+      "gain": -27.91,
       "term": "short",
-      "long_term_on": "2027-11-17"
+      "long_term_on": "2027-11-24"
      },
      {
       "ticker": "GOOGL",
       "id": "GOOGL-1",
-      "date": "2026-11-16",
-      "shares": 6.1662,
-      "cost": 1756.0,
-      "price": 287.09,
-      "value": 1770.25,
-      "gain": 14.25,
+      "date": "2026-11-23",
+      "shares": 5.8712,
+      "cost": 1672.0,
+      "price": 282.76,
+      "value": 1660.14,
+      "gain": -11.86,
       "term": "short",
-      "long_term_on": "2027-11-17"
+      "long_term_on": "2027-11-24"
      },
      {
       "ticker": "KO",
       "id": "KO-1",
-      "date": "2026-11-16",
-      "shares": 15.7939,
-      "cost": 1511.0,
-      "price": 99.33,
-      "value": 1568.81,
-      "gain": 57.81,
+      "date": "2026-11-23",
+      "shares": 16.536,
+      "cost": 1582.0,
+      "price": 96.11,
+      "value": 1589.27,
+      "gain": 7.27,
       "term": "short",
-      "long_term_on": "2027-11-17"
+      "long_term_on": "2027-11-24"
      }
     ],
     "positions": [
      {
       "ticker": "AAPL",
-      "shares": 8.9611,
-      "cost": 3068.0,
-      "value": 3167.57,
-      "short": 99.57,
+      "shares": 10.1849,
+      "cost": 3487.0,
+      "value": 3558.86,
+      "short": 71.86,
       "long": 0.0,
-      "gain": 99.57,
-      "pct": 3.25
+      "gain": 71.86,
+      "pct": 2.06
      },
      {
       "ticker": "AXP",
-      "shares": 7.4301,
-      "cost": 2385.0,
-      "value": 2370.72,
-      "short": -14.28,
+      "shares": 6.6015,
+      "cost": 2119.0,
+      "value": 2026.13,
+      "short": -92.87,
       "long": 0.0,
-      "gain": -14.28,
-      "pct": -0.6
+      "gain": -92.87,
+      "pct": -4.38
      },
      {
       "ticker": "BAC",
-      "shares": 25.9004,
-      "cost": 1280.0,
-      "value": 1300.33,
-      "short": 20.33,
+      "shares": 23.0676,
+      "cost": 1140.0,
+      "value": 1112.09,
+      "short": -27.91,
       "long": 0.0,
-      "gain": 20.33,
-      "pct": 1.59
+      "gain": -27.91,
+      "pct": -2.45
      },
      {
       "ticker": "GOOGL",
-      "shares": 6.1662,
-      "cost": 1756.0,
-      "value": 1770.25,
-      "short": 14.25,
+      "shares": 5.8712,
+      "cost": 1672.0,
+      "value": 1660.14,
+      "short": -11.86,
       "long": 0.0,
-      "gain": 14.25,
-      "pct": 0.81
+      "gain": -11.86,
+      "pct": -0.71
      },
      {
       "ticker": "KO",
-      "shares": 15.7939,
-      "cost": 1511.0,
-      "value": 1568.81,
-      "short": 57.81,
+      "shares": 16.536,
+      "cost": 1582.0,
+      "value": 1589.27,
+      "short": 7.27,
       "long": 0.0,
-      "gain": 57.81,
-      "pct": 3.83
+      "gain": 7.27,
+      "pct": 0.46
      }
     ],
     "missing_prices": [],
@@ -273,14 +273,14 @@
   }
  ],
  "prices": {
-  "AAPL": 353.48,
-  "AXP": 319.07,
-  "GOOGL": 287.09,
-  "KO": 99.33,
-  "BAC": 50.205
+  "AAPL": 349.425,
+  "AXP": 306.92,
+  "GOOGL": 282.76,
+  "KO": 96.11,
+  "BAC": 48.21
  },
- "prices_as_of": "2026-11-16T18:08:29Z",
- "market": "New York 2026-11-16 13:08 (Monday): NYSE OPEN, regular session. Today's session: 09:30 to 16:00.",
+ "prices_as_of": "2026-11-23T19:48:11Z",
+ "market": "New York 2026-11-23 14:48 (Monday): NYSE OPEN, regular session. Today's session: 09:30 to 16:00.",
  "next_open": null,
  "market_open_now": true,
  "entry": {
@@ -294,11 +294,11 @@
  "outlook": {
   "horizon_days": 252,
   "portfolio": {
-   "vol_pct": 15.4,
-   "low": 8889.28,
-   "high": 13201.42,
+   "vol_pct": 15.5,
+   "low": 8877.87,
+   "high": 13218.39,
    "invested": 10000.0,
-   "last_year_pct": 12.6
+   "last_year_pct": 6.9
   },
   "stocks": [
    {
@@ -311,7 +311,7 @@
      "stop": [
       5,
       16,
-      51
+      52
      ]
     },
     "odds_raw": {
@@ -323,17 +323,17 @@
      "stop": [
       2,
       19,
-      51
+      52
      ]
     },
     "ticker": "AAPL",
-    "vol_pct": 24.9,
-    "last_year_pct": 32.2,
-    "entry": 342.37,
-    "take_profit_price": 427.96,
-    "stop_price": 291.01,
-    "low": 269.41,
-    "high": 510.57
+    "vol_pct": 25.0,
+    "last_year_pct": 26.6,
+    "entry": 344.15603029572503,
+    "take_profit_price": 430.2,
+    "stop_price": 292.53,
+    "low": 270.65,
+    "high": 513.55
    },
    {
     "odds": {
@@ -361,19 +361,19 @@
      ]
     },
     "ticker": "AXP",
-    "vol_pct": 25.8,
-    "last_year_pct": -6.5,
-    "entry": 320.99,
-    "take_profit_price": 401.24,
-    "stop_price": 272.84,
-    "low": 249.84,
-    "high": 483.97
+    "vol_pct": 25.9,
+    "last_year_pct": -13.8,
+    "entry": 320.73066429335387,
+    "take_profit_price": 400.91,
+    "stop_price": 272.62,
+    "low": 249.28,
+    "high": 484.26
    },
    {
     "odds": {
      "profit": [
       1,
-      18,
+      19,
       51
      ],
      "stop": [
@@ -385,23 +385,23 @@
     "odds_raw": {
      "profit": [
       2,
-      18,
+      19,
       51
      ],
      "stop": [
-      9,
-      33,
+      10,
+      34,
       63
      ]
     },
     "ticker": "GOOGL",
-    "vol_pct": 33.7,
-    "last_year_pct": 0.7,
-    "entry": 284.78,
-    "take_profit_price": 355.97,
-    "stop_price": 242.06,
-    "low": 200.41,
-    "high": 474.88
+    "vol_pct": 33.8,
+    "last_year_pct": -11.2,
+    "entry": 284.6729993120353,
+    "take_profit_price": 355.84,
+    "stop_price": 241.97,
+    "low": 199.91,
+    "high": 475.72
    },
    {
     "odds": {
@@ -429,20 +429,20 @@
      ]
     },
     "ticker": "KO",
-    "vol_pct": 18.9,
-    "last_year_pct": 40.5,
-    "entry": 95.67,
-    "take_profit_price": 119.59,
-    "stop_price": 81.32,
-    "low": 81.3,
-    "high": 132.11
+    "vol_pct": 19.0,
+    "last_year_pct": 32.4,
+    "entry": 95.78704063535383,
+    "take_profit_price": 119.73,
+    "stop_price": 81.42,
+    "low": 81.35,
+    "high": 132.35
    },
    {
     "odds": {
      "profit": [
       0,
       5,
-      32
+      33
      ],
      "stop": [
       4,
@@ -454,7 +454,7 @@
      "profit": [
       0,
       5,
-      32
+      33
      ],
      "stop": [
       1,
@@ -463,13 +463,13 @@
      ]
     },
     "ticker": "BAC",
-    "vol_pct": 22.4,
-    "last_year_pct": -2.5,
-    "entry": 49.42,
-    "take_profit_price": 61.78,
-    "stop_price": 42.01,
-    "low": 40.16,
-    "high": 71.37
+    "vol_pct": 22.7,
+    "last_year_pct": -7.2,
+    "entry": 49.443707751018295,
+    "take_profit_price": 61.8,
+    "stop_price": 42.03,
+    "low": 40.02,
+    "high": 71.69
    }
   ],
   "rules": {
@@ -486,8 +486,8 @@
    "stop_1"
   ],
   "next_13f": {
-   "quarter_end": "2026-09-30",
-   "deadline": "2026-11-16"
+   "quarter_end": "2026-12-31",
+   "deadline": "2027-02-15"
   },
   "auto_exit": false
  },
@@ -592,7 +592,7 @@
      "revenue_growth_yoy 24.7 >= 10",
      "operating_margin 31.8 >= 25",
      "eps_ttm 19.16 > 0",
-     "pe 15 <= 35"
+     "pe 14.8 <= 35"
     ],
     "skipped": []
    }
@@ -601,7 +601,7 @@
    {
     "ticker": "AAPL",
     "why": [
-     "pe 39.4, needs <= 35"
+     "pe 38.9, needs <= 35"
     ]
    },
    {
@@ -631,51 +631,89 @@
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "GOOGL",
-   "title": "Micron and Sandisk Lead the Memory Market. 1 Stock Has Far Greater Upside.",
-   "link": "https://www.fool.com/investing/2026/11/07/micron-and-sandisk-lead-the-memory-market-1-stock/?.tsrc=rss",
-   "time": "2026-11-07T17:50:00+00:00",
+   "title": "Nvidia gains nearly $1T as Trump says nobody could 'revive the stock like it's being revived'",
+   "link": "https://finance.yahoo.com/markets/article/nvidia-gains-nearly-1t-as-trump-says-nobody-could-revive-the-stock-like-its-being-revived-194634496.html?.tsrc=rss",
+   "time": "2026-11-23T19:46:34+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Why Jensen Huang is the 'key man' behind the market rally",
+   "link": "https://finance.yahoo.com/video/why-jensen-huang-is-the-key-man-behind-the-market-rally-193849634.html?.tsrc=rss",
+   "time": "2026-11-23T19:38:49+00:00",
    "tags": [
-    "earnings"
+    "people"
    ]
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Stock Market Today: Dow, Nasdaq Leap On Jensen Huang's Nvidia Return; Cruise Play Eyes Entry (Live Coverage)",
+   "link": "https://finance.yahoo.com/m/8751de70-467e-380a-82cb-f4ee42adc461/stock-market-today%3A-dow%2C.html?.tsrc=rss",
+   "time": "2026-11-23T19:37:01+00:00",
+   "tags": [
+    "people"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "KO",
+   "title": "How Much You Really Need Invested to Generate $50,000 a Year in Retirement",
+   "link": "https://247wallst.com/investing/2026/11/23/how-much-you-really-need-invested-to-generate-50000-a-year-in-retirement/?.tsrc=rss",
+   "time": "2026-11-23T19:17:21+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
    "ticker": "AAPL",
-   "title": "Apple Completes the Set: Every Magnificent Seven Stock Opts Out of OKX-ICE Venue",
-   "link": "https://decrypt.co/382768/apple-meta-every-magnificent-seven-stock-opts-out-okx-ice-venue?.tsrc=rss",
-   "time": "2026-11-07T17:01:03+00:00",
+   "title": "Alphabet Soars 6% as Jensen Huang\u2019s Return to Nvidia Reignites AI Stocks",
+   "link": "https://www.tikr.com/blog/alphabet-soars-6-as-jensen-huangs-return-to-nvidia-reignites-ai-stocks?ref=yahoofinance&tlnk=yf-261123-hwv86p83&.tsrc=rss",
+   "time": "2026-11-23T19:00:31+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Jensen Huang's return to Nvidia: Long or short accountability?",
+   "link": "https://finance.yahoo.com/video/jensen-huangs-return-to-nvidia-long-or-short-accountability-185949254.html?.tsrc=rss",
+   "time": "2026-11-23T18:59:49+00:00",
+   "tags": [
+    "people"
+   ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Jim Cramer sees a Google bargain after $120 million exit",
+   "link": "https://www.thestreet.com/investing/jim-cramer-sees-a-google-bargain-after-120-million-exit?.tsrc=rss",
+   "time": "2026-11-23T18:33:00+00:00",
    "tags": []
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "KO",
-   "title": "These 5 Consumer Stocks Raised Their Dividends in 2026. Here's What $10,000 in Each Pays in 2027.",
-   "link": "https://www.fool.com/investing/2026/11/07/these-5-consumer-stocks-raised-their-dividends-in/?.tsrc=rss",
-   "time": "2026-11-07T16:50:00+00:00",
+   "title": "If a Recession Hits in 2027, This Is the Dividend Stock I Want to Own",
+   "link": "https://www.fool.com/investing/2026/11/23/if-recession-hits-2027-this-dividend-stock-i-want-to-own/?.tsrc=rss",
+   "time": "2026-11-23T18:20:02+00:00",
    "tags": [
-    "earnings"
+    "capital"
    ]
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "GOOGL",
-   "title": "AST SpaceMobile Is Building Its Own Reusable Rocket to Rely Less on SpaceX",
-   "link": "https://247wallst.com/investing/2026/11/07/ast-spacemobile-is-building-its-own-reusable-rocket-to-rely-less-on-spacex/?.tsrc=rss",
-   "time": "2026-11-07T16:49:42+00:00",
-   "tags": [
-    "deal"
-   ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AXP",
-   "title": "American Express\u2019s CEO Sold $99 Million of Stock the Day Before the Crash",
-   "link": "https://247wallst.com/investing/2026/11/07/american-expresss-ceo-sold-99-million-of-stock-the-day-before-the-crash/?.tsrc=rss",
-   "time": "2026-11-07T16:41:58+00:00",
+   "title": "Billionaire Ray Dalio Is Going All-In on These 10 AI and Chip Stocks: Should You Buy?",
+   "link": "https://finance.yahoo.com/technology/ai/articles/billionaire-ray-dalio-going-10-181149569.html?.tsrc=rss",
+   "time": "2026-11-23T18:11:49+00:00",
    "tags": [
     "people"
    ]
@@ -684,89 +722,51 @@
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "AAPL",
-   "title": "Dow Jones Futures: Market Needs Repair But Apple, Amazon, Microsoft Strong; Berkshire Doubles Stock Buyback",
-   "link": "https://finance.yahoo.com/m/283e1bd9-349e-390b-a32b-b4ed9a9034f3/dow-jones-futures%3A-market.html?.tsrc=rss",
-   "time": "2026-11-07T16:19:28+00:00",
+   "title": "Nvidia's Forecast Needs $1.4 Trillion Of AI Spending In 2027. Who Pays?",
+   "link": "https://www.trefis.com/stock/nvda/articles/627446/nvidia-s-forecast-needs-1-4-trillion-of-ai-spending-in-2027-who-pays/2026-11-23?.tsrc=rss",
+   "time": "2026-11-23T18:00:56+00:00",
    "tags": [
     "earnings",
-    "capital"
+    "legal"
    ]
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "BAC",
-   "title": "Bank of America (BAC) Bond Sales Keep The Undervalued Narrative In Play",
-   "link": "https://finance.yahoo.com/markets/stocks/articles/bank-america-bac-bond-sales-161156601.html?.tsrc=rss",
-   "time": "2026-11-07T16:11:56+00:00",
+   "ticker": "GOOGL",
+   "title": "Alphabet Stocks Jump 6.97% as AI Rebound Spotlights Google Cloud's 103% Growth",
+   "link": "https://finance.yahoo.com/technology/ai/articles/alphabet-stocks-jump-6-97-175521840.html?.tsrc=rss",
+   "time": "2026-11-23T17:55:21+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "KO",
+   "title": "Coca-Cola vs. PepsiCo: Which Consumer Goods Stock Is a Better Buy for 2027?",
+   "link": "https://www.fool.com/coverage/better-buy/2026/11/23/coca-cola-vs-pepsico-which-consumer-goods-stock-is-a-better-buy-for-2027/?.tsrc=rss",
+   "time": "2026-11-23T17:50:02+00:00",
    "tags": []
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "GOOGL",
-   "title": "AI Stocks Diverge as Democratic Election Victory Sparks Rotation Into Cloud Giants",
-   "link": "https://investorshub.advfn.com/market-news/article/39467/ai-stocks-diverge-as-democratic-election-victory-sparks-rotation-into-cloud-giants?.tsrc=rss",
-   "time": "2026-11-07T15:54:00+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "BAC",
-   "title": "Bank of America warns oil could force a Fed interest-rate rethink",
-   "link": "https://www.thestreet.com/fed/bank-of-america-oil-fed-rates?.tsrc=rss",
-   "time": "2026-11-07T15:37:00+00:00",
+   "title": "All Broadcom Has to Do is Deliver Modestly to Prove Stanley Druckenmiller Wrong and Hit $500 in 2027",
+   "link": "https://247wallst.com/investing/2026/11/23/all-broadcom-has-to-do-is-deliver-modestly-to-prove-stanley-druckenmiller-wrong-and-hit-500-in-2027/?.tsrc=rss",
+   "time": "2026-11-23T17:45:48+00:00",
    "tags": []
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "GOOGL",
-   "title": "Fed Chair Kevin Warsh Just Issued a 6-Word Warning That Could Spell Disaster for AI Stocks",
-   "link": "https://247wallst.com/investing/2026/11/07/fed-chair-kevin-warsh-just-issued-a-6-word-warning-that-could-spell-disaster-for-ai-stocks/?.tsrc=rss",
-   "time": "2026-11-07T15:26:32+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "BAC",
-   "title": "Here's How These 6 Big Bank Stocks Make Their Money",
-   "link": "https://www.fool.com/investing/2026/11/07/how-these-6-big-bank-stocks-make-their-money/?.tsrc=rss",
-   "time": "2026-11-07T15:05:00+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Pinterest CEO: The EU Hit Was \u201cGreater Than We Anticipated.\u201d Its Q4 Guide Sits $70 Million Light",
-   "link": "https://www.tikr.com/blog/pinterest-ceo-the-eu-hit-was-greater-than-we-anticipated-its-q4-guide-sits-70-million-light?ref=yahoofinance&tlnk=yf-261107-43v3vfp7&.tsrc=rss",
-   "time": "2026-11-07T15:03:36+00:00",
+   "title": "What Explains The Fall In Meta Stock?",
+   "link": "https://www.trefis.com/stock/meta/articles/627808/what-explains-the-fall-in-meta-stock/2026-11-23?.tsrc=rss",
+   "time": "2026-11-23T17:31:04+00:00",
    "tags": [
-    "people"
+    "legal"
    ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Take-Two Expects 20% Growth From GTA VI. Roblox Guides Its Holiday Bookings Down 15%",
-   "link": "https://www.tikr.com/blog/roblox-just-gained-15-in-a-week-after-its-earnings-crash-take-profits-or-buy-more?ref=yahoofinance&tlnk=yf-261107-8cwrg7hr&.tsrc=rss",
-   "time": "2026-11-07T14:51:11+00:00",
-   "tags": [
-    "earnings"
-   ]
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Google\u2019s Man on SpaceX\u2019s Board Just Quit After 11 Years",
-   "link": "https://247wallst.com/investing/2026/11/07/googles-man-on-spacexs-board-just-quit-after-11-years/?.tsrc=rss",
-   "time": "2026-11-07T14:42:49+00:00",
-   "tags": []
   }
  ],
  "sec_skills": true,
