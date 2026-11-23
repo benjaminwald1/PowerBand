@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23T19:48:10+00:00",
+ "generated": "2026-11-23T19:50:40+00:00",
  "source": "BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)",
  "as_of_13f": "2026-09-30",
  "names": {
@@ -21,8 +21,8 @@
      "ticker": "AAPL",
      "name": "Apple",
      "dollars": 3487.0,
-     "price": 349.425,
-     "shares": 9.9793,
+     "price": 349.395,
+     "shares": 9.9801,
      "weight": 34.87,
      "capped": false,
      "verdict": "PASS",
@@ -32,8 +32,8 @@
      "ticker": "AXP",
      "name": "American Express",
      "dollars": 2119.0,
-     "price": 306.92,
-     "shares": 6.9041,
+     "price": 306.655,
+     "shares": 6.91,
      "weight": 21.19,
      "capped": false,
      "verdict": "PASS",
@@ -43,8 +43,8 @@
      "ticker": "GOOGL",
      "name": "Alphabet",
      "dollars": 1672.0,
-     "price": 282.76,
-     "shares": 5.9131,
+     "price": 282.42,
+     "shares": 5.9203,
      "weight": 16.72,
      "capped": false,
      "verdict": "PASS",
@@ -54,8 +54,8 @@
      "ticker": "KO",
      "name": "Coca Cola",
      "dollars": 1582.0,
-     "price": 96.11,
-     "shares": 16.4603,
+     "price": 96.155,
+     "shares": 16.4526,
      "weight": 15.82,
      "capped": false,
      "verdict": "PASS",
@@ -65,8 +65,8 @@
      "ticker": "BAC",
      "name": "Bank of America",
      "dollars": 1140.0,
-     "price": 48.21,
-     "shares": 23.6465,
+     "price": 48.195,
+     "shares": 23.6539,
      "weight": 11.4,
      "capped": false,
      "verdict": "PASS",
@@ -83,60 +83,60 @@
      {
       "ticker": "AAPL",
       "shares": 10.1849,
-      "price": 349.425,
-      "value": 3558.86,
-      "current_pct": 35.78,
+      "price": 349.395,
+      "value": 3558.55,
+      "current_pct": 35.79,
       "target_pct": 34.87,
-      "drift": 0.91,
-      "target_usd": 3468.34,
+      "drift": 0.92,
+      "target_usd": 3467.07,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "AXP",
       "shares": 6.6015,
-      "price": 306.92,
-      "value": 2026.13,
-      "current_pct": 20.37,
+      "price": 306.655,
+      "value": 2024.38,
+      "current_pct": 20.36,
       "target_pct": 21.19,
-      "drift": -0.82,
-      "target_usd": 2107.66,
+      "drift": -0.83,
+      "target_usd": 2106.89,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "GOOGL",
       "shares": 5.8712,
-      "price": 282.76,
-      "value": 1660.14,
-      "current_pct": 16.69,
+      "price": 282.42,
+      "value": 1658.14,
+      "current_pct": 16.68,
       "target_pct": 16.72,
-      "drift": -0.03,
-      "target_usd": 1663.05,
+      "drift": -0.04,
+      "target_usd": 1662.44,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "KO",
       "shares": 16.536,
-      "price": 96.11,
-      "value": 1589.27,
-      "current_pct": 15.98,
+      "price": 96.155,
+      "value": 1590.02,
+      "current_pct": 15.99,
       "target_pct": 15.82,
-      "drift": 0.16,
-      "target_usd": 1573.54,
+      "drift": 0.17,
+      "target_usd": 1572.96,
       "tracked": true,
       "action": "hold"
      },
      {
       "ticker": "BAC",
       "shares": 23.0676,
-      "price": 48.21,
-      "value": 1112.09,
+      "price": 48.195,
+      "value": 1111.74,
       "current_pct": 11.18,
       "target_pct": 11.4,
       "drift": -0.22,
-      "target_usd": 1133.9,
+      "target_usd": 1133.48,
       "tracked": true,
       "action": "hold"
      }
@@ -155,9 +155,9 @@
       "date": "2026-11-23",
       "shares": 10.1849,
       "cost": 3487.0,
-      "price": 349.425,
-      "value": 3558.86,
-      "gain": 71.86,
+      "price": 349.395,
+      "value": 3558.55,
+      "gain": 71.55,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -167,9 +167,9 @@
       "date": "2026-11-23",
       "shares": 6.6015,
       "cost": 2119.0,
-      "price": 306.92,
-      "value": 2026.13,
-      "gain": -92.87,
+      "price": 306.655,
+      "value": 2024.38,
+      "gain": -94.62,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -179,9 +179,9 @@
       "date": "2026-11-23",
       "shares": 23.0676,
       "cost": 1140.0,
-      "price": 48.21,
-      "value": 1112.09,
-      "gain": -27.91,
+      "price": 48.195,
+      "value": 1111.74,
+      "gain": -28.26,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -191,9 +191,9 @@
       "date": "2026-11-23",
       "shares": 5.8712,
       "cost": 1672.0,
-      "price": 282.76,
-      "value": 1660.14,
-      "gain": -11.86,
+      "price": 282.42,
+      "value": 1658.14,
+      "gain": -13.86,
       "term": "short",
       "long_term_on": "2027-11-24"
      },
@@ -203,9 +203,9 @@
       "date": "2026-11-23",
       "shares": 16.536,
       "cost": 1582.0,
-      "price": 96.11,
-      "value": 1589.27,
-      "gain": 7.27,
+      "price": 96.155,
+      "value": 1590.02,
+      "gain": 8.02,
       "term": "short",
       "long_term_on": "2027-11-24"
      }
@@ -215,51 +215,51 @@
       "ticker": "AAPL",
       "shares": 10.1849,
       "cost": 3487.0,
-      "value": 3558.86,
-      "short": 71.86,
+      "value": 3558.55,
+      "short": 71.55,
       "long": 0.0,
-      "gain": 71.86,
-      "pct": 2.06
+      "gain": 71.55,
+      "pct": 2.05
      },
      {
       "ticker": "AXP",
       "shares": 6.6015,
       "cost": 2119.0,
-      "value": 2026.13,
-      "short": -92.87,
+      "value": 2024.38,
+      "short": -94.62,
       "long": 0.0,
-      "gain": -92.87,
-      "pct": -4.38
+      "gain": -94.62,
+      "pct": -4.47
      },
      {
       "ticker": "BAC",
       "shares": 23.0676,
       "cost": 1140.0,
-      "value": 1112.09,
-      "short": -27.91,
+      "value": 1111.74,
+      "short": -28.26,
       "long": 0.0,
-      "gain": -27.91,
-      "pct": -2.45
+      "gain": -28.26,
+      "pct": -2.48
      },
      {
       "ticker": "GOOGL",
       "shares": 5.8712,
       "cost": 1672.0,
-      "value": 1660.14,
-      "short": -11.86,
+      "value": 1658.14,
+      "short": -13.86,
       "long": 0.0,
-      "gain": -11.86,
-      "pct": -0.71
+      "gain": -13.86,
+      "pct": -0.83
      },
      {
       "ticker": "KO",
       "shares": 16.536,
       "cost": 1582.0,
-      "value": 1589.27,
-      "short": 7.27,
+      "value": 1590.02,
+      "short": 8.02,
       "long": 0.0,
-      "gain": 7.27,
-      "pct": 0.46
+      "gain": 8.02,
+      "pct": 0.51
      }
     ],
     "missing_prices": [],
@@ -273,14 +273,14 @@
   }
  ],
  "prices": {
-  "AAPL": 349.425,
-  "AXP": 306.92,
-  "GOOGL": 282.76,
-  "KO": 96.11,
-  "BAC": 48.21
+  "AAPL": 349.395,
+  "AXP": 306.655,
+  "GOOGL": 282.42,
+  "KO": 96.155,
+  "BAC": 48.195
  },
- "prices_as_of": "2026-11-23T19:48:11Z",
- "market": "New York 2026-11-23 14:48 (Monday): NYSE OPEN, regular session. Today's session: 09:30 to 16:00.",
+ "prices_as_of": "2026-11-23T19:50:40Z",
+ "market": "New York 2026-11-23 14:50 (Monday): NYSE OPEN, regular session. Today's session: 09:30 to 16:00.",
  "next_open": null,
  "market_open_now": true,
  "entry": {
@@ -295,8 +295,8 @@
   "horizon_days": 252,
   "portfolio": {
    "vol_pct": 15.5,
-   "low": 8877.87,
-   "high": 13218.39,
+   "low": 8878.36,
+   "high": 13217.65,
    "invested": 10000.0,
    "last_year_pct": 6.9
   },
@@ -333,7 +333,7 @@
     "take_profit_price": 430.2,
     "stop_price": 292.53,
     "low": 270.65,
-    "high": 513.55
+    "high": 513.56
    },
    {
     "odds": {
@@ -366,8 +366,8 @@
     "entry": 320.73066429335387,
     "take_profit_price": 400.91,
     "stop_price": 272.62,
-    "low": 249.28,
-    "high": 484.26
+    "low": 249.3,
+    "high": 484.22
    },
    {
     "odds": {
@@ -396,12 +396,12 @@
     },
     "ticker": "GOOGL",
     "vol_pct": 33.8,
-    "last_year_pct": -11.2,
+    "last_year_pct": -11.4,
     "entry": 284.6729993120353,
     "take_profit_price": 355.84,
     "stop_price": 241.97,
-    "low": 199.91,
-    "high": 475.72
+    "low": 199.97,
+    "high": 475.57
    },
    {
     "odds": {
@@ -430,12 +430,12 @@
     },
     "ticker": "KO",
     "vol_pct": 19.0,
-    "last_year_pct": 32.4,
+    "last_year_pct": 32.5,
     "entry": 95.78704063535383,
     "take_profit_price": 119.73,
     "stop_price": 81.42,
-    "low": 81.35,
-    "high": 132.35
+    "low": 81.36,
+    "high": 132.34
    },
    {
     "odds": {
