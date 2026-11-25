@@ -1,26 +1,46 @@
 {
  "start": 10000,
- "cash": 1.02,
+ "cash": 0.01,
  "positions": {
   "AAPL": {
-   "shares": 8.805599010994996,
-   "cost": 3030.5
+   "shares": 4.929801707477224,
+   "cost": 1703.5433424616203
   },
   "AXP": {
-   "shares": 7.574080904774711,
-   "cost": 2429.24
+   "shares": 3.4022993742080105,
+   "cost": 1090.1398090199682
   },
   "GOOGL": {
-   "shares": 6.269474113502779,
-   "cost": 1784.75
+   "shares": 2.9257952087023407,
+   "cost": 832.5371797024125
   },
   "KO": {
-   "shares": 15.38861614496892,
-   "cost": 1474.03
+   "shares": 8.156176250432775,
+   "cost": 782.1024997849372
   },
   "BAC": {
-   "shares": 25.897329675354474,
-   "cost": 1280.46
+   "shares": 11.631248122259635,
+   "cost": 575.4302304490325
+  },
+  "AMD": {
+   "shares": 2.3273586635521935,
+   "cost": 989.43
+  },
+  "INTC": {
+   "shares": 17.267539496929967,
+   "cost": 989.43
+  },
+  "MU": {
+   "shares": 1.4781069008321657,
+   "cost": 989.43
+  },
+  "PSX": {
+   "shares": 4.190724161041294,
+   "cost": 989.43
+  },
+  "TRMD": {
+   "shares": 29.68141674438724,
+   "cost": 989.43
   }
  },
  "buys": [
@@ -58,75 +78,44 @@
    "shares": 1.615663,
    "price": 49.8,
    "dollars": 80.46
-  }
- ],
- "pending": [
-  {
-   "ticker": "AAPL",
-   "dollars": -1349.01,
-   "all": false,
-   "queued": "2026-11-23",
-   "why": "new targets"
   },
   {
-   "ticker": "AXP",
-   "dollars": -1276.44,
-   "all": false,
-   "queued": "2026-11-23",
-   "why": "new targets"
-  },
-  {
-   "ticker": "BAC",
-   "dollars": -683.06,
-   "all": false,
-   "queued": "2026-11-23",
-   "why": "new targets"
-  },
-  {
-   "ticker": "GOOGL",
-   "dollars": -941.58,
-   "all": false,
-   "queued": "2026-11-23",
-   "why": "new targets"
-  },
-  {
-   "ticker": "KO",
-   "dollars": -696.05,
-   "all": false,
-   "queued": "2026-11-23",
-   "why": "new targets"
-  },
-  {
+   "date": "2026-11-24",
    "ticker": "AMD",
-   "dollars": 989.43,
-   "queued": "2026-11-23",
-   "why": "new targets"
+   "shares": 2.327359,
+   "price": 425.13,
+   "dollars": 989.43
   },
   {
+   "date": "2026-11-24",
    "ticker": "INTC",
-   "dollars": 989.43,
-   "queued": "2026-11-23",
-   "why": "new targets"
+   "shares": 17.267539,
+   "price": 57.3,
+   "dollars": 989.43
   },
   {
+   "date": "2026-11-24",
    "ticker": "MU",
-   "dollars": 989.43,
-   "queued": "2026-11-23",
-   "why": "new targets"
+   "shares": 1.478107,
+   "price": 669.39,
+   "dollars": 989.43
   },
   {
+   "date": "2026-11-24",
    "ticker": "PSX",
-   "dollars": 989.43,
-   "queued": "2026-11-23",
-   "why": "new targets"
+   "shares": 4.190724,
+   "price": 236.1,
+   "dollars": 989.43
   },
   {
+   "date": "2026-11-24",
    "ticker": "TRMD",
-   "dollars": 989.43,
-   "queued": "2026-11-23",
-   "why": "new targets"
+   "shares": 29.681417,
+   "price": 33.335,
+   "dollars": 989.43
   }
  ],
+ "pending": [],
  "history": [
   {
    "date": "2026-11-06",
@@ -187,9 +176,14 @@
    "date": "2026-11-23",
    "equity": 9894.34,
    "cash": 1.02
+  },
+  {
+   "date": "2026-11-24",
+   "equity": 9794.58,
+   "cash": 0.01
   }
  ],
- "last_roll": "2026-11-23",
+ "last_roll": "2026-11-24",
  "note": "Paper money. Rolled daily by scripts/roll.py.",
  "bench": {
   "symbol": "^GSPC",
@@ -201,32 +195,32 @@
   {
    "ticker": "AAPL",
    "date": "2026-11-06",
-   "shares": 7.30204201,
-   "cost": 2500.0
+   "shares": 3.42624471,
+   "cost": 1173.0433
   },
   {
    "ticker": "AXP",
    "date": "2026-11-06",
-   "shares": 6.9659489,
-   "cost": 2236.0
+   "shares": 2.79416737,
+   "cost": 896.8998
   },
   {
    "ticker": "GOOGL",
    "date": "2026-11-06",
-   "shares": 5.78341211,
-   "cost": 1647.0
+   "shares": 2.43973321,
+   "cost": 694.7872
   },
   {
    "ticker": "KO",
    "date": "2026-11-06",
-   "shares": 14.81133114,
-   "cost": 1417.0
+   "shares": 7.57889125,
+   "cost": 725.0725
   },
   {
    "ticker": "BAC",
    "date": "2026-11-06",
-   "shares": 24.28166668,
-   "cost": 1200.0
+   "shares": 10.01558513,
+   "cost": 494.9702
   },
   {
    "ticker": "AAPL",
@@ -257,8 +251,94 @@
    "date": "2026-11-17",
    "shares": 1.615663,
    "cost": 80.46
+  },
+  {
+   "ticker": "AMD",
+   "date": "2026-11-24",
+   "shares": 2.32735866,
+   "cost": 989.43
+  },
+  {
+   "ticker": "INTC",
+   "date": "2026-11-24",
+   "shares": 17.2675395,
+   "cost": 989.43
+  },
+  {
+   "ticker": "MU",
+   "date": "2026-11-24",
+   "shares": 1.4781069,
+   "cost": 989.43
+  },
+  {
+   "ticker": "PSX",
+   "date": "2026-11-24",
+   "shares": 4.19072416,
+   "cost": 989.43
+  },
+  {
+   "ticker": "TRMD",
+   "date": "2026-11-24",
+   "shares": 29.68141674,
+   "cost": 989.43
   }
  ],
- "sells": [],
+ "sells": [
+  {
+   "date": "2026-11-24",
+   "ticker": "AAPL",
+   "shares": 3.875797,
+   "price": 348.06,
+   "dollars": 1349.01,
+   "basis": 1326.96,
+   "gain": 22.05,
+   "long_term_gain": 0.0,
+   "short_term_gain": 22.05
+  },
+  {
+   "date": "2026-11-24",
+   "ticker": "AXP",
+   "shares": 4.171782,
+   "price": 305.97,
+   "dollars": 1276.44,
+   "basis": 1339.1,
+   "gain": -62.66,
+   "long_term_gain": 0.0,
+   "short_term_gain": -62.66
+  },
+  {
+   "date": "2026-11-24",
+   "ticker": "BAC",
+   "shares": 14.266082,
+   "price": 47.88,
+   "dollars": 683.06,
+   "basis": 705.03,
+   "gain": -21.97,
+   "long_term_gain": 0.0,
+   "short_term_gain": -21.97
+  },
+  {
+   "date": "2026-11-24",
+   "ticker": "GOOGL",
+   "shares": 3.343679,
+   "price": 281.6,
+   "dollars": 941.58,
+   "basis": 952.21,
+   "gain": -10.63,
+   "long_term_gain": 0.0,
+   "short_term_gain": -10.63
+  },
+  {
+   "date": "2026-11-24",
+   "ticker": "KO",
+   "shares": 7.23244,
+   "price": 96.24,
+   "dollars": 696.05,
+   "basis": 691.93,
+   "gain": 4.12,
+   "long_term_gain": 0.0,
+   "short_term_gain": 4.12
+  }
+ ],
  "targets_as_of": "2026-11"
 }
