@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26T03:43:18+00:00",
+ "generated": "2026-11-27T03:44:19+00:00",
  "source": "Half Berkshire's top 5 (BERKSHIRE HATHAWAY INC 13F-HR, quarter ending 2026-09-30, filed 2026-11-16 (accession 0001193125-26-463399)), half the 5 famous-investor picks with the best 12-1 month price move (45 candidates from 22 investors' newest 13Fs, built 2026-11-23)",
  "as_of_13f": "2026-09-30",
  "targets_version": "2026-11",
@@ -458,7 +458,7 @@
       "long": 0.0,
       "wash": [],
       "disallowed": 0.0,
-      "rebuy_on_or_after": "2026-12-27"
+      "rebuy_on_or_after": "2026-12-28"
      },
      {
       "ticker": "AMD",
@@ -475,7 +475,7 @@
       "long": 0.0,
       "wash": [],
       "disallowed": 0.0,
-      "rebuy_on_or_after": "2026-12-27"
+      "rebuy_on_or_after": "2026-12-28"
      }
     ],
     "orders": [
@@ -485,7 +485,7 @@
       "qty": "1.4131",
       "type": "market",
       "time_in_force": "day",
-      "why": "tax-loss harvest proposal: sell lots MU-1 for an estimated -$150.37 loss (-$150.37 short term, $0.00 long term). Do not buy MU again before 2026-12-27 (wash sale). Not tax advice."
+      "why": "tax-loss harvest proposal: sell lots MU-1 for an estimated -$150.37 loss (-$150.37 short term, $0.00 long term). Do not buy MU again before 2026-12-28 (wash sale). Not tax advice."
      },
      {
       "symbol": "AMD",
@@ -493,7 +493,7 @@
       "qty": "2.2075",
       "type": "market",
       "time_in_force": "day",
-      "why": "tax-loss harvest proposal: sell lots AMD-1 for an estimated -$103.69 loss (-$103.69 short term, $0.00 long term). Do not buy AMD again before 2026-12-27 (wash sale). Not tax advice."
+      "why": "tax-loss harvest proposal: sell lots AMD-1 for an estimated -$103.69 loss (-$103.69 short term, $0.00 long term). Do not buy AMD again before 2026-12-28 (wash sale). Not tax advice."
      }
     ]
    },
@@ -502,122 +502,122 @@
      {
       "ticker": "AAPL",
       "id": "AAPL-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 5.091,
       "cost": 1743.0,
       "price": 355.58,
       "value": 1810.26,
       "gain": 67.26,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "AMD",
       "id": "AMD-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 2.2075,
       "cost": 1000.0,
       "price": 406.03,
       "value": 896.31,
       "gain": -103.69,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "AXP",
       "id": "AXP-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 3.3023,
       "cost": 1060.0,
       "price": 312.39,
       "value": 1031.61,
       "gain": -28.39,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "BAC",
       "id": "BAC-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 11.5338,
       "cost": 570.0,
       "price": 48.54,
       "value": 559.85,
       "gain": -10.15,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "GOOGL",
       "id": "GOOGL-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 2.9356,
       "cost": 836.0,
       "price": 273.1,
       "value": 801.71,
       "gain": -34.29,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "INTC",
       "id": "INTC-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 16.8379,
       "cost": 1000.0,
       "price": 54.47,
       "value": 917.16,
       "gain": -82.84,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "KO",
       "id": "KO-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 8.268,
       "cost": 791.0,
       "price": 97.59,
       "value": 806.87,
       "gain": 15.87,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "MU",
       "id": "MU-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 1.4131,
       "cost": 1000.0,
       "price": 601.25,
       "value": 849.63,
       "gain": -150.37,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "PSX",
       "id": "PSX-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 4.2211,
       "cost": 1000.0,
       "price": 236.08,
       "value": 996.52,
       "gain": -3.48,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      },
      {
       "ticker": "TRMD",
       "id": "TRMD-1",
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "shares": 30.4692,
       "cost": 1000.0,
       "price": 33.35,
       "value": 1016.15,
       "gain": 16.15,
       "term": "short",
-      "long_term_on": "2027-11-27"
+      "long_term_on": "2027-11-28"
      }
     ],
     "positions": [
@@ -744,8 +744,8 @@
   "KO": 97.59,
   "BAC": 48.54
  },
- "prices_as_of": "2026-11-26T03:43:18Z",
- "market": "New York 2026-11-25 22:43 (Wednesday): NYSE closed, after the close. Today's session: 09:30 to 16:00. Next open: 2026-11-27 09:30 New York.",
+ "prices_as_of": "2026-11-27T03:44:19Z",
+ "market": "New York 2026-11-26 22:44 (Thursday): NYSE closed, NYSE holiday: Thanksgiving Day. Next open: 2026-11-27 09:30 New York.",
  "next_open": "2026-11-27 09:30 New York",
  "market_open_now": false,
  "entry": {
@@ -1355,134 +1355,132 @@
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "AAPL",
-   "title": "Dow Jones Futures Rise; Market Goes On Wild Ride As Nasdaq Slashes Losses",
-   "link": "https://finance.yahoo.com/m/158e82fc-b889-34b6-8704-99a49e9a83ae/dow-jones-futures-rise%3B.html?.tsrc=rss",
-   "time": "2026-11-26T03:39:36+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AAPL",
-   "title": "Nvidia\u2019s Market Cap Falls Below Microsoft\u2019s: Analyst Flags Five Overhangs For NVDA Stock",
-   "link": "https://stocktwits.com/news-articles/markets/equity/nvidia-s-market-cap-falls-below-microsoft-s-analyst-flags-five-overhangs-for-nvda-stock/cNbx4KZR9Z3?.tsrc=rss",
-   "time": "2026-11-26T02:39:42+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
    "ticker": "GOOGL",
-   "title": "SpaceX gets approval for 1 million data center satellites",
-   "link": "https://finance.yahoo.com/technology/ai/articles/spacex-gets-approval-1-million-023847485.html?.tsrc=rss",
-   "time": "2026-11-26T02:38:47+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AMD",
-   "title": "Why Retail Investors Are Watching AMD and AI Infrastructure Stocks After SpaceX Satellite News",
-   "link": "https://finance.yahoo.com/technology/ai/articles/why-retail-investors-watching-amd-021215050.html?.tsrc=rss",
-   "time": "2026-11-26T02:12:15+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "AMD",
-   "title": "Tech Stocks Stall Into Thanksgiving: Will the AI Rebound Return?",
-   "link": "https://beincrypto.com/tech-stocks-stall-thanksgiving-nvidia-rebound/?.tsrc=rss",
-   "time": "2026-11-26T01:19:53+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "KO",
-   "title": "3 US Consumer Staples Stocks Built For Sticky Inflation",
-   "link": "https://finance.yahoo.com/markets/stocks/articles/3-us-consumer-staples-stocks-011434558.html?.tsrc=rss",
-   "time": "2026-11-26T01:14:34+00:00",
+   "title": "5 Best Quantum Computing Stocks To Buy for 2027",
+   "link": "https://finance.yahoo.com/technology/articles/5-best-quantum-computing-stocks-032149616.html?.tsrc=rss",
+   "time": "2026-11-27T03:21:49+00:00",
    "tags": []
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "AAPL",
-   "title": "Apple Stock Defies AI Selloff: Is It the Market's Safe Haven?",
-   "link": "https://beincrypto.com/apple-stock-ai-selloff-safe-haven/?.tsrc=rss",
-   "time": "2026-11-26T01:00:00+00:00",
+   "title": "Apple (AAPL) Has Found a New AI Opportunity That Has Little to Do With the iPhone",
+   "link": "https://finance.yahoo.com/technology/ai/articles/apple-aapl-found-ai-opportunity-031905510.html?.tsrc=rss",
+   "time": "2026-11-27T03:19:05+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AAPL",
+   "title": "Target cut its Apple Black Friday discount in half",
+   "link": "https://www.thestreet.com/retail/target-cut-its-apple-black-friday-discount-in-half?.tsrc=rss",
+   "time": "2026-11-27T03:17:00+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "AXP",
+   "title": "American Express (AXP) Names Sarah Dodds Brown As Legal Chief After Laureen Seeger Retirement",
+   "link": "https://finance.yahoo.com/markets/stocks/articles/american-express-axp-names-sarah-031418742.html?.tsrc=rss",
+   "time": "2026-11-27T03:14:18+00:00",
    "tags": [
-    "deal"
+    "people"
    ]
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "AMD",
-   "title": "Big AI Buyers Want a Second Source. Is AMD (AMD) It?",
-   "link": "https://finance.yahoo.com/technology/ai/articles/big-ai-buyers-want-second-005602621.html?.tsrc=rss",
-   "time": "2026-11-26T00:56:02+00:00",
+   "ticker": "INTC",
+   "title": "Intel\u2019s (INTC) AI Opportunity Is Growing, But There\u2019s One Big Problem Holding It Back",
+   "link": "https://finance.yahoo.com/technology/ai/articles/intel-intc-ai-opportunity-growing-031416634.html?.tsrc=rss",
+   "time": "2026-11-27T03:14:16+00:00",
    "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "5 Best Strong Buy Growth Stocks to Buy for 2027",
-   "link": "https://finance.yahoo.com/markets/stocks/articles/5-best-strong-buy-growth-004610627.html?.tsrc=rss",
-   "time": "2026-11-26T00:46:10+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "SpaceX wins approval to launch one million AI data centre satellites",
-   "link": "https://www.proactiveinvestors.com/companies/news/1102478/spacex-wins-approval-to-launch-one-million-ai-data-centre-satellites-1102478.html?.tsrc=rss",
-   "time": "2026-11-26T00:27:00+00:00",
-   "tags": []
-  },
-  {
-   "source": "Yahoo Finance",
-   "kind": "headline",
-   "ticker": "KO",
-   "title": "Here\u2019s How Many Coca-Cola Shares It Takes to Earn $1,300 Every Quarter in Dividends",
-   "link": "https://www.fool.com/investing/2026/11/25/heres-how-many-coca-cola-shares-it-takes-to-earn-1300-every-quarter-in-dividends/?.tsrc=rss",
-   "time": "2026-11-25T23:48:02+00:00",
-   "tags": [
-    "capital"
-   ]
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "MU",
-   "title": "Is Micron Cheap Only If Its Record Margin Lasts?",
-   "link": "https://www.trefis.com/stock/mu/articles/628939/is-micron-cheap-only-if-its-record-margin-lasts/2026-11-25?.tsrc=rss",
-   "time": "2026-11-25T23:43:07+00:00",
+   "title": "Micron (MU) Has Secured $32 Billion in Customer Commitments. Here\u2019s Why That Matters",
+   "link": "https://finance.yahoo.com/markets/stocks/articles/micron-mu-secured-32-billion-031249719.html?.tsrc=rss",
+   "time": "2026-11-27T03:12:49+00:00",
    "tags": []
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
-   "ticker": "GOOGL",
-   "title": "Bill Gurley: Investors Weren\u2019t \u201cScrambling to Actually Own Anthropic.\u201d That\u2019s a Problem for Amazon and Alphabet",
-   "link": "https://www.tikr.com/blog/bill-gurley-investors-werent-scrambling-to-actually-own-anthropic-thats-a-problem-for-amazon-and-alphabet?ref=yahoofinance&tlnk=yf-261125-5qg4553j&.tsrc=rss",
-   "time": "2026-11-25T23:43:06+00:00",
+   "ticker": "BAC",
+   "title": "5 Best Tech Stocks to Buy for 2027 According to Hedge Funds",
+   "link": "https://finance.yahoo.com/markets/stocks/articles/5-best-tech-stocks-buy-030856400.html?.tsrc=rss",
+   "time": "2026-11-27T03:08:56+00:00",
    "tags": []
   },
   {
    "source": "Yahoo Finance",
    "kind": "headline",
    "ticker": "AMD",
-   "title": "Anthropic Earns \u201c$80 a Year per Watt\u201d of GPUs, Says Modal\u2019s CEO. That\u2019s Good News for SpaceX",
-   "link": "https://www.tikr.com/blog/anthropic-earns-80-a-year-per-watt-of-gpus-says-modals-ceo-thats-good-news-for-spacex?ref=yahoofinance&tlnk=yf-261125-5cgv35mg&.tsrc=rss",
-   "time": "2026-11-25T23:41:46+00:00",
+   "title": "Eric Trump-Backed Robot Startup\u2019s Employees Lose Health Insurance After Weeks Without Pay as Company Scrambles for $150 Million Lifeline: Report",
+   "link": "https://finance.yahoo.com/healthcare/articles/eric-trump-backed-robot-startup-023005325.html?.tsrc=rss",
+   "time": "2026-11-27T02:30:05+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "MU",
+   "title": "Dow Jones Futures Rise; Look For This Bullish Market Signal On Black Friday",
+   "link": "https://finance.yahoo.com/m/158e82fc-b889-34b6-8704-99a49e9a83ae/dow-jones-futures-rise%3B-look.html?.tsrc=rss",
+   "time": "2026-11-27T01:34:35+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "\u2018How Can TSLA Compete With Waymo?\u2019 Gary Black Questions Tesla\u2019s Robotaxi Strategy, Predicts Waymo Will Lead in Miles and Trips",
+   "link": "https://finance.yahoo.com/technology/articles/tsla-compete-waymo-gary-black-013007370.html?.tsrc=rss",
+   "time": "2026-11-27T01:30:07+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "MU",
+   "title": "Not Nvidia. Not Micron. If I Could Buy and Hold Only 1 Artificial Intelligence (AI) Semiconductor Stock Through 2030, This Would Be It.",
+   "link": "https://www.fool.com/investing/2026/11/26/not-nvidia-not-micron-if-i-could-buy-and-hold-only-1-artificial-intelligence-ai-semiconductor-stock-through-2030-this-would-be-it/?.tsrc=rss",
+   "time": "2026-11-26T23:14:44+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "INTC",
+   "title": "Intel (INTC) Faces Lawsuit And AI Selloff As Fair Value Debate Gets Harder",
+   "link": "https://finance.yahoo.com/markets/stocks/articles/intel-intc-faces-lawsuit-ai-220908878.html?.tsrc=rss",
+   "time": "2026-11-26T22:09:08+00:00",
    "tags": [
-    "people"
+    "legal"
    ]
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "GOOGL",
+   "title": "Jim Lebenthal Says This Is \u201ca Correction, Not Something Worse.\u201d Why He\u2019s Buying More Alphabet",
+   "link": "https://247wallst.com/investing/2026/11/26/jim-lebenthal-says-this-is-a-correction-not-something-worse-why-hes-buying-more-alphabet/?.tsrc=rss",
+   "time": "2026-11-26T22:07:55+00:00",
+   "tags": []
+  },
+  {
+   "source": "Yahoo Finance",
+   "kind": "headline",
+   "ticker": "INTC",
+   "title": "Steve Cohen\u2019s 5 Biggest Stock Bets for 2027",
+   "link": "https://finance.yahoo.com/markets/stocks/articles/steve-cohen-5-biggest-stock-220614898.html?.tsrc=rss",
+   "time": "2026-11-26T22:06:14+00:00",
+   "tags": []
   }
  ],
  "sec_skills": true,
