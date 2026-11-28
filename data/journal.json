@@ -1138,5 +1138,195 @@
     47
    ]
   }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "AAPL",
+  "price": 358.54,
+  "profit_level": 431.95,
+  "stop_level": 293.73,
+  "odds": {
+   "profit": [
+    0,
+    7,
+    37
+   ],
+   "stop": [
+    5,
+    16,
+    52
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "AXP",
+  "price": 316.4,
+  "profit_level": 400.52,
+  "stop_level": 272.35,
+  "odds": {
+   "profit": [
+    0,
+    8,
+    39
+   ],
+   "stop": [
+    5,
+    17,
+    53
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "MU",
+  "price": 646.95,
+  "profit_level": 836.74,
+  "stop_level": 568.98,
+  "odds": {
+   "profit": [
+    19,
+    61,
+    80
+   ],
+   "stop": [
+    11,
+    26,
+    85
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "INTC",
+  "price": 57.4,
+  "profit_level": 71.62,
+  "stop_level": 48.7,
+  "odds": {
+   "profit": [
+    19,
+    61,
+    80
+   ],
+   "stop": [
+    11,
+    26,
+    85
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "AMD",
+  "price": 424.54,
+  "profit_level": 531.41,
+  "stop_level": 361.36,
+  "odds": {
+   "profit": [
+    16,
+    55,
+    77
+   ],
+   "stop": [
+    10,
+    25,
+    83
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "PSX",
+  "price": 242.12,
+  "profit_level": 295.13,
+  "stop_level": 200.69,
+  "odds": {
+   "profit": [
+    1,
+    18,
+    50
+   ],
+   "stop": [
+    7,
+    19,
+    63
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "TRMD",
+  "price": 33.76,
+  "profit_level": 41.67,
+  "stop_level": 28.33,
+  "odds": {
+   "profit": [
+    3,
+    29,
+    59
+   ],
+   "stop": [
+    8,
+    21,
+    70
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "GOOGL",
+  "price": 274.96,
+  "profit_level": 355.69,
+  "stop_level": 241.87,
+  "odds": {
+   "profit": [
+    1,
+    19,
+    51
+   ],
+   "stop": [
+    7,
+    19,
+    63
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "KO",
+  "price": 97.4,
+  "profit_level": 119.86,
+  "stop_level": 81.51,
+  "odds": {
+   "profit": [
+    0,
+    2,
+    24
+   ],
+   "stop": [
+    1,
+    14,
+    39
+   ]
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "ticker": "BAC",
+  "price": 49.07,
+  "profit_level": 61.84,
+  "stop_level": 42.05,
+  "odds": {
+   "profit": [
+    0,
+    5,
+    33
+   ],
+   "stop": [
+    4,
+    15,
+    47
+   ]
+  }
  }
 ]
